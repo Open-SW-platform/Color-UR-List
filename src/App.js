@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
 import AchievementScreen from './screens/AchievementScreen';
+import 'react-native-gesture-handler';
 
 const TabNavigator = createBottomTabNavigator({ // TabNavigator로 App.js 통일
   'To Do': {

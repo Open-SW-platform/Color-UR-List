@@ -5,13 +5,13 @@ import CircleButton from './CircleButton'
 const TodolistInput = () => {
     return (
         <View style= {styles.container}> 
-        <CircleButton/>
+        <CircleButton color="blue"/>
         <View style={{backgroundColor:'orange'}}>
         <TextInput 
         style = {styles.textInput}
         placeholder= "To do list"
         multiline={false} />  
-        <Text>카테고리 드롭다운 자리</Text>
+        <Text>동그란 부분에 이미지 삽입하기</Text>
         </View>
         </View>
     );

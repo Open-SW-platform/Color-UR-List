@@ -5,14 +5,16 @@ import { images } from "../images";
 import { theme } from "../theme";
 import IconButton from "./IconButton";
 
-const Task = ({text}) => {
+const Task = ({text,detailVisible,setDetailVisible}) => {
+
+    
     return(
         <View style = {taskStyle.container}>
             <IconButton type={images.unchecked} />
             <Text style={taskStyle.contents}>{text}</Text>
-            <IconButton type={images.edit} />
+            <IconButton onPressOut={()=> { setDetailVisible(!detailVisible);}} type={images.edit} />
         </View>
-    )
+    ) 
 }
 
 const taskStyle = StyleSheet.create({
@@ -35,6 +37,7 @@ const taskStyle = StyleSheet.create({
 
 Task.propTypes = {
     text: propTypes.string.isRequired,
+    
 };
 
 export default Task;

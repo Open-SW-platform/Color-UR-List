@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 const CircleButton = (props)=> {
-    
-  console.log(props.color);
  
         return (
             <TouchableOpacity 

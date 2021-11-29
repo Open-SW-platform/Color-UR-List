@@ -83,6 +83,14 @@ export const textStyles = StyleSheet.create({ //text관련 설정
     fontSize: 15,
     color: 'black',
   },
+  moremenu: {
+    fontSize: 20,
+    alignItems: 'flex-start',
+    marginTop: 0,
+    marginLeft: 0,
+    color: 'black',
+  
+  },
 });
 
 
@@ -138,6 +146,18 @@ export const modalstyles = StyleSheet.create({
     alignItems : 'center',
 
   },
+  horizentalline : {
+    backgroundColor : 'black',
+    height: 1,
+    alignItems : 'stretch',
+  },
+  menuView : {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: 'yellow',
+    width: '100%',
+  }
 
 });
 

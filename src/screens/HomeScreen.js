@@ -11,17 +11,25 @@ import Today from '../components/Today'
 import ThemeSelector from '../components/ThemeSelector';
 import Input from '../components/Input';
 import Task from '../components/Task';
+import ExtraMenu from '../components/ExtraMenu';
+import {ThemeProvider} from 'styled-components/native';
+import {theme} from '../theme';
+
 
 export default function HomeScreen() {
-  Alert, Modal, StyleSheet, Text, Pressable, View
+  
   const [addMode, setAddMode] = useState(false);
   const [newTask, setNewTask] = useState(''); // 새 투두리스트 추가 여부
   const [tasks, setTasks] = useState({
     '1': { id: '1', text: "My Todo List", completed: false },
   });
-  const [modalVisible, setModalVisible] = useState(false); // 태스크 세부사항창을 띄우고 있는지 여부
+  
+  const [detailVisible, setDetailVisible] = useState(false); // 태스크 세부사항창을 띄우고 있는지 여부
   const [themeVisible, setThemeVisible] = useState(false); // theme 변경 창을 띄우고 있는지 여부
   const [SearchMode, setSearchMode] = useState(false); //검색모드인지 여부
+  const [extraVisible, setExtraVisible] = useState(false); // 더보기창을 보이고 있는지 여부
+  const [DeleteMode, setDeleteMode] = useState(false); //삭제모드인지 여부 
+ 
   var TopBar;
 
   const openTheme = () => {
@@ -54,38 +62,55 @@ export default function HomeScreen() {
     </View>
 
   }
-  else { // 검색모드가 아니라면 -> 일반 상단바 보여줌
+  else if (DeleteMode){ //삭제모드라면 -> 상단바부분을 삭제부분으로 변경.
+    TopBar=<View style={viewStyles.settingView} >
+    <IconButton type={images.back}  onPressOut={() => setDeleteMode(!DeleteMode)}/>
+    <Text>  Delete </Text>
+    <View style={viewStyles.settingGroup}>
+      <IconButton type={images.unchecked} />
+      <IconButton type={images.trash} />
+    </View>
+  </View>
+
+  }
+  else { // 둘다 아니라면 -> 일반 상단바 보여줌
     TopBar =
       <View style={viewStyles.settingView} >
+        <IconButton type={images.todo} onPressOut={openTheme}/>
         <Today />
         <View style={viewStyles.settingGroup}>
+        
           <IconButton type={images.search} onPressOut={() => setSearchMode(!SearchMode)} />
-          <IconButton type={images.dot} />
+          <IconButton onPressOut = {()=>{setExtraVisible(!extraVisible); console.log('open extraMenu');}} type={images.dot} />
         </View>
       </View>
   }
 
   return (
+    //ThemeProvider는 자식들에게 광역으로 자신이 가지고 있는 기본 props값을 사용할 수 있도록 해주는 역할
+    <ThemeProvider theme= {theme} //theme : basic theme (기본파랑)
+    > 
     <View style={viewStyles.container}>
       <StatusBar barStyle="light-content" style={barStyles.statusBar} />
       {TopBar}
       <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} // 테마선택창
       />
-      <Modal // Task 클릭시 띄우는 세부사항 창. 
+
+  <Modal // Task 클릭시 띄우는 세부사항 창. 
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={detailVisible}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-
+          setDetailVisible(!detailVisible);
+         
         }}>
 
         <View style={modalstyles.modalView}>
           <View style={viewStyles.settingGroup}>
-            <IconButton type={images.check} onPressOut={() => setModalVisible(!modalVisible)} />
+            <IconButton type={images.check} onPressOut={() => {setDetailVisible(!detailVisible);}} />
             <IconButton type={images.trash} onPressOut={() => alert('delete')} />
-            <IconButton type={images.cancle} onPressOut={() => setModalVisible(!modalVisible)} />
+            <IconButton type={images.cancle} onPressOut={() => {setDetailVisible(!detailVisible);}} />
           </View>
           <TodolistInput />
           <ScrollView style={{ width: '100%', marginLeft: 30, }}>
@@ -95,6 +120,14 @@ export default function HomeScreen() {
           </ScrollView>
         </View>
       </Modal>
+
+        <ExtraMenu  // 더보기 모달창
+        ExtraVisible={extraVisible} 
+        setExtraVisible ={ setExtraVisible} 
+        DeleteMode={DeleteMode} 
+        setDeleteMode={setDeleteMode} 
+        openTheme={openTheme}/>
+
 
       <View style={viewStyles.goalView}/** 목표 작성부분*/>
         <TextInput
@@ -113,9 +146,10 @@ export default function HomeScreen() {
               onChangeText={_handleTextChange}
               onSubmitEditing={_addTask} />
             <View>
-              {Object.values(tasks).reverse().map(item => ((
-                <Task key={item.id} text={item.text} />
+            {Object.values(tasks).reverse().map(item => ((
+                <Task key={item.id} text={item.text} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/>
               )))}
+              
             </View>
           </View>
 
@@ -129,9 +163,10 @@ export default function HomeScreen() {
               onChangeText={_handleTextChange}
               onSubmitEditing={_addTask} />
             <View>
-              {Object.values(tasks).reverse().map(item => ((
-                <Task key={item.id} text={item.text} />
+            {Object.values(tasks).reverse().map(item => ((
+                <Task key={item.id} text={item.text} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/>
               )))}
+              
             </View>
           </View>
 
@@ -145,9 +180,10 @@ export default function HomeScreen() {
               onChangeText={_handleTextChange}
               onSubmitEditing={_addTask} />
             <View>
-              {Object.values(tasks).reverse().map(item => ((
-                <Task key={item.id} text={item.text} />
+            {Object.values(tasks).reverse().map(item => ((
+                <Task key={item.id} text={item.text} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/>
               )))}
+              
             </View>
           </View>
 
@@ -162,18 +198,17 @@ export default function HomeScreen() {
               onSubmitEditing={_addTask} />
             <View>
               {Object.values(tasks).reverse().map(item => ((
-                <Task key={item.id} text={item.text} />
+                <Task key={item.id} text={item.text} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/>
               )))}
+              
             </View>
           </View>
         </ScrollView>
-
-        <View style={viewStyles.AddTaskButtonView}>
-
-          <CircleButton color='white' onPress={openTheme} />
-        </View>
+              
+      
 
       </View>
     </View>
+    </ThemeProvider>
   );
 };
