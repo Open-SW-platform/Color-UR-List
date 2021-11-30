@@ -1,12 +1,9 @@
 //홈(메인) 화면
 import React, { useState } from 'react';
-import { StatusBar, Text, View, TextInput, ScrollView, Alert, Modal, StyleSheet, Pressable } from 'react-native';
-import { viewStyles, textStyles, barStyles, modalstyles } from '../styles'
+import { StatusBar, Text, View, TextInput, ScrollView, Image } from 'react-native';
+import { viewStyles, textStyles, barStyles } from '../styles'
 import { images } from '../images';
 import IconButton from '../components/IconButton';
-import CircleButton from '../components/CircleButton';
-import Memo from '../components/Memo';
-import TodolistInput from '../components/TodolistInput';
 import Today from '../components/Today'
 import ThemeSelector from '../components/ThemeSelector';
 import Input from '../components/Input';
@@ -14,7 +11,7 @@ import Task from '../components/Task';
 import ExtraMenu from '../components/ExtraMenu';
 import {ThemeProvider} from 'styled-components/native';
 import {theme} from '../theme';
-
+import DetailTodolist from '../components/DetailTodolist';
 
 export default function HomeScreen() {
   
@@ -95,31 +92,9 @@ export default function HomeScreen() {
       {TopBar}
       <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} // 테마선택창
       />
-
-  <Modal // Task 클릭시 띄우는 세부사항 창. 
-        animationType="slide"
-        transparent={true}
-        visible={detailVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setDetailVisible(!detailVisible);
-         
-        }}>
-
-        <View style={modalstyles.modalView}>
-          <View style={viewStyles.settingGroup}>
-            <IconButton type={images.check} onPressOut={() => {setDetailVisible(!detailVisible);}} />
-            <IconButton type={images.trash} onPressOut={() => alert('delete')} />
-            <IconButton type={images.cancle} onPressOut={() => {setDetailVisible(!detailVisible);}} />
-          </View>
-          <TodolistInput />
-          <ScrollView style={{ width: '100%', marginLeft: 30, }}>
-            <Text style={modalstyles.modalText}>Note</Text>
-            <Memo />
-            <Text style={modalstyles.modalText}>Due date : 12-25</Text>
-          </ScrollView>
-        </View>
-      </Modal>
+      <DetailTodolist
+        detailVisible={detailVisible} 
+        setDetailVisible ={ setDetailVisible} />
 
         <ExtraMenu  // 더보기 모달창
         ExtraVisible={extraVisible} 
@@ -204,9 +179,6 @@ export default function HomeScreen() {
             </View>
           </View>
         </ScrollView>
-              
-      
-
       </View>
     </View>
     </ThemeProvider>

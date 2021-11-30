@@ -36,17 +36,17 @@ const Today = () => {
   },
   dateView: { //날짜 뷰 -> 두꺼운 글씨
     flex: 0.22,
-    fontSize : 25,
+    fontSize : 20,
     backgroundColor: 'yellow',
-    fontWeight : "900",
+    fontWeight : "bold",
     marginLeft :10,
   
   },
   dayView: { //요일 뷰 -> 얇고 가는 글씨
     flex: 0.5,
     backgroundColor:  'pink',
-    fontSize : 25,
-    fontWeight : "100",
+    fontSize : 20,
+    fontWeight : "normal",
     paddingLeft : "3%",
   },
 })

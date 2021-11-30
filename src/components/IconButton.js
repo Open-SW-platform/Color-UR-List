@@ -6,6 +6,13 @@ import PropTypes from 'prop-types';
 import { images } from '../images';
 
 const IconButton = ({type, onPressOut}) =>{
+    if(type == 15){ //todo type id 값?
+        return(
+            <Pressable onPressOut = {onPressOut}>
+                <Image source = {type} style = {iconStyle.themeIcon}/>
+            </Pressable>
+        );
+    }
     return (
         <Pressable onPressOut = {onPressOut}>
             <Image source = {type} style = {iconStyle.icon}/>
@@ -21,6 +28,11 @@ const iconStyle = StyleSheet.create({
         margin: 5,
         backgroundColor: 'red',
     },
+    themeIcon: {
+        width: 30,
+        height: 30,
+        margin: 7,
+    }
 });
 
 IconButton.propTypes = {

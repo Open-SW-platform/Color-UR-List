@@ -1,17 +1,14 @@
 import React from 'react';
-import {StyleSheet, TextInput,View,Text} from 'react-native';
+import { images } from '../images';
+import {StyleSheet, TextInput,View } from 'react-native';
 import {theme} from '../theme';
-import CircleButton from './CircleButton'
-const TodolistInput = () => {
+import IconButton from './IconButton';
+const TodolistInput = ({newTask}) => {
     return (
         <View style= {styles.container}> 
-        <CircleButton color="blue"/>
-        <View style={{backgroundColor:'orange'}}>
-        <TextInput 
-        style = {styles.textInput}
-        placeholder= "To do list"
-        multiline={false} />  
-        <Text>동그란 부분에 이미지 삽입하기</Text>
+        <IconButton type={images.todo}/>
+        <View style={{backgroundColor:'white'}}>
+        <TextInput style={styles.textInput}>To Do List</TextInput> 
         </View>
         </View>
     );
@@ -23,9 +20,7 @@ const styles = StyleSheet.create({
         borderBottomWidth : 2,
         borderBottomColor: '#e3e3e3',
         width : '100%',
-        height : '20%',
-        
-       
+        height : '10%',
     },
     textInput: {
         width: 100,
