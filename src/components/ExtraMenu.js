@@ -31,7 +31,7 @@ const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTh
 </View>
 
 
-<View style={viewStyles.menuView}>
+<View style={textStyles.menu}>
     <TouchableOpacity onPressOut={() => { console.log('View Uncompleted'); }  }>
     <Text style={textStyles.moremenu}> View Uncompleted </Text>
     </TouchableOpacity>
@@ -39,7 +39,7 @@ const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTh
 
 
 
-<View style={viewStyles.menuView}>
+<View style={textStyles.menu}>
     <TouchableOpacity onPressOut={() =>{ console.log('select All'); }}>
     <Text style={textStyles.moremenu}> Select All </Text>
     </TouchableOpacity>
@@ -47,7 +47,7 @@ const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTh
 
 
 
-<View style={viewStyles.menuView}>
+<View style={textStyles.menu}>
     <TouchableOpacity onPressOut={() => { console.log('Deselect All'); }}>
     <Text style={textStyles.moremenu}> Deselect All </Text>
     </TouchableOpacity>

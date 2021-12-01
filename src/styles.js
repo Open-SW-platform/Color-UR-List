@@ -100,7 +100,7 @@ export const barStyles = StyleSheet.create({
   },
 });
 
-export const modalstyles = StyleSheet.create({
+export const modalStyles = StyleSheet.create({
   modalView: {
     marginTop: 250,
     justifyContent: 'flex-start',
