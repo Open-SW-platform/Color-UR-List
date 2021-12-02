@@ -136,7 +136,7 @@ export const modalStyles = StyleSheet.create({
     textAlign: 'center',
   },
   modalText: {
-    margin: 10,
+    margin: 5,
     textAlign: 'left',
   },
   top : {
