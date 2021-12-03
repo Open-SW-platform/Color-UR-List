@@ -17,6 +17,7 @@ export const viewStyles = StyleSheet.create({
   settingGroup:{ //search/trash/dot 아이콘 버튼 정렬
     flexDirection: 'row',
     marginLeft: 'auto',
+    marginTop: 5
   },
   goalView: { //목표 작성 스타일
     flex: 0.7,
@@ -74,6 +75,14 @@ export const textStyles = StyleSheet.create({ //text관련 설정
     flex: 1,
     fontSize: 25,
     color: theme.text,
+  },
+  listInModal:{
+    flex: 1,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    backgroundColor: 'blue',
+    marginLeft: 5,
   },
   menu: {
     fontSize: 15,
