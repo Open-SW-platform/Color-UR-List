@@ -18,7 +18,8 @@ export default function HomeScreen() {
   const [addMode, setAddMode] = useState(false);
   const [newTask, setNewTask] = useState(''); // 새 투두리스트 추가 여부
   const [tasks, setTasks] = useState({
-    '1': { id: '1', text: "My Todo List", completed: false },
+    '1': { id: '1', text: "My Todo List1", completed: false },
+    '2': { id: '2', text: "My Todo List2", completed: false },
   });
   
   const [detailVisible, setDetailVisible] = useState(false); // 태스크 세부사항창을 띄우고 있는지 여부
@@ -33,7 +34,13 @@ export default function HomeScreen() {
     setThemeVisible(!themeVisible);
   }
 
+  // 투두 추가,삭제,토글,업데이트 함수
+
   const _addTask = () => {
+
+    if (newTask.length<1 ){
+      return; //아무것도 입력하지 않은 상태에서 완료버튼을 누르면 추가되지 않음.
+    }  
     const ID = Date.now().toString();
     const newTaskObject = {
       [ID]: { id: ID, text: newTask, completed: false },
@@ -42,9 +49,29 @@ export default function HomeScreen() {
     setTasks({ ...tasks, ...newTaskObject });
   };
 
-  const _handleTextChange = text => {
-    setNewTask(text);
-  };
+  const _deleteTask =(id)=>{ //id : 삭제할 task의 id값
+
+    const currentTasks=Object.assign({},tasks);  //현재todolist정보 킵
+
+    //delete 연산자는 객체의 속성을 제거
+    delete currentTasks[id]; //특정 id값을 가진 todoitem삭제.
+    setTasks(currentTask); // {...currentTasks} 가 아님. 이미 열거 가능한 항목으로 나열되어있음.
+ 
+  }
+
+  const _toggleTask =(id)=>{
+    const currentTask=Object.assign({},tasks);
+   currentTask[id]['completed'] = ! currentTask[id]['completed']; 
+   setTasks(currentTask);
+   }
+
+   const _updateTask=(updatatedItem)=>{
+    const currentTasks=Object.assign({},tasks);
+    currentTasks[updatatedItem.id]['text'] = updatatedItem.text;
+    setTasks(currentTasks);
+
+  }
+3
 
   if (SearchMode) { // 검색모드라면 -> 상단바부분을 검색창으로 변경
     TopBar = <View style={viewStyles.settingView} >
@@ -90,9 +117,10 @@ export default function HomeScreen() {
     <View style={viewStyles.container}>
       <StatusBar barStyle="light-content" style={barStyles.statusBar} />
       {TopBar}
+
       <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} // 테마선택창
       />
-      <DetailTodolist
+      <DetailTodolist //투두리스트 세부창
         detailVisible={detailVisible} 
         setDetailVisible ={ setDetailVisible} />
 
@@ -117,68 +145,23 @@ export default function HomeScreen() {
             <IconButton type={images.add} />
           </View>
           <View style={viewStyles.container}/** 투두리스트 항목 */>
-            <Input value={newTask}
-              onChangeText={_handleTextChange}
+            <Input placeholder="+ Add a Task" 
+              value={newTask}
+              onChangeText={text => setNewTask(text)}
               onSubmitEditing={_addTask} 
-              placeholder = "+ Add a Task"/>
+              placeholder = "+ Add a Task"
+              onBlur={()=>setNewTask('')}
+              />
             <View>
-            {Object.values(tasks).reverse().map(item => ((
-                <Task key={item.id} text={item.text} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/>
-              )))}
+             
+        
+            {Object.values(tasks)
+       .reverse().
+       map(item=>(<Task key= {item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask} updateTask={_updateTask} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/> ) )}
               
             </View>
           </View>
 
-          <View style={viewStyles.categoryView}/** Assignment 카테고리*/>
-            <IconButton type={images.tag} />
-            <Text style={textStyles.contents}> Assignment </Text>
-            <IconButton type={images.add} />
-          </View>
-          <View style={viewStyles.container}/** 투두리스트 항목 */>
-            <Input value={newTask}
-              onChangeText={_handleTextChange}
-              onSubmitEditing={_addTask} />
-            <View>
-            {Object.values(tasks).reverse().map(item => ((
-                <Task key={item.id} text={item.text} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/>
-              )))}
-              
-            </View>
-          </View>
-
-          <View style={viewStyles.categoryView}/** Work 카테고리*/>
-            <IconButton type={images.tag} />
-            <Text style={textStyles.contents}> Work </Text>
-            <IconButton type={images.add} />
-          </View>
-          <View style={viewStyles.container}/** 투두리스트 항목 */>
-            <Input value={newTask}
-              onChangeText={_handleTextChange}
-              onSubmitEditing={_addTask} />
-            <View>
-            {Object.values(tasks).reverse().map(item => ((
-                <Task key={item.id} text={item.text} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/>
-              )))}
-              
-            </View>
-          </View>
-
-          <View style={viewStyles.categoryView}/** Exercise 카테고리*/>
-            <IconButton type={images.tag} />
-            <Text style={textStyles.contents}> Exercise </Text>
-            <IconButton type={images.add} />
-          </View>
-          <View style={viewStyles.container}/** 투두리스트 항목 */>
-            <Input value={newTask}
-              onChangeText={_handleTextChange}
-              onSubmitEditing={_addTask} />
-            <View>
-              {Object.values(tasks).reverse().map(item => ((
-                <Task key={item.id} text={item.text} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/>
-              )))}
-              
-            </View>
-          </View>
         </ScrollView>
       </View>
     </View>

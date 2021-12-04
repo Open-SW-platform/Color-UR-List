@@ -38,10 +38,11 @@ const Input = ({placeholder,value,onChangeText,onSubmitEditing,onBlur})=>{
   
 };
 
-Input.propTypes = {
+/*Input.propTypes = {
     placeholder : PropTypes.string,
     value : PropTypes.string.isRequred, // string이고 필수
     onChangeText : PropTypes.func.isRequred, // 함수이고 필수
     onSubmitEditing: PropTypes.func.isRequred // 함수이고 필수
 }
+*/
 export default Input;

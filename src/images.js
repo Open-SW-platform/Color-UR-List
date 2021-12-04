@@ -13,6 +13,7 @@ import Back from '../assets/back.png'
 import Edit from '../assets/edit_24.png'
 import Add from '../assets/add_black_24.png'
 import Todo from '../assets/todo.png'
+import Pencil from '../assets/pencil.png'
 export const images = {
     menu: Menu,
     dropDown: DropDown,
@@ -28,4 +29,5 @@ export const images = {
     edit: Edit,
     add: Add,
     todo :Todo,
+    pencil:Pencil,
 };
