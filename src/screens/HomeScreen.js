@@ -119,7 +119,8 @@ export default function HomeScreen() {
           <View style={viewStyles.container}/** 투두리스트 항목 */>
             <Input value={newTask}
               onChangeText={_handleTextChange}
-              onSubmitEditing={_addTask} />
+              onSubmitEditing={_addTask} 
+              placeholder = "+ Add a Task"/>
             <View>
             {Object.values(tasks).reverse().map(item => ((
                 <Task key={item.id} text={item.text} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/>
