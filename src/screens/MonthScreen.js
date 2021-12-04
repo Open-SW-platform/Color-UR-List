@@ -4,8 +4,8 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
 
 LocaleConfig.locales['fr'] = {
-  monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
-  monthNamesShort: ['Janv.','Févr.','Mars','Avril','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
+  monthNames: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+  monthNamesShort: ['Jan.','Feb.','Mar.','Apr.','May','Jun.','Jul.','Aug','Sep.','Oct.','Nov.','Dec.'],
   dayNames: ['일요일','월요일', '화요일','수요일','목요일','금요일','토요일'],
   dayNamesShort: ['SUN', 'MON','TUE','WED','THU','FRI','SAT'],
   today: 'Aujourd\'hui'
