@@ -3,12 +3,15 @@ import { images } from '../images';
 import {StyleSheet, Text, TextInput, View } from 'react-native';
 import {theme} from '../theme';
 import IconButton from './IconButton';
-const TodolistInput = ({newTask, dueDate}) => {
+const TodolistInput = ({newTask, dueDate,item}) => {
+  
+    console.log(item);
     return (
         <View style= {styles.container}> 
-        <IconButton type={images.checked}/>
+
+        <IconButton type = {item.completed? images.checked :images.unchecked}/>
         <View style={{backgroundColor:'white'}}>
-        <TextInput style={styles.textInput}> To Do List</TextInput>
+        <TextInput style={styles.textInput}> {item.text}</TextInput>
         <Text style={styles.textDueDate}> Due Date: {dueDate}</Text>
         </View>
         </View>

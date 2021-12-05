@@ -11,7 +11,7 @@ import Task from '../components/Task';
 import ExtraMenu from '../components/ExtraMenu';
 import {ThemeProvider} from 'styled-components/native';
 import {theme} from '../theme';
-import DetailTodolist from '../components/DetailTodolist';
+
 
 export default function HomeScreen() {
   
@@ -22,7 +22,7 @@ export default function HomeScreen() {
     '2': { id: '2', text: "My Todo List2", completed: false },
   });
   
-  const [detailVisible, setDetailVisible] = useState(false); // 태스크 세부사항창을 띄우고 있는지 여부
+  //const [detailVisible, setDetailVisible] = useState(false); // 태스크 세부사항창을 띄우고 있는지 여부
   const [themeVisible, setThemeVisible] = useState(false); // theme 변경 창을 띄우고 있는지 여부
   const [SearchMode, setSearchMode] = useState(false); //검색모드인지 여부
   const [extraVisible, setExtraVisible] = useState(false); // 더보기창을 보이고 있는지 여부
@@ -55,7 +55,7 @@ export default function HomeScreen() {
 
     //delete 연산자는 객체의 속성을 제거
     delete currentTasks[id]; //특정 id값을 가진 todoitem삭제.
-    setTasks(currentTask); // {...currentTasks} 가 아님. 이미 열거 가능한 항목으로 나열되어있음.
+    setTasks(currentTasks); // {...currentTasks} 가 아님. 이미 열거 가능한 항목으로 나열되어있음.
  
   }
 
@@ -71,7 +71,10 @@ export default function HomeScreen() {
     setTasks(currentTasks);
 
   }
-3
+
+ 
+
+// > 버튼을 누르면 선택된 투두아이템의 정보가 detailtodolist에 props로 주어짐.
 
   if (SearchMode) { // 검색모드라면 -> 상단바부분을 검색창으로 변경
     TopBar = <View style={viewStyles.settingView} >
@@ -120,9 +123,7 @@ export default function HomeScreen() {
 
       <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} // 테마선택창
       />
-      <DetailTodolist //투두리스트 세부창
-        detailVisible={detailVisible} 
-        setDetailVisible ={ setDetailVisible} />
+ 
 
         <ExtraMenu  // 더보기 모달창
         ExtraVisible={extraVisible} 
@@ -155,9 +156,14 @@ export default function HomeScreen() {
             <View>
              
         
-            {Object.values(tasks)
-       .reverse().
-       map(item=>(<Task key= {item.id} item={item} deleteTask={_deleteTask} toggleTask={_toggleTask} updateTask={_updateTask} detailVisible={detailVisible} setDetailVisible={setDetailVisible}/> ) )}
+            {Object.values(tasks).reverse().map(item=>(
+            <Task key= {item.id} 
+            item={item} 
+            deleteTask={_deleteTask} 
+            toggleTask={_toggleTask} 
+            updateTask={_updateTask} 
+
+            /> ) )}
               
             </View>
           </View>

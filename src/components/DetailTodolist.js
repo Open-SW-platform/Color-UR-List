@@ -8,7 +8,14 @@ import TodolistInput from './TodolistInput';
 import { images } from '../images';
 import ViewCalendar from './ViewCalendar';
 
-const DetailTodolist = ({detailVisible,setDetailVisible}) => {
+const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask}) => {
+
+  //삭제버튼 눌렸을때
+  const _deleteTask= ()=>{
+
+    deleteTask(item.id); //id전달
+    setDetailVisible(false);
+  }
     const [dueDate, setDueDate] = useState("");
     return (
         <Modal // Task > 클릭시 띄우는 세부사항 모달
@@ -22,12 +29,12 @@ const DetailTodolist = ({detailVisible,setDetailVisible}) => {
 
         <View style={modalStyles.modalView}>
           <View style={viewStyles.settingGroup}>
-          <Text style={textStyles.listInModal}> Category </Text>
+          <Text style={textStyles.listInModal}> {item.text} </Text>
             <IconButton type={images.check} onPressOut={() => {setDetailVisible(!detailVisible);}} />
-            <IconButton type={images.trash} onPressOut={() => alert('delete')} />
+            <IconButton type={images.trash} onPressOut={_deleteTask} />
             <IconButton type={images.cancle} onPressOut={() => {setDetailVisible(!detailVisible);}} />
           </View>
-          <TodolistInput dueDate = {dueDate}/>
+          <TodolistInput item={item} dueDate = {dueDate}/>
           <ScrollView style={{ width: '100%', marginLeft: 20, marginRight: 8}}>
             <Text style={modalStyles.modalText}>Note</Text>
             <Memo />
