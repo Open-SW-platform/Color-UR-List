@@ -70,8 +70,9 @@ const Task =({item,deleteTask,toggleTask,updateTask})=>{
         detailVisible={detailVisible} 
         setDetailVisible ={setDetailVisible}
         item= {item}
-        deleteTask={deleteTask}/>
-         
+        deleteTask={deleteTask}
+        toggleTask={toggleTask}
+        updateTask={updateTask}/>
         </Container>
 
     );

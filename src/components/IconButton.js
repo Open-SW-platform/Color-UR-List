@@ -21,10 +21,9 @@ const IconButton =  ({type,onPressOut,item})=>{
 
 
 const _onPressOut =()=>{
-   
     onPressOut(item.id);
    //onPressOut();
-   console.log('onPressOut');
+   console.log('click IconButton');
 }
 
 if(type == 15){ //todo type id 값?

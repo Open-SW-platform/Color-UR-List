@@ -8,7 +8,7 @@ import TodolistInput from './TodolistInput';
 import { images } from '../images';
 import ViewCalendar from './ViewCalendar';
 
-const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask}) => {
+const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask}) => {
 
   //삭제버튼 눌렸을때
   const _deleteTask= ()=>{
@@ -34,7 +34,7 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask}) => {
             <IconButton type={images.trash} onPressOut={_deleteTask} />
             <IconButton type={images.cancle} onPressOut={() => {setDetailVisible(!detailVisible);}} />
           </View>
-          <TodolistInput item={item} dueDate = {dueDate}/>
+          <TodolistInput item={item} dueDate = {dueDate} toggleTask={toggleTask} updateTask={updateTask}/>
           <ScrollView style={{ width: '100%', marginLeft: 20, marginRight: 8}}>
             <Text style={modalStyles.modalText}>Note</Text>
             <Memo />

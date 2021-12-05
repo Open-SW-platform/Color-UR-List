@@ -41,12 +41,11 @@ export default function HomeScreen() {
   // 투두 추가,삭제,토글,업데이트 함수
 
   const _addTask = () => {
-
     const ID = Date.now().toString();
     const newTaskObject = {
       [ID]: { id: ID, text: "", completed: false },
     };
-  
+   // text_added.current.focus(); //방금 추가한 투두리스트 컴포넌트로 포커스 이동.
     setTasks({ ...tasks, ...newTaskObject });
   };
 
@@ -60,13 +59,13 @@ export default function HomeScreen() {
  
   }
 
-  const _toggleTask =(id)=>{
+  const _toggleTask =(id)=>{ //완료/미완료
     const currentTask=Object.assign({},tasks);
    currentTask[id]['completed'] = ! currentTask[id]['completed']; 
    setTasks(currentTask);
    }
 
-   const _updateTask=(updatatedItem)=>{
+   const _updateTask=(updatatedItem)=>{ //수정
     const currentTasks=Object.assign({},tasks);
     currentTasks[updatatedItem.id]['text'] = updatatedItem.text;
     setTasks(currentTasks);
@@ -129,31 +128,22 @@ export default function HomeScreen() {
         setDeleteMode={setDeleteMode} 
         openTheme={openTheme}/>
 
-      <Goal/>
+      <Goal /*목표작성부분*//> 
      
-      <List>
+      <List /*투두리스트뷰*/> 
           <View style={viewStyles.categoryView}/** Study 카테고리*/>
             <IconButton type={images.tag} />
             <Text style={textStyles.contents}> Study </Text>
             <IconButton onPressOut={_addTask} type={images.add} />
           </View>
-          <View style={viewStyles.container}/** 투두리스트 항목 */>
-            <View>
-             
-        
             {Object.values(tasks).reverse().map(item=>(
             <Task key= {item.id} 
             item={item} 
             deleteTask={_deleteTask} 
             toggleTask={_toggleTask} 
             updateTask={_updateTask} 
-              
             /> ) )}
-            <TextInput ref={text_added}/>
-              
-            </View>
-          </View>
-
+            
           </List>
       </Container>
     </ThemeProvider>
