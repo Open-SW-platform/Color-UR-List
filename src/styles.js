@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import {theme} from './theme';
-
+import styled from 'styled-components/native';
+ 
 export const viewStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -9,7 +10,7 @@ export const viewStyles = StyleSheet.create({
     marginBottom: 40,
   },
   settingView: { //설정 하단바 스타일
-    flex: 0.5,
+    flex: 0.1,
     flexDirection: 'row',
     backgroundColor: 'red',
     alignItems: 'center',
@@ -20,8 +21,9 @@ export const viewStyles = StyleSheet.create({
     marginTop: 5
   },
   goalView: { //목표 작성 스타일
-    flex: 0.7,
+    flex: 0.15,
     borderWidth: 1,
+    width: '100%',
     padding: 3,
     margin: 5,
     borderRadius: 3,
@@ -169,4 +171,19 @@ export const modalStyles = StyleSheet.create({
   }
 
 });
+
+
+export const Container = styled.SafeAreaView`
+  flex: 1;
+  backgroundColor: ${ ({theme}) => theme.background };
+  align-items: center;
+  justify-content: flex-start;
+
+`;
+
+export const List =styled.ScrollView`
+flex : 1;
+width : 100%;
+
+`;
 

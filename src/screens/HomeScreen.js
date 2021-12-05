@@ -1,7 +1,7 @@
 //홈(메인) 화면
-import React, { useState } from 'react';
-import { StatusBar, Text, View, TextInput, ScrollView, Image } from 'react-native';
-import { viewStyles, textStyles, barStyles } from '../styles'
+import React, { useState,useRef } from 'react';
+import { StatusBar, Dimensions,Text, View, TextInput, ScrollView, Image } from 'react-native';
+import { viewStyles, textStyles, barStyles,List,Container } from '../styles'
 import { images } from '../images';
 import IconButton from '../components/IconButton';
 import Today from '../components/Today'
@@ -9,12 +9,13 @@ import ThemeSelector from '../components/ThemeSelector';
 import Input from '../components/Input';
 import Task from '../components/Task';
 import ExtraMenu from '../components/ExtraMenu';
-import {ThemeProvider} from 'styled-components/native';
+import styled,{ThemeProvider} from 'styled-components/native';
 import {theme} from '../theme';
-
+import Goal from '../components/Goal'
 
 export default function HomeScreen() {
-  
+
+  const width = Dimensions.get('window').width;
   const [addMode, setAddMode] = useState(false);
   const [newTask, setNewTask] = useState(''); // 새 투두리스트 추가 여부
   const [tasks, setTasks] = useState({
@@ -22,14 +23,17 @@ export default function HomeScreen() {
     '2': { id: '2', text: "My Todo List2", completed: false },
   });
   
-  //const [detailVisible, setDetailVisible] = useState(false); // 태스크 세부사항창을 띄우고 있는지 여부
+ 
   const [themeVisible, setThemeVisible] = useState(false); // theme 변경 창을 띄우고 있는지 여부
   const [SearchMode, setSearchMode] = useState(false); //검색모드인지 여부
   const [extraVisible, setExtraVisible] = useState(false); // 더보기창을 보이고 있는지 여부
   const [DeleteMode, setDeleteMode] = useState(false); //삭제모드인지 여부 
- 
+
+
   var TopBar;
 
+  const text_added = useRef(null); //+버튼을 눌러서 방금 추가된 투두아이템
+  
   const openTheme = () => {
     setThemeVisible(!themeVisible);
   }
@@ -38,14 +42,11 @@ export default function HomeScreen() {
 
   const _addTask = () => {
 
-    if (newTask.length<1 ){
-      return; //아무것도 입력하지 않은 상태에서 완료버튼을 누르면 추가되지 않음.
-    }  
     const ID = Date.now().toString();
     const newTaskObject = {
-      [ID]: { id: ID, text: newTask, completed: false },
+      [ID]: { id: ID, text: "", completed: false },
     };
-    setNewTask('');
+  
     setTasks({ ...tasks, ...newTaskObject });
   };
 
@@ -72,7 +73,6 @@ export default function HomeScreen() {
 
   }
 
- 
 
 // > 버튼을 누르면 선택된 투두아이템의 정보가 detailtodolist에 props로 주어짐.
 
@@ -117,14 +117,11 @@ export default function HomeScreen() {
     //ThemeProvider는 자식들에게 광역으로 자신이 가지고 있는 기본 props값을 사용할 수 있도록 해주는 역할
     <ThemeProvider theme= {theme} //theme : basic theme (기본파랑)
     > 
-    <View style={viewStyles.container}>
+    <Container>
       <StatusBar barStyle="light-content" style={barStyles.statusBar} />
       {TopBar}
-
       <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} // 테마선택창
       />
- 
-
         <ExtraMenu  // 더보기 모달창
         ExtraVisible={extraVisible} 
         setExtraVisible ={ setExtraVisible} 
@@ -132,27 +129,15 @@ export default function HomeScreen() {
         setDeleteMode={setDeleteMode} 
         openTheme={openTheme}/>
 
-
-      <View style={viewStyles.goalView}/** 목표 작성부분*/>
-        <TextInput
-          style={{ padding: 10, fontSize: 20 }}
-          placeholder="TODAY'S GOAL" />
-      </View>
-      <View style={viewStyles.todolistView}>
-        <ScrollView>
+      <Goal/>
+     
+      <List>
           <View style={viewStyles.categoryView}/** Study 카테고리*/>
             <IconButton type={images.tag} />
             <Text style={textStyles.contents}> Study </Text>
-            <IconButton type={images.add} />
+            <IconButton onPressOut={_addTask} type={images.add} />
           </View>
           <View style={viewStyles.container}/** 투두리스트 항목 */>
-            <Input placeholder="+ Add a Task" 
-              value={newTask}
-              onChangeText={text => setNewTask(text)}
-              onSubmitEditing={_addTask} 
-              placeholder = "+ Add a Task"
-              onBlur={()=>setNewTask('')}
-              />
             <View>
              
         
@@ -162,15 +147,15 @@ export default function HomeScreen() {
             deleteTask={_deleteTask} 
             toggleTask={_toggleTask} 
             updateTask={_updateTask} 
-
+              
             /> ) )}
+            <TextInput ref={text_added}/>
               
             </View>
           </View>
 
-        </ScrollView>
-      </View>
-    </View>
+          </List>
+      </Container>
     </ThemeProvider>
   );
 };
