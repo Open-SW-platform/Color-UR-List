@@ -33,7 +33,7 @@ export default function HomeScreen() {
 
   var TopBar;
 
-  const text_added = useRef(null); //+버튼을 눌러서 방금 추가된 투두아이템
+  //const text_added = useRef(null); //+버튼을 눌러서 방금 추가된 투두아이템
   const category= ["school","exercise"];
   const openTheme = () => {
     setThemeVisible(!themeVisible);
