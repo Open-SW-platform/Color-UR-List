@@ -27,7 +27,7 @@ text-decoration-line: ${({completed})=> completed?'Line-through':'none'};
 `;
 
  
-const Task =({item,deleteTask,toggleTask,updateTask})=>{
+const Task =({item,deleteTask,toggleTask,updateTask, category})=>{
 //투두리스트 아이템이 눌리면 현재 렌더링하고있는 아이템들이 아닌 input컴포넌트를 렌더링하도록함.
 // input vs 현재구성 렌더링을 결정하기 위해서는 수정상태변수 필요.
 
@@ -60,19 +60,22 @@ const Task =({item,deleteTask,toggleTask,updateTask})=>{
         onPressOut={toggleTask}
         item = {item}
         />
-         {item.completed || <IconButton onPressOut = {()=>{setIsEdting(true);} } type = {images.pencil}/>
-        // completed 값이 false여야 pencil버튼이 렌더링됨. 
-        }
+        
         <Content completed={item.completed}>{item.text}</Content>
        
+        {item.completed || <IconButton onPressOut = {()=>{setIsEdting(true);} } type = {images.pencil}/>
+        // completed 값이 false여야 pencil버튼이 렌더링됨. 
+        }
         <IconButton onPressOut={()=> { setDetailVisible(!detailVisible); }} type={images.edit} /> 
+        
         <DetailTodolist //투두리스트 세부창
         detailVisible={detailVisible} 
         setDetailVisible ={setDetailVisible}
         item= {item}
         deleteTask={deleteTask}
         toggleTask={toggleTask}
-        updateTask={updateTask}/>
+        updateTask={updateTask}
+        category={ category}/>
         </Container>
 
     );

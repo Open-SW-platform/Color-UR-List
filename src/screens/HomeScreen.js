@@ -22,6 +22,7 @@ export default function HomeScreen() {
     '1': { id: '1', text: "My Todo List1", completed: false },
     '2': { id: '2', text: "My Todo List2", completed: false },
   });
+  const [goal,setGoal]=useState('');
   
  
   const [themeVisible, setThemeVisible] = useState(false); // theme 변경 창을 띄우고 있는지 여부
@@ -33,7 +34,7 @@ export default function HomeScreen() {
   var TopBar;
 
   const text_added = useRef(null); //+버튼을 눌러서 방금 추가된 투두아이템
-  
+  const category= ["school","exercise"];
   const openTheme = () => {
     setThemeVisible(!themeVisible);
   }
@@ -128,12 +129,13 @@ export default function HomeScreen() {
         setDeleteMode={setDeleteMode} 
         openTheme={openTheme}/>
 
-      <Goal /*목표작성부분*//> 
+      <Goal value={goal} setValue={setGoal}/*목표작성부분*//> 
      
       <List /*투두리스트뷰*/> 
-          <View style={viewStyles.categoryView}/** Study 카테고리*/>
+      
+      <View style={viewStyles.categoryView}/** Study 카테고리*/>
             <IconButton type={images.tag} />
-            <Text style={textStyles.contents}> Study </Text>
+            <Text style={textStyles.contents}> {category[0]} </Text>
             <IconButton onPressOut={_addTask} type={images.add} />
           </View>
             {Object.values(tasks).reverse().map(item=>(
@@ -142,9 +144,12 @@ export default function HomeScreen() {
             deleteTask={_deleteTask} 
             toggleTask={_toggleTask} 
             updateTask={_updateTask} 
+            category={category[0]}
             /> ) )}
-            
+        
           </List>
+  
+             
       </Container>
     </ThemeProvider>
   );

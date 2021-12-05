@@ -8,7 +8,7 @@ import TodolistInput from './TodolistInput';
 import { images } from '../images';
 import ViewCalendar from './ViewCalendar';
 
-const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask}) => {
+const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask, category}) => {
 
   //삭제버튼 눌렸을때
   const _deleteTask= ()=>{
@@ -29,7 +29,7 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
 
         <View style={modalStyles.modalView}>
           <View style={viewStyles.settingGroup}>
-          <Text style={textStyles.listInModal}> {item.text} </Text>
+          <Text style={textStyles.listInModal}> {category} </Text>
             <IconButton type={images.check} onPressOut={() => {setDetailVisible(!detailVisible);}} />
             <IconButton type={images.trash} onPressOut={_deleteTask} />
             <IconButton type={images.cancle} onPressOut={() => {setDetailVisible(!detailVisible);}} />

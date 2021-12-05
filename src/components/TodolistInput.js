@@ -35,8 +35,8 @@ const TodolistInput = ({newTask, dueDate,item,toggleTask,updateTask}) => {
         />
     
         <View style={{backgroundColor:'white'}}>
-        <Input style={styles.textInput} value={text} onChangeText={text=>setText(text)} onSubmitEditing = {_onSubmit} onBlur={_onBlur} />
-
+   
+        <TextInput value={text} style={styles.textInput} onChangeText={text=>setText(text)} onSubmitEditing = {_onSubmit} onBlur={_onBlur}/> 
         <Text style={styles.textDueDate}> Due Date: {dueDate}</Text>
         </View>
         </View>

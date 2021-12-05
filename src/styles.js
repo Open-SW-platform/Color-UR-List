@@ -80,7 +80,7 @@ export const textStyles = StyleSheet.create({ //text관련 설정
   },
   listInModal:{
     flex: 1,
-    fontSize: 20,
+    fontSize: 27,
     fontWeight: 'bold',
     color: 'white',
     backgroundColor: 'blue',
