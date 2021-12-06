@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, ScrollView } from 'react-native';
 import { Container, barStyles, viewStyles } from '../styles'
 import { ThemeProvider } from 'styled-components/native';
 import { theme } from '../theme';
@@ -22,13 +22,13 @@ export default function WeekScreen() {
     const data = {
         labels: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
         datasets: [
-          {
-            data: [0, 4, 2, 8, 9, 4, 2],
-            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-            strokeWidth: 2 // optional
-          }
+            {
+                data: [0, 4, 2, 8, 9, 4, 2],
+                color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+                strokeWidth: 2 // optional
+            }
         ],
-      };
+    };
 
 
     var TopBar =
@@ -38,9 +38,8 @@ export default function WeekScreen() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container>
-                <StatusBar barStyle="light-content" style={barStyles.statusBar} />
-                {TopBar}
+            <StatusBar barStyle="light-content" style={barStyles.statusBar} />
+            {TopBar}<Container>
                 <LineChart
                     style={{ paddingTop: 20, flex: 1 }}
                     data={data}
@@ -48,8 +47,14 @@ export default function WeekScreen() {
                     height={250}
                     verticalLabelRotation={30}
                     chartConfig={chartConfig}
+                    verticalLabelRotation={0}
                     bezier
                 />
+                <Container>
+                    <ScrollView>
+
+                    </ScrollView>
+                </Container>
             </Container>
         </ThemeProvider>
     );

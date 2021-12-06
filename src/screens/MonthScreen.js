@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, ScrollView } from 'react-native';
 import { Container, barStyles, viewStyles } from '../styles'
 import { ThemeProvider } from 'styled-components/native';
 import { theme } from '../theme';
@@ -42,10 +42,9 @@ export default function MonthScreen() {
 
     return (
         <ThemeProvider theme={theme}>
+            <StatusBar barStyle="light-content" style={barStyles.statusBar} />
+            {TopBar}
             <Container>
-                <StatusBar barStyle="light-content" style={barStyles.statusBar} />
-                {TopBar}
-
                 <ContributionGraph
                     style={{ paddingTop: 20, flex: 1 }}
                     values={commitsData}
@@ -55,6 +54,11 @@ export default function MonthScreen() {
                     height={250}
                     chartConfig={chartConfig}
                 />
+                <Container>
+                    <ScrollView>
+
+                    </ScrollView>
+                </Container>
             </Container>
         </ThemeProvider>
     );
