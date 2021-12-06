@@ -9,9 +9,7 @@ import Today from '../components/Today';
 
 export default function DayScreen() {
 
-  var TopBar;
-
-  TopBar =
+  var TopBar =
   <View style={viewStyles.settingView} >
     <Today />
   </View>
