@@ -12,9 +12,11 @@ import ExtraMenu from '../components/ExtraMenu';
 import styled,{ThemeProvider} from 'styled-components/native';
 import {theme} from '../theme';
 import Goal from '../components/Goal'
+import DetailTodolist from '../components/DetailTodolist';
 
 export default function HomeScreen() {
   
+  const [goal,setGoal]=useState('');
   const [addMode, setAddMode] = useState(false);
   const [newTask, setNewTask] = useState(''); // 새 투두리스트 추가 여부
   const [tasks, setTasks] = useState({
