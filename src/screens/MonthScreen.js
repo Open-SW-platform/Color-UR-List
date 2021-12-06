@@ -6,7 +6,7 @@ import { theme } from '../theme';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { LocaleConfig } from 'react-native-calendars';
 import Today from '../components/Today';
-import {ContributionGraph} from "react-native-chart-kit";
+import { ContributionGraph } from "react-native-chart-kit";
 
 export default function MonthScreen() {
 
@@ -19,7 +19,7 @@ export default function MonthScreen() {
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
         useShadowColorFromDataset: false // optional
-      };
+    };
 
     const commitsData = [
         { date: "2017-01-02", count: 1 },
@@ -47,12 +47,12 @@ export default function MonthScreen() {
                 {TopBar}
 
                 <ContributionGraph
-                style = {{paddingTop: 20, flex: 1 }}
+                    style={{ paddingTop: 20, flex: 1 }}
                     values={commitsData}
                     endDate={new Date("2017-04-01")}
                     numDays={105}
                     width={400}
-                    height={220}
+                    height={250}
                     chartConfig={chartConfig}
                 />
             </Container>
