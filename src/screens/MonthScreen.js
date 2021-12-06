@@ -1,8 +1,36 @@
 import React from 'react';
-import {StyleSheet, Text, View,ToastAndroid} from 'react-native';
+import { View, StatusBar } from 'react-native';
+import {Container, barStyles, viewStyles} from '../styles'
+import {ThemeProvider} from 'styled-components/native';
+import {theme} from '../theme';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
+import Today from '../components/Today';
 
+export default function MonthScreen() {
+
+  var TopBar;
+
+  TopBar =
+  <View style={viewStyles.settingView} >
+    <Today />
+  </View>
+
+    return (
+      <ThemeProvider theme= {theme}>
+      <Container>
+        <StatusBar barStyle="light-content" style={barStyles.statusBar} />
+        {TopBar}
+      </Container>
+      </ThemeProvider>
+    );
+}
+
+
+
+//아래는 기존에 임시로 있던 캘린더뷰 필요시 히트맵과 합칠 수 있다면 좋을 듯
+
+/*
 LocaleConfig.locales['fr'] = {
   monthNames: ['January','February','March','April','May','June','July','August','September','October','November','December'],
   monthNamesShort: ['Jan.','Feb.','Mar.','Apr.','May','Jun.','Jul.','Aug','Sep.','Oct.','Nov.','Dec.'],
@@ -87,18 +115,8 @@ class MonthScreen extends React.Component {
         disableAllTouchEventsForDisabledDays={true}
         /** Replace default month and year title with custom one. the function receive a date as parameter. */
         //renderHeader={(date) => {/*Return JSX*/}}
-        />
+      /*  />
 </View>
         );
     }
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});
-
-export default MonthScreen;
+} */
