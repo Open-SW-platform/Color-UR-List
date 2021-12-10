@@ -15,8 +15,7 @@ import Goal from '../components/Goal'
 
 export default function HomeScreen() {
   
-  const [addMode, setAddMode] = useState(false);
-  const [newTask, setNewTask] = useState(''); // 새 투두리스트 추가 여부
+
   const [tasks, setTasks] = useState({
     '1': { id: '1', text: "My Todo List1", completed: false, category: 0},
     '2': { id: '2', text: "My Todo List2", completed: false, category: 1 },
@@ -24,7 +23,7 @@ export default function HomeScreen() {
     '4': { id: '4', text: "My Todo List4", completed: false, category: 3 },
   });
   
-  const [detailVisible, setDetailVisible] = useState(false); // 태스크 세부사항창을 띄우고 있는지 여부
+  const [goal,setGoal]=useState('');
   const [themeVisible, setThemeVisible] = useState(false); // theme 변경 창을 띄우고 있는지 여부
   const [SearchMode, setSearchMode] = useState(false); //검색모드인지 여부
   const [extraVisible, setExtraVisible] = useState(false); // 더보기창을 보이고 있는지 여부
@@ -45,7 +44,7 @@ export default function HomeScreen() {
     const newTaskObject = {
       [ID]: { id: ID, text: "", completed: false, category: num_category },
     };
-    setNewTask('');
+ 
     setTasks({ ...tasks, ...newTaskObject });
   };
 
@@ -73,7 +72,6 @@ export default function HomeScreen() {
   }
 
   const [searchTerm, setSearchTerm] = useState(""); // 검색창에 들어가는 키워드
-// > 버튼을 누르면 선택된 투두아이템의 정보가 detailtodolist에 props로 주어짐.
 
   if (SearchMode) { // 검색모드라면 -> 상단바부분을 검색창으로 변경
     TopBar = <View style={viewStyles.settingView} >
@@ -90,24 +88,7 @@ export default function HomeScreen() {
         <IconButton type={images.cancle} />
       </View>
     </View>
-    ListView =
-      <List /*투두리스트뷰*/> 
-        {Object.values(tasks).filter((item)=>{
-          if(searchTerm==""){
-            return item
-          }else if(item.text.toLowerCase().includes(searchTerm.toLowerCase())){
-            return item
-          }
-        }).reverse().map(item =>(
-        <Task key= {item.id} 
-        item={item} 
-        deleteTask={_deleteTask} 
-        toggleTask={_toggleTask} 
-        updateTask={_updateTask} 
-        category={category[0]}
-        />
-        ))}
-      </List>
+    
   }
   else if (DeleteMode){ //삭제모드라면 -> 상단바부분을 삭제부분으로 변경.
     TopBar=<View style={viewStyles.settingView} >
@@ -118,77 +99,7 @@ export default function HomeScreen() {
       <IconButton type={images.trash} />
     </View>
   </View>
-    ListView =
-    <List /*투두리스트뷰*/> 
-      <View style={viewStyles.categoryView}/** Study 카테고리*/>
-          <IconButton type={images.tag} />
-          <Text style={textStyles.contents}> {category[0]} </Text>
-          <IconButton onPressOut={()=>_addTask(0)} type={images.add} />
-      </View>
-          {Object.values(tasks).filter((item)=>{
-          if(item.category==0){
-            return item
-          }
-        }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
-          updateTask={_updateTask} 
-          category={category[0]}
-          /> ) )}
-      <View style={viewStyles.categoryView}/** Assignment 카테고리*/>
-          <IconButton type={images.tag} />
-          <Text style={textStyles.contents}> {category[1]} </Text>
-          <IconButton onPressOut={()=>_addTask(1)} type={images.add} />
-      </View>
-          {Object.values(tasks).filter((item)=>{
-          if(item.category==1){
-            return item
-          }
-        }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
-          updateTask={_updateTask} 
-          category={category[1]}
-          /> ) )}
-      <View style={viewStyles.categoryView}/** Work 카테고리*/>
-          <IconButton type={images.tag} />
-          <Text style={textStyles.contents}> {category[2]} </Text>
-          <IconButton onPressOut={()=>_addTask(2)} type={images.add} />
-      </View>
-          {Object.values(tasks).filter((item)=>{
-          if(item.category==2){
-            return item
-          }
-        }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
-          updateTask={_updateTask} 
-          category={category[2]}
-          /> ) )}
-      <View style={viewStyles.categoryView}/** Exercise 카테고리*/>
-          <IconButton type={images.tag} />
-          <Text style={textStyles.contents}> {category[3]} </Text>
-          <IconButton onPressOut={() =>_addTask(3)} type={images.add} />
-      </View>
-          {Object.values(tasks).filter((item)=>{
-          if(item.category==3){
-            return item
-          }
-        }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
-          updateTask={_updateTask} 
-          category={category[3]}
-          /> ) )}  
-    </List>
+    
   }
   else { // 둘다 아니라면 -> 일반 상단바 보여줌
     TopBar =
@@ -201,79 +112,70 @@ export default function HomeScreen() {
           <IconButton onPressOut = {()=>{setExtraVisible(!extraVisible); console.log('open extraMenu');}} type={images.dot} />
         </View>
       </View>
-    ListView =
-    <List /*투두리스트뷰*/> 
-      <View style={viewStyles.categoryView}/** Study 카테고리*/>
-          <IconButton type={images.tag} />
-          <Text style={textStyles.contents}> {category[0]} </Text>
-          <IconButton onPressOut={()=>_addTask(0)} type={images.add} />
-      </View>
-          {Object.values(tasks).filter((item)=>{
-          if(item.category==0){
-            return item
-          }
-        }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
-          updateTask={_updateTask} 
-          category={category[0]}
-          /> ) )}
-      <View style={viewStyles.categoryView}/** Assignment 카테고리*/>
-          <IconButton type={images.tag} />
-          <Text style={textStyles.contents}> {category[1]} </Text>
-          <IconButton onPressOut={()=>_addTask(1)} type={images.add} />
-      </View>
-          {Object.values(tasks).filter((item)=>{
-          if(item.category==1){
-            return item
-          }
-        }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
-          updateTask={_updateTask} 
-          category={category[1]}
-          /> ) )}
-      <View style={viewStyles.categoryView}/** Work 카테고리*/>
-          <IconButton type={images.tag} />
-          <Text style={textStyles.contents}> {category[2]} </Text>
-          <IconButton onPressOut={()=>_addTask(2)} type={images.add} />
-      </View>
-          {Object.values(tasks).filter((item)=>{
-          if(item.category==2){
-            return item
-          }
-        }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
-          updateTask={_updateTask} 
-          category={category[2]}
-          /> ) )}
-      <View style={viewStyles.categoryView}/** Exercise 카테고리*/>
-          <IconButton type={images.tag} />
-          <Text style={textStyles.contents}> {category[3]} </Text>
-          <IconButton onPressOut={() =>_addTask(3)} type={images.add} />
-      </View>
-          {Object.values(tasks).filter((item)=>{
-          if(item.category==3){
-            return item
-          }
-        }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
-          updateTask={_updateTask} 
-          category={category[3]}
-          /> ) )}  
-    </List>
+  
   }
 
+  
+  const rendering =()=>{
+
+    const result = [];
+    for (let i = 0; i < weekArr.length; i++) {
+      result.push(<span key={i}>{weekArr[i] + " / "}</span>);
+    }
+    return result;
+  }
+
+  //서치뷰
+  var SearchView =<List> 
+  {Object.values(tasks).filter((item)=>{
+    if(searchTerm==""){
+      return item
+    }else if(item.text.toLowerCase().includes(searchTerm.toLowerCase())){
+      return item
+    }
+  }).reverse().map(item =>(
+  <Task key= {item.id} 
+  item={item} 
+  deleteTask={_deleteTask} 
+  toggleTask={_toggleTask} 
+  updateTask={_updateTask} 
+  category={category[0]}
+  />
+  ))}
+</List>
+
+//일반 투두리스트 뷰
+var ListView = <List /**/> 
+ {category.map((category,index)=>{  
+   return(
+     <>
+      <View style={viewStyles.categoryView}/** Study 카테고리*/>
+          <IconButton type={images.tag} />
+          <Text style={textStyles.contents}> {category} </Text>
+          <IconButton onPressOut={()=>_addTask(index)} type={images.add} />
+      </View> 
+      {Object.values(tasks).filter((item)=>{
+          if(item.category==index){
+            return item
+          }
+        }).reverse().map(item=>(
+          <Task key= {item.id} 
+          item={item} 
+          deleteTask={_deleteTask} 
+          toggleTask={_toggleTask} 
+          updateTask={_updateTask} 
+          category={category}
+          /> ) )}
+      </>
+   );
+      
+ })}
+ </List> 
+
+
+
+
+ 
   return (
     //ThemeProvider는 자식들에게 광역으로 자신이 가지고 있는 기본 props값을 사용할 수 있도록 해주는 역할
     <ThemeProvider theme= {theme} //theme : basic theme (기본파랑)
@@ -283,9 +185,6 @@ export default function HomeScreen() {
       {TopBar}
       <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} // 테마선택창
       />
-      <DetailTodolist
-        detailVisible={detailVisible} 
-        setDetailVisible ={ setDetailVisible} />
 
         <ExtraMenu  // 더보기 모달창
         ExtraVisible={extraVisible} 
@@ -295,7 +194,8 @@ export default function HomeScreen() {
         openTheme={openTheme}/>
 
       <Goal value={goal} setValue={setGoal}/*목표작성부분*//>
-      {ListView}   
+
+        {SearchMode?SearchView:ListView/*서치모드이면 서치리스트뷰, 아니라면 일반 리스트 뷰를 보여줌*/}
       </View>
     </ThemeProvider>
   );
