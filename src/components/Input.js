@@ -24,7 +24,7 @@ const Input = ({placeholder,value,onChangeText,onSubmitEditing,onBlur})=>{
     const width = useWindowDimensions().width;
     return <StyledInput width={width} 
     placeholder={placeholder} 
-    maxLength={50}
+    maxLength={25}
     autoCapitalize="none"
     autoCorrect={false}
     returnKeyType="done"
