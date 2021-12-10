@@ -168,8 +168,7 @@ export const modalStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'yellow',
     width: '100%',
-  }
-
+  },
 });
 
 
