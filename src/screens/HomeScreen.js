@@ -85,10 +85,16 @@ export default function HomeScreen() {
     const currentTasks = Object.assign({}, tasks);
 
     for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
-            currentTasks[id]['completed'] = false; //완료여부를 true로 설정
-        
+            currentTasks[id]['completed'] = false; //완료여부를 false로 설정
     }
    setTasks(currentTasks);
+  }
+
+ 
+  const _updateCategory=(category_index,name)=>{ //index번째 카테고리를 name으로 바꿈
+    const currentCategory = category;
+    currentCategory[category_index]=name;
+    setTasks(currentCategory);
   }
 
   const [searchTerm, setSearchTerm] = useState(""); // 검색창에 들어가는 키워드
@@ -155,23 +161,12 @@ export default function HomeScreen() {
   ))}
 </List>
 
-var visible;
-if(visibleMode == 'Completed'){
-visible=true;
-}
-else if (visibleMode =='Uncompleted'){
-  visible=false;
-}
-else{ //View all 
-
-}
-
 //일반 투두리스트 뷰 -> 2중 맵 활용 간소화.
 var ListView = <List /**/> 
  {category.map((category,index)=>{  
    return(
      <>
-      <View style={viewStyles.categoryView}/** Study 카테고리*/>
+      <View style={viewStyles.categoryView}/** 일반 카테고리*/>
           <IconButton type={images.tag} />
           <Text style={textStyles.contents}> {category} </Text>
           <IconButton onPressOut={()=>_addTask(index)} type={images.add} />
@@ -198,16 +193,11 @@ var ListView = <List /**/>
       
  })}
  </List> 
-
-
-
-
- 
   return (
     //ThemeProvider는 자식들에게 광역으로 자신이 가지고 있는 기본 props값을 사용할 수 있도록 해주는 역할
     <ThemeProvider theme= {theme} //theme : basic theme (기본파랑)
     > 
-    <View style={viewStyles.container}>
+    <Container>
       <StatusBar barStyle="light-content" style={barStyles.statusBar} />
       {TopBar}
       <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} // 테마선택창
@@ -226,7 +216,7 @@ var ListView = <List /**/>
       <Goal value={goal} setValue={setGoal}/*목표작성부분*//>
 
         {SearchMode?SearchView:ListView/*서치모드이면 서치리스트뷰, 아니라면 일반 리스트 뷰를 보여줌*/}
-      </View>
+        </Container>
     </ThemeProvider>
   );
 };
