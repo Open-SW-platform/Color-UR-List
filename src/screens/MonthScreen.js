@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar, ScrollView } from 'react-native';
+import { Text, View, StatusBar, ScrollView } from 'react-native';
 import { Container, barStyles, viewStyles } from '../styles'
 import { ThemeProvider } from 'styled-components/native';
 import { theme } from '../theme';
@@ -7,6 +7,7 @@ import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { LocaleConfig } from 'react-native-calendars';
 import Today from '../components/Today';
 import { ContributionGraph } from "react-native-chart-kit";
+import * as Progress from 'react-native-progress';
 
 export default function MonthScreen() {
 
@@ -34,6 +35,15 @@ export default function MonthScreen() {
         { date: "2017-03-05", count: 2 },
         { date: "2017-02-30", count: 4 }
     ];
+    
+      var studyProgress = 1;
+      var studyProgressPercentage = 100;
+      var workProgress = 0.5;
+      var workProgressPercentage = 40;
+      var exerciseProgress = 0.5;
+      var exerciseProgressPercentage = 40;
+      var assignmentProgress = 0.5;
+      var assignmentProgressPercentage = 40;
 
     var TopBar =
         <View style={viewStyles.settingView} >
@@ -55,8 +65,30 @@ export default function MonthScreen() {
                     chartConfig={chartConfig}
                 />
                 <Container>
-                    <ScrollView>
+                <ScrollView width={350}>
+                        <Text style={{ fontSize: 20, paddingLeft: 10, color: 'white' }}>Study</Text>
+                        <View style={{ flexDirection: 'row' }} >
+                            <Progress.Bar progress={studyProgress} width={270} height={10} style={{ margin: 10 }} />
+                            <Text style={{ fontSize: 20, margin: 5, color: 'white' }}> {studyProgressPercentage}% </Text>
+                        </View>
 
+                        <Text style={{ fontSize: 20, paddingLeft: 10, paddingTop: 10, color: 'white' }}>Work</Text>
+                        <View style={{ flexDirection: 'row' }} >
+                            <Progress.Bar progress={workProgress} width={270} height={10} style={{ margin: 10 }} />
+                            <Text style={{ fontSize: 20, margin: 5, color: 'white' }}> {workProgressPercentage}% </Text>
+                        </View>
+
+                        <Text style={{ fontSize: 20, paddingLeft: 10, paddingTop: 10, color: 'white' }}>Exercise</Text>
+                        <View style={{ flexDirection: 'row' }} >
+                            <Progress.Bar progress={exerciseProgress} width={270} height={10} style={{ margin: 10 }} />
+                            <Text style={{ fontSize: 20, margin: 5, color: 'white' }}> {exerciseProgressPercentage}% </Text>
+                        </View>
+
+                        <Text style={{ fontSize: 20, paddingLeft: 10, paddingTop: 10, color: 'white' }}>Assignment</Text>
+                        <View style={{ flexDirection: 'row' }} >
+                            <Progress.Bar progress={assignmentProgress} width={270} height={10} style={{ margin: 10 }} />
+                            <Text style={{ fontSize: 20, margin: 5, color: 'white' }}> {assignmentProgressPercentage}% </Text>
+                        </View>
                     </ScrollView>
                 </Container>
             </Container>
