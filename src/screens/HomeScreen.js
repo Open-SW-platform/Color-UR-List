@@ -32,7 +32,7 @@ export default function HomeScreen() {
   var TopBar, ListView;
 
   //const text_added = useRef(null); //+버튼을 눌러서 방금 추가된 투두아이템
-  const category= ["Study","Assignment","Work","Exercise"];
+  const [category,setCategory]= useState(["Study","Assignment","Work","Exercise"]);
   const openTheme = () => {
     setThemeVisible(!themeVisible);
   }
@@ -69,6 +69,25 @@ export default function HomeScreen() {
     currentTasks[updatatedItem.id]['text'] = updatatedItem.text;
     setTasks(currentTasks);
 
+  }
+  const _selectAll = () => {
+    const currentTasks = Object.assign({}, tasks);
+
+    for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
+            currentTasks[id]['completed'] = true; //완료여부를 true로 설정
+        
+    }
+   setTasks(currentTasks);
+  }
+
+  const _deselectAll = () => {
+    const currentTasks = Object.assign({}, tasks);
+
+    for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
+            currentTasks[id]['completed'] = false; //완료여부를 true로 설정
+        
+    }
+   setTasks(currentTasks);
   }
 
   const [searchTerm, setSearchTerm] = useState(""); // 검색창에 들어가는 키워드
@@ -115,15 +134,6 @@ export default function HomeScreen() {
   
   }
 
-  
-  const rendering =()=>{
-
-    const result = [];
-    for (let i = 0; i < weekArr.length; i++) {
-      result.push(<span key={i}>{weekArr[i] + " / "}</span>);
-    }
-    return result;
-  }
 
   //서치뷰
   var SearchView =<List> 
@@ -139,7 +149,7 @@ export default function HomeScreen() {
   deleteTask={_deleteTask} 
   toggleTask={_toggleTask} 
   updateTask={_updateTask} 
-  category={category[0]}
+  category={category[item.category]}
   />
   ))}
 </List>
@@ -191,7 +201,9 @@ var ListView = <List /**/>
         setExtraVisible ={ setExtraVisible} 
         DeleteMode={DeleteMode} 
         setDeleteMode={setDeleteMode} 
-        openTheme={openTheme}/>
+        openTheme={openTheme}
+        selectAll={_selectAll}
+        deselectAll={_deselectAll}/>
 
       <Goal value={goal} setValue={setGoal}/*목표작성부분*//>
 

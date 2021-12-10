@@ -14,7 +14,7 @@ margin-left : 63%;
 `;
 
 
-const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTheme}) => {
+const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTheme,selectAll,deselectAll}) => {
  
   return (
     <Modal 
@@ -37,10 +37,20 @@ const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTh
     </TouchableOpacity>
 </View>
 
-
+<View style={textStyles.menu}>
+    <TouchableOpacity onPressOut={() => { console.log('View Completed'); }  }>
+    <Text style={textStyles.moremenu}>View Completed </Text>
+    </TouchableOpacity>
+</View>
 
 <View style={textStyles.menu}>
-    <TouchableOpacity onPressOut={() =>{ console.log('select All'); }}>
+    <TouchableOpacity onPressOut={() => { console.log('View All'); }  }>
+    <Text style={textStyles.moremenu}> View All </Text>
+    </TouchableOpacity>
+</View>
+
+<View style={textStyles.menu}>
+    <TouchableOpacity onPressOut={() =>{ selectAll(); }}>
     <Text style={textStyles.moremenu}> Select All </Text>
     </TouchableOpacity>
 </View>
@@ -48,7 +58,7 @@ const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTh
 
 
 <View style={textStyles.menu}>
-    <TouchableOpacity onPressOut={() => { console.log('Deselect All'); }}>
+    <TouchableOpacity onPressOut={() => { deselectAll();}}>
     <Text style={textStyles.moremenu}> Deselect All </Text>
     </TouchableOpacity>
 </View>
