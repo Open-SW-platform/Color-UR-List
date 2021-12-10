@@ -20,12 +20,13 @@ export default function DayScreen() {
     useShadowColorFromDataset: false // optional
   };
 
+  var data = 0.7 // 이 부분은 전체 링
   var progressChartData = {
-    data: [0.6]
+    data: [data]
   };
 
-  var studyProgress = 1;
-  var studyProgressPercentage = 100;
+  var studyProgress = 1; // 이 부분은 study progress bar
+  var studyProgressPercentage = 100; // 이 부분은 study progress bar 옆의 % text
   var workProgress = 0.5;
   var workProgressPercentage = 40;
   var exerciseProgress = 0.5;
