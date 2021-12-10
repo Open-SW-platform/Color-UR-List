@@ -1,4 +1,5 @@
 import PropTyeps from 'prop-types';
+import {TouchableOpacity} from 'react-native';
 import React,{useState} from 'react';
 import styled from  'styled-components/native';
 import IconButton from './IconButton';
@@ -22,11 +23,9 @@ flex : 1 ;
 font-size : 24px;
 color : ${({theme,completed}) => completed?theme.done:theme.text};
 text-decoration-line: ${({completed})=> completed?'Line-through':'none'};
-//완료여부에 따라 줄이 그어짐
 
 `;
 
- 
 const Task =({item,deleteTask,toggleTask,updateTask, category})=>{
 //투두리스트 아이템이 눌리면 현재 렌더링하고있는 아이템들이 아닌 input컴포넌트를 렌더링하도록함.
 // input vs 현재구성 렌더링을 결정하기 위해서는 수정상태변수 필요.
@@ -61,11 +60,10 @@ const Task =({item,deleteTask,toggleTask,updateTask, category})=>{
         item = {item}
         />
         
+        <TouchableOpacity style={{flex:1, }} onPress={()=>{setIsEdting(true);}}>
         <Content completed={item.completed}>{item.text}</Content>
-       
-        {item.completed || <IconButton onPressOut = {()=>{setIsEdting(true);} } type = {images.pencil}/>
-        // completed 값이 false여야 pencil버튼이 렌더링됨. 
-        }
+        </TouchableOpacity>
+        
         <IconButton onPressOut={()=> { setDetailVisible(!detailVisible); }} type={images.edit} /> 
         
         <DetailTodolist //투두리스트 세부창
