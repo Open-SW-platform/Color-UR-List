@@ -23,13 +23,14 @@ export default function HomeScreen() {
     '4': { id: '4', text: "My Todo List4", completed: false, category: 3 },
   });
   
+  const [visibleMode,setVisibleMode]=useState('ViewAll'); // ViewAll/Uncompleted/Completed
   const [goal,setGoal]=useState('');
   const [themeVisible, setThemeVisible] = useState(false); // theme 변경 창을 띄우고 있는지 여부
   const [SearchMode, setSearchMode] = useState(false); //검색모드인지 여부
   const [extraVisible, setExtraVisible] = useState(false); // 더보기창을 보이고 있는지 여부
   const [DeleteMode, setDeleteMode] = useState(false); //삭제모드인지 여부 
 
-  var TopBar, ListView;
+  var TopBar;
 
   //const text_added = useRef(null); //+버튼을 눌러서 방금 추가된 투두아이템
   const [category,setCategory]= useState(["Study","Assignment","Work","Exercise"]);
@@ -154,7 +155,18 @@ export default function HomeScreen() {
   ))}
 </List>
 
-//일반 투두리스트 뷰
+var visible;
+if(visibleMode == 'Completed'){
+visible=true;
+}
+else if (visibleMode =='Uncompleted'){
+  visible=false;
+}
+else{ //View all 
+
+}
+
+//일반 투두리스트 뷰 -> 2중 맵 활용 간소화.
 var ListView = <List /**/> 
  {category.map((category,index)=>{  
    return(
@@ -164,10 +176,15 @@ var ListView = <List /**/>
           <Text style={textStyles.contents}> {category} </Text>
           <IconButton onPressOut={()=>_addTask(index)} type={images.add} />
       </View> 
-      {Object.values(tasks).filter((item)=>{
-          if(item.category==index){
+      {Object.values(tasks).filter((item)=>{ // ViewMode 구현
+          if(visibleMode =='ViewAll'&&item.category==index)
             return item
-          }
+          else if(visibleMode =='Uncompleted'&&item.category==index && item.completed==false)
+          return item
+          else if (visibleMode=='Completed'&& item.category==index && item.completed==true)
+          return item
+          else return null; 
+
         }).reverse().map(item=>(
           <Task key= {item.id} 
           item={item} 
@@ -203,7 +220,8 @@ var ListView = <List /**/>
         setDeleteMode={setDeleteMode} 
         openTheme={openTheme}
         selectAll={_selectAll}
-        deselectAll={_deselectAll}/>
+        deselectAll={_deselectAll}
+        setVisibleMode={setVisibleMode}/>
 
       <Goal value={goal} setValue={setGoal}/*목표작성부분*//>
 

@@ -14,7 +14,7 @@ margin-left : 63%;
 `;
 
 
-const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTheme,selectAll,deselectAll}) => {
+const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTheme,selectAll,deselectAll,setVisibleMode}) => {
  
   return (
     <Modal 
@@ -32,19 +32,19 @@ const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTh
 
 
 <View style={textStyles.menu}>
-    <TouchableOpacity onPressOut={() => { console.log('View Uncompleted'); }  }>
+    <TouchableOpacity onPressOut={() => { setVisibleMode('Uncompleted'); }  }>
     <Text style={textStyles.moremenu}> View Uncompleted </Text>
     </TouchableOpacity>
 </View>
 
 <View style={textStyles.menu}>
-    <TouchableOpacity onPressOut={() => { console.log('View Completed'); }  }>
-    <Text style={textStyles.moremenu}>View Completed </Text>
+    <TouchableOpacity onPressOut={() => { setVisibleMode('Completed'); }  }>
+    <Text style={textStyles.moremenu}> View Completed </Text>
     </TouchableOpacity>
 </View>
 
 <View style={textStyles.menu}>
-    <TouchableOpacity onPressOut={() => { console.log('View All'); }  }>
+    <TouchableOpacity onPressOut={() => { setVisibleMode('ViewAll'); }  }>
     <Text style={textStyles.moremenu}> View All </Text>
     </TouchableOpacity>
 </View>
