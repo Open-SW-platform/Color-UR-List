@@ -126,7 +126,6 @@ export default function HomeScreen() {
         <IconButton type={images.trash} />
       </View>
     </View>
-  </View>
 
   }
   else { // 둘다 아니라면 -> 일반 상단바 보여줌
