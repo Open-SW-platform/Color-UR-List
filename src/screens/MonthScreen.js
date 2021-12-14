@@ -1,8 +1,106 @@
 import React from 'react';
-import {StyleSheet, Text, View,ToastAndroid} from 'react-native';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import {LocaleConfig} from 'react-native-calendars';
+import { Text, View, StatusBar, ScrollView } from 'react-native';
+import { Container, barStyles, viewStyles } from '../styles'
+import { ThemeProvider } from 'styled-components/native';
+import { theme } from '../theme';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { LocaleConfig } from 'react-native-calendars';
+import Today from '../components/Today';
+import { ContributionGraph } from "react-native-chart-kit";
+import * as Progress from 'react-native-progress';
 
+export default function MonthScreen() {
+
+    const chartConfig = {
+        backgroundGradientFrom: "#1E2923",
+        backgroundGradientFromOpacity: 0,
+        backgroundGradientTo: "#08130D",
+        backgroundGradientToOpacity: 0.5,
+        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+        strokeWidth: 2, // optional, default 3
+        barPercentage: 0.5,
+        useShadowColorFromDataset: false // optional
+    };
+
+    const commitsData = [
+        { date: "2017-01-02", count: 1 },
+        { date: "2017-01-03", count: 2 },
+        { date: "2017-01-04", count: 3 },
+        { date: "2017-01-05", count: 4 },
+        { date: "2017-01-06", count: 5 },
+        { date: "2017-01-30", count: 2 },
+        { date: "2017-01-31", count: 3 },
+        { date: "2017-03-01", count: 2 },
+        { date: "2017-04-02", count: 4 },
+        { date: "2017-03-05", count: 2 },
+        { date: "2017-02-30", count: 4 }
+    ];
+    
+      var studyProgress = 1;
+      var studyProgressPercentage = 100;
+      var workProgress = 0.5;
+      var workProgressPercentage = 40;
+      var exerciseProgress = 0.5;
+      var exerciseProgressPercentage = 40;
+      var assignmentProgress = 0.5;
+      var assignmentProgressPercentage = 40;
+
+    var TopBar =
+        <View style={viewStyles.settingView} >
+            <Today />
+        </View>
+
+    return (
+        <ThemeProvider theme={theme}>
+            <StatusBar barStyle="light-content" style={barStyles.statusBar} />
+            {TopBar}
+            <Container>
+                <ContributionGraph
+                    style={{ paddingTop: 20, flex: 1 }}
+                    values={commitsData}
+                    endDate={new Date("2017-04-01")}
+                    numDays={105}
+                    width={400}
+                    height={250}
+                    chartConfig={chartConfig}
+                />
+                <Container>
+                <ScrollView width={350}>
+                        <Text style={{ fontSize: 20, paddingLeft: 10, color: 'white' }}>Study</Text>
+                        <View style={{ flexDirection: 'row' }} >
+                            <Progress.Bar progress={studyProgress} width={270} height={10} style={{ margin: 10 }} />
+                            <Text style={{ fontSize: 20, margin: 5, color: 'white' }}> {studyProgressPercentage}% </Text>
+                        </View>
+
+                        <Text style={{ fontSize: 20, paddingLeft: 10, paddingTop: 10, color: 'white' }}>Work</Text>
+                        <View style={{ flexDirection: 'row' }} >
+                            <Progress.Bar progress={workProgress} width={270} height={10} style={{ margin: 10 }} />
+                            <Text style={{ fontSize: 20, margin: 5, color: 'white' }}> {workProgressPercentage}% </Text>
+                        </View>
+
+                        <Text style={{ fontSize: 20, paddingLeft: 10, paddingTop: 10, color: 'white' }}>Exercise</Text>
+                        <View style={{ flexDirection: 'row' }} >
+                            <Progress.Bar progress={exerciseProgress} width={270} height={10} style={{ margin: 10 }} />
+                            <Text style={{ fontSize: 20, margin: 5, color: 'white' }}> {exerciseProgressPercentage}% </Text>
+                        </View>
+
+                        <Text style={{ fontSize: 20, paddingLeft: 10, paddingTop: 10, color: 'white' }}>Assignment</Text>
+                        <View style={{ flexDirection: 'row' }} >
+                            <Progress.Bar progress={assignmentProgress} width={270} height={10} style={{ margin: 10 }} />
+                            <Text style={{ fontSize: 20, margin: 5, color: 'white' }}> {assignmentProgressPercentage}% </Text>
+                        </View>
+                    </ScrollView>
+                </Container>
+            </Container>
+        </ThemeProvider>
+    );
+}
+
+
+
+//아래는 기존에 임시로 있던 캘린더뷰 필요시 히트맵과 합칠 수 있다면 좋을 듯
+
+/*
 LocaleConfig.locales['fr'] = {
   monthNames: ['January','February','March','April','May','June','July','August','September','October','November','December'],
   monthNamesShort: ['Jan.','Feb.','Mar.','Apr.','May','Jun.','Jul.','Aug','Sep.','Oct.','Nov.','Dec.'],
@@ -31,7 +129,7 @@ class MonthScreen extends React.Component {
   scrollEnabled={true}
   // Enable or disable vertical scroll indicator. Default = false
   showScrollIndicator={true}
-  
+
 />
                 <Calendar
         // Initially visible month. Default = Date()
@@ -47,7 +145,7 @@ class MonthScreen extends React.Component {
               day.dateString,
               ToastAndroid.SHORT,
               ToastAndroid.CENTER
-            );   
+            );
         }}
         // Handler which gets executed on day long press. Default = undefined
         onDayLongPress={(day) => {console.log('selected day', day)}}
@@ -87,18 +185,8 @@ class MonthScreen extends React.Component {
         disableAllTouchEventsForDisabledDays={true}
         /** Replace default month and year title with custom one. the function receive a date as parameter. */
         //renderHeader={(date) => {/*Return JSX*/}}
-        />
+/*  />
 </View>
-        );
-    }
+  );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});
-
-export default MonthScreen;
+} */

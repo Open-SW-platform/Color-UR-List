@@ -1,7 +1,7 @@
 //홈(메인) 화면
-import React, { useState,useRef } from 'react';
-import { StatusBar, Dimensions,Text, View, TextInput, ScrollView, Image } from 'react-native';
-import { viewStyles, textStyles, barStyles,List,Container } from '../styles'
+import React, { useState, useRef } from 'react';
+import { StatusBar, Dimensions, Text, View, TextInput, ScrollView, Image } from 'react-native';
+import { viewStyles, textStyles, barStyles, List, Container } from '../styles'
 import { images } from '../images';
 import IconButton from '../components/IconButton';
 import Today from '../components/Today'
@@ -9,20 +9,20 @@ import ThemeSelector from '../components/ThemeSelector';
 import Input from '../components/Input';
 import Task from '../components/Task';
 import ExtraMenu from '../components/ExtraMenu';
-import styled,{ThemeProvider} from 'styled-components/native';
-import {theme} from '../theme';
+import styled, { ThemeProvider } from 'styled-components/native';
+import { theme } from '../theme';
 import Goal from '../components/Goal'
+import DetailTodolist from '../components/DetailTodolist';
 
 export default function HomeScreen() {
-  
 
   const [tasks, setTasks] = useState({
-    '1': { id: '1', text: "My Todo List1", completed: false, category: 0},
+    '1': { id: '1', text: "My Todo List1", completed: false, category: 0 },
     '2': { id: '2', text: "My Todo List2", completed: false, category: 1 },
     '3': { id: '3', text: "My Todo List3", completed: false, category: 2 },
     '4': { id: '4', text: "My Todo List4", completed: false, category: 3 },
   });
-  
+
   const [visibleMode,setVisibleMode]=useState('ViewAll'); // ViewAll/Uncompleted/Completed
   const [goal,setGoal]=useState('');
   const [themeVisible, setThemeVisible] = useState(false); // theme 변경 창을 띄우고 있는지 여부
@@ -37,7 +37,7 @@ export default function HomeScreen() {
   const openTheme = () => {
     setThemeVisible(!themeVisible);
   }
-  
+
   // 투두 추가,삭제,토글,업데이트 함수
 
   const _addTask = (num_category) => {
@@ -49,24 +49,24 @@ export default function HomeScreen() {
     setTasks({ ...tasks, ...newTaskObject });
   };
 
-  const _deleteTask =(id)=>{ //id : 삭제할 task의 id값
+  const _deleteTask = (id) => { //id : 삭제할 task의 id값
 
-    const currentTasks=Object.assign({},tasks);  //현재todolist정보 킵
+    const currentTasks = Object.assign({}, tasks);  //현재todolist정보 킵
 
     //delete 연산자는 객체의 속성을 제거
     delete currentTasks[id]; //특정 id값을 가진 todoitem삭제.
     setTasks(currentTasks); // {...currentTasks} 가 아님. 이미 열거 가능한 항목으로 나열되어있음.
- 
+
   }
 
-  const _toggleTask =(id)=>{ //완료/미완료
-    const currentTask=Object.assign({},tasks);
-   currentTask[id]['completed'] = ! currentTask[id]['completed']; 
-   setTasks(currentTask);
-   }
+  const _toggleTask = (id) => { //완료/미완료
+    const currentTask = Object.assign({}, tasks);
+    currentTask[id]['completed'] = !currentTask[id]['completed'];
+    setTasks(currentTask);
+  }
 
-   const _updateTask=(updatatedItem)=>{ //수정
-    const currentTasks=Object.assign({},tasks);
+  const _updateTask = (updatatedItem) => { //수정
+    const currentTasks = Object.assign({}, tasks);
     currentTasks[updatatedItem.id]['text'] = updatatedItem.text;
     setTasks(currentTasks);
 
@@ -98,6 +98,8 @@ export default function HomeScreen() {
   }
 
   const [searchTerm, setSearchTerm] = useState(""); // 검색창에 들어가는 키워드
+ 
+  // > 버튼을 누르면 선택된 투두아이템의 정보가 detailtodolist에 props로 주어짐.
 
   if (SearchMode) { // 검색모드라면 -> 상단바부분을 검색창으로 변경
     TopBar = <View style={viewStyles.settingView} >
@@ -105,37 +107,37 @@ export default function HomeScreen() {
       <View style={viewStyles.SearchBar}>
         <IconButton type={images.search} />
         <TextInput
-          type = "text"
+          type="text"
           style={{ width: '75%', paddingLeft: 10, paddingRight: 10, fontSize: 20 }}
           onChangeText={(e) => {
-          setSearchTerm(e);
-        }}
+            setSearchTerm(e);
+          }}
           placeholder="Searching for ..." />
         <IconButton type={images.cancle} />
       </View>
     </View>
-    
   }
-  else if (DeleteMode){ //삭제모드라면 -> 상단바부분을 삭제부분으로 변경.
-    TopBar=<View style={viewStyles.settingView} >
-    <IconButton type={images.back}  onPressOut={() => setDeleteMode(!DeleteMode)}/>
-    <Text style={{flex:1, fontSize: 20}}>  Delete </Text>
-    <View style={viewStyles.settingGroup}>
-      <IconButton type={images.unchecked} />
-      <IconButton type={images.trash} />
+  else if (DeleteMode) { //삭제모드라면 -> 상단바부분을 삭제부분으로 변경.
+    TopBar = <View style={viewStyles.settingView} >
+      <IconButton type={images.back} onPressOut={() => setDeleteMode(!DeleteMode)} />
+      <Text style={{ flex: 1, fontSize: 20 }}>  Delete </Text>
+      <View style={viewStyles.settingGroup}>
+        <IconButton type={images.unchecked} />
+        <IconButton type={images.trash} />
+      </View>
     </View>
   </View>
-    
+
   }
   else { // 둘다 아니라면 -> 일반 상단바 보여줌
     TopBar =
       <View style={viewStyles.settingView} >
-        <IconButton type={images.todo} onPressOut={openTheme}/>
+        <IconButton type={images.todo} onPressOut={openTheme} />
         <Today />
         <View style={viewStyles.settingGroup}>
-        
+
           <IconButton type={images.search} onPressOut={() => setSearchMode(!SearchMode)} />
-          <IconButton onPressOut = {()=>{setExtraVisible(!extraVisible); console.log('open extraMenu');}} type={images.dot} />
+          <IconButton onPressOut={() => { setExtraVisible(!extraVisible); console.log('open extraMenu'); }} type={images.dot} />
         </View>
       </View>
   
