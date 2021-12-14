@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import {theme} from './theme';
 import styled from 'styled-components/native';
- 
+
 export const viewStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -29,7 +29,7 @@ export const viewStyles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: 'green',
   },
-  
+
   todolistView: { //투두리스트 전체 스타일
     margin: 5,
     flex: 5,
@@ -95,12 +95,12 @@ export const textStyles = StyleSheet.create({ //text관련 설정
     color: 'black',
   },
   moremenu: {
-    fontSize: 20,
+    fontSize: 21,
     alignItems: 'flex-start',
-    marginTop: 0,
+    marginTop: 3,
     marginLeft: 0,
     color: 'black',
-  
+
   },
 });
 
