@@ -8,27 +8,29 @@ import Today from '../components/Today'
 import ThemeSelector from '../components/ThemeSelector';
 import Input from '../components/Input';
 import Task from '../components/Task';
+import Delete from '../components/Delete';
 import ExtraMenu from '../components/ExtraMenu';
 import styled,{ThemeProvider} from 'styled-components/native';
 import {theme} from '../theme';
 import Goal from '../components/Goal'
 
 export default function HomeScreen() {
-  
+
 
   const [tasks, setTasks] = useState({
-    '1': { id: '1', text: "My Todo List1", completed: false, category: 0},
-    '2': { id: '2', text: "My Todo List2", completed: false, category: 1 },
-    '3': { id: '3', text: "My Todo List3", completed: false, category: 2 },
-    '4': { id: '4', text: "My Todo List4", completed: false, category: 3 },
+    '1': { id: '1', text: "My Todo List1", completed: false, category: 0, selected :false },
+    '2': { id: '2', text: "My Todo List2", completed: false, category: 1, selected :false  },
+    '3': { id: '3', text: "My Todo List3", completed: false, category: 2, selected :false  },
+    '4': { id: '4', text: "My Todo List4", completed: false, category: 3, selected :false  },
   });
-  
+
   const [visibleMode,setVisibleMode]=useState('ViewAll'); // ViewAll/Uncompleted/Completed
   const [goal,setGoal]=useState('');
   const [themeVisible, setThemeVisible] = useState(false); // theme 변경 창을 띄우고 있는지 여부
   const [SearchMode, setSearchMode] = useState(false); //검색모드인지 여부
   const [extraVisible, setExtraVisible] = useState(false); // 더보기창을 보이고 있는지 여부
-  const [DeleteMode, setDeleteMode] = useState(false); //삭제모드인지 여부 
+  const [DeleteMode, setDeleteMode] = useState(false); //삭제모드인지 여부
+  let check = false;
 
   var TopBar;
 
@@ -37,15 +39,15 @@ export default function HomeScreen() {
   const openTheme = () => {
     setThemeVisible(!themeVisible);
   }
-  
+
   // 투두 추가,삭제,토글,업데이트 함수
 
   const _addTask = (num_category) => {
     const ID = Date.now().toString();
     const newTaskObject = {
-      [ID]: { id: ID, text: "", completed: false, category: num_category },
+      [ID]: { id: ID, text: "", completed: false, category: num_category, selected :false },
     };
- 
+
     setTasks({ ...tasks, ...newTaskObject });
   };
 
@@ -56,12 +58,12 @@ export default function HomeScreen() {
     //delete 연산자는 객체의 속성을 제거
     delete currentTasks[id]; //특정 id값을 가진 todoitem삭제.
     setTasks(currentTasks); // {...currentTasks} 가 아님. 이미 열거 가능한 항목으로 나열되어있음.
- 
+
   }
 
   const _toggleTask =(id)=>{ //완료/미완료
     const currentTask=Object.assign({},tasks);
-   currentTask[id]['completed'] = ! currentTask[id]['completed']; 
+   currentTask[id]['completed'] = ! currentTask[id]['completed'];
    setTasks(currentTask);
    }
 
@@ -76,9 +78,42 @@ export default function HomeScreen() {
 
     for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
             currentTasks[id]['completed'] = true; //완료여부를 true로 설정
-        
+
     }
    setTasks(currentTasks);
+  }
+
+  const _selectToDelete = () => {
+    const currentTask=Object.assign({},tasks);
+
+    currentTask[id]['selected'] = ! currentTask[id]['selected'];
+    setTasks(currentTask);
+  }
+
+  const _selectAllToDelete = () => {
+    const currentTasks = Object.assign({}, tasks);
+
+    if(!check){
+      for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
+        currentTasks[id]['selected'] = true; //완료여부를 true로 설정
+      }
+    }
+    else {
+      for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
+        currentTasks[id]['selected'] = false; //완료여부를 true로 설정
+      }
+    }
+    check = !check
+    setTasks(currentTasks);
+  }
+  const _delete = () => {
+    const currentTasks = Object.assign({}, tasks);
+    for(const id in currentTasks){
+      if(currentTasks[id]['selected'] = true){
+        delete currentTasks[id];
+      }
+    }
+    setTasks(currentTasks);
   }
 
   const _deselectAll = () => {
@@ -90,7 +125,7 @@ export default function HomeScreen() {
    setTasks(currentTasks);
   }
 
- 
+
   const _updateCategory=(category_index,name)=>{ //index번째 카테고리를 name으로 바꿈
     const currentCategory = category;
     currentCategory[category_index]=name;
@@ -114,18 +149,25 @@ export default function HomeScreen() {
         <IconButton type={images.cancle} />
       </View>
     </View>
-    
+
   }
   else if (DeleteMode){ //삭제모드라면 -> 상단바부분을 삭제부분으로 변경.
     TopBar=<View style={viewStyles.settingView} >
     <IconButton type={images.back}  onPressOut={() => setDeleteMode(!DeleteMode)}/>
     <Text style={{flex:1, fontSize: 20}}>  Delete </Text>
     <View style={viewStyles.settingGroup}>
-      <IconButton type={images.unchecked} />
-      <IconButton type={images.trash} />
+      <IconButton onPressOut={()=> { _selectAllToDelete(); }} type={check ? images.checked :images.unchecked} />
+      <IconButton onPressOut={()=> { _delete(); }} type={images.trash} />
     </View>
+      <List>
+        <Delete key= {item.id}
+                item={item}
+                toggleTask={_toggleTask}
+                selectTask={_selectToDelete}
+        />
+      </List>
   </View>
-    
+
   }
   else { // 둘다 아니라면 -> 일반 상단바 보여줌
     TopBar =
@@ -133,17 +175,17 @@ export default function HomeScreen() {
         <IconButton type={images.todo} onPressOut={openTheme}/>
         <Today />
         <View style={viewStyles.settingGroup}>
-        
+
           <IconButton type={images.search} onPressOut={() => setSearchMode(!SearchMode)} />
           <IconButton onPressOut = {()=>{setExtraVisible(!extraVisible); console.log('open extraMenu');}} type={images.dot} />
         </View>
       </View>
-  
+
   }
 
 
   //서치뷰
-  var SearchView =<List> 
+  var SearchView =<List>
   {Object.values(tasks).filter((item)=>{
     if(searchTerm==""){
       return item
@@ -151,26 +193,26 @@ export default function HomeScreen() {
       return item
     }
   }).reverse().map(item =>(
-  <Task key= {item.id} 
-  item={item} 
-  deleteTask={_deleteTask} 
-  toggleTask={_toggleTask} 
-  updateTask={_updateTask} 
+  <Task key= {item.id}
+  item={item}
+  deleteTask={_deleteTask}
+  toggleTask={_toggleTask}
+  updateTask={_updateTask}
   category={category[item.category]}
   />
   ))}
 </List>
 
 //일반 투두리스트 뷰 -> 2중 맵 활용 간소화.
-var ListView = <List /**/> 
- {category.map((category,index)=>{  
+var ListView = <List /**/>
+ {category.map((category,index)=>{
    return(
      <>
       <View style={viewStyles.categoryView}/** 일반 카테고리*/>
           <IconButton type={images.tag} />
           <Text style={textStyles.contents}> {category} </Text>
           <IconButton onPressOut={()=>_addTask(index)} type={images.add} />
-      </View> 
+      </View>
       {Object.values(tasks).filter((item)=>{ // ViewMode 구현
           if(visibleMode =='ViewAll'&&item.category==index)
             return item
@@ -178,25 +220,25 @@ var ListView = <List /**/>
           return item
           else if (visibleMode=='Completed'&& item.category==index && item.completed==true)
           return item
-          else return null; 
+          else return null;
 
         }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
-          updateTask={_updateTask} 
+          <Task key= {item.id}
+          item={item}
+          deleteTask={_deleteTask}
+          toggleTask={_toggleTask}
+          updateTask={_updateTask}
           category={category}
           /> ) )}
       </>
    );
-      
+
  })}
- </List> 
+ </List>
   return (
     //ThemeProvider는 자식들에게 광역으로 자신이 가지고 있는 기본 props값을 사용할 수 있도록 해주는 역할
     <ThemeProvider theme= {theme} //theme : basic theme (기본파랑)
-    > 
+    >
     <Container>
       <StatusBar barStyle="light-content" style={barStyles.statusBar} />
       {TopBar}
@@ -204,10 +246,10 @@ var ListView = <List /**/>
       />
 
         <ExtraMenu  // 더보기 모달창
-        ExtraVisible={extraVisible} 
-        setExtraVisible ={ setExtraVisible} 
-        DeleteMode={DeleteMode} 
-        setDeleteMode={setDeleteMode} 
+        ExtraVisible={extraVisible}
+        setExtraVisible ={ setExtraVisible}
+        DeleteMode={DeleteMode}
+        setDeleteMode={setDeleteMode}
         openTheme={openTheme}
         selectAll={_selectAll}
         deselectAll={_deselectAll}
