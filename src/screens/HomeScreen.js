@@ -17,10 +17,10 @@ import DetailTodolist from '../components/DetailTodolist';
 export default function HomeScreen() {
 
   const [tasks, setTasks] = useState({
-    '1': { id: '1', text: "My Todo List1", completed: false, category: 0 },
-    '2': { id: '2', text: "My Todo List2", completed: false, category: 1 },
-    '3': { id: '3', text: "My Todo List3", completed: false, category: 2 },
-    '4': { id: '4', text: "My Todo List4", completed: false, category: 3 },
+    '1': { id: '1', text: "My Todo List1", duedate:'', completed: false, category: 0 },
+    '2': { id: '2', text: "My Todo List2", duedate:'', completed: false, category: 1 },
+    '3': { id: '3', text: "My Todo List3", duedate:'', completed: false, category: 2 },
+    '4': { id: '4', text: "My Todo List4", duedate:'',completed: false, category: 3 },
   });
 
   const [visibleMode,setVisibleMode]=useState('ViewAll'); // ViewAll/Uncompleted/Completed
@@ -71,6 +71,13 @@ export default function HomeScreen() {
     setTasks(currentTasks);
 
   }
+
+  const _dueDateTask = (dueDateItem) =>{ //duedate 설정
+    const currentTasks = Object.assign({}, tasks);
+    currentTasks[dueDateItem.id]['duedate'] = dueDateItem.duedate;
+    setTasks(currentTasks);
+  }
+  
   const _selectAll = () => {
     const currentTasks = Object.assign({}, tasks);
 
@@ -156,7 +163,8 @@ export default function HomeScreen() {
   item={item} 
   deleteTask={_deleteTask} 
   toggleTask={_toggleTask} 
-  updateTask={_updateTask} 
+  updateTask={_updateTask}
+  dueDateTask={_dueDateTask} 
   category={category[item.category]}
   />
   ))}
@@ -186,7 +194,8 @@ var ListView = <List /**/>
           item={item} 
           deleteTask={_deleteTask} 
           toggleTask={_toggleTask} 
-          updateTask={_updateTask} 
+          updateTask={_updateTask}
+          dueDateTask={_dueDateTask} 
           category={category}
           /> ) )}
       </>

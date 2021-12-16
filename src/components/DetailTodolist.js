@@ -8,7 +8,7 @@ import TodolistInput from './TodolistInput';
 import { images } from '../images';
 import ViewCalendar from './ViewCalendar';
 
-const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask, category}) => {
+const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask, category, dueDateTask}) => {
 
   //삭제버튼 눌렸을때
   const _deleteTask= ()=>{
@@ -39,7 +39,7 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
             <Text style={modalStyles.modalText}>Note</Text>
             <Memo />
             <PickImage/>
-            <ViewCalendar dueDate={dueDate} setDueDate={setDueDate}/>
+            <ViewCalendar item={item} dueDate={dueDate} setDueDate={setDueDate} dueDateTask={dueDateTask}/>
           </ScrollView>
         </View>
       </Modal>

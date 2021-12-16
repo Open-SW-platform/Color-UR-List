@@ -26,7 +26,7 @@ text-decoration-line: ${({completed})=> completed?'Line-through':'none'};
 
 `;
 
-const Task =({item,deleteTask,toggleTask,updateTask, category})=>{
+const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask,category})=>{
 //투두리스트 아이템이 눌리면 현재 렌더링하고있는 아이템들이 아닌 input컴포넌트를 렌더링하도록함.
 // input vs 현재구성 렌더링을 결정하기 위해서는 수정상태변수 필요.
 
@@ -73,6 +73,7 @@ const Task =({item,deleteTask,toggleTask,updateTask, category})=>{
         deleteTask={deleteTask}
         toggleTask={toggleTask}
         updateTask={updateTask}
+        dueDateTask={dueDateTask}
         category={ category}/>
         </Container>
 
