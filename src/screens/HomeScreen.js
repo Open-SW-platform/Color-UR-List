@@ -1,6 +1,6 @@
 //홈(메인) 화면
 import React, { useState, useRef } from 'react';
-import { StatusBar, Dimensions, Text, View, TextInput, ScrollView, Image } from 'react-native';
+import {StatusBar, Dimensions, Text, View, TextInput, ScrollView, Image, Share} from 'react-native';
 import { viewStyles, textStyles, barStyles, List, Container } from '../styles'
 import { images } from '../images';
 import IconButton from '../components/IconButton';
@@ -209,6 +209,7 @@ export default function HomeScreen() {
   category={category[item.category]}
   setThemeColor={setThemeColor}
   themeColor={themeColor}
+
   />
   ))}
 </List>
