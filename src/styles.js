@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet,Dimensions } from 'react-native';
 import {theme} from './theme';
 import styled from 'styled-components/native';
  
@@ -174,7 +174,7 @@ export const Container = styled.SafeAreaView`
 
 export const List =styled.ScrollView`
 flex : 1;
-width : 100%;
+width : 98%; 
 
 `;
 

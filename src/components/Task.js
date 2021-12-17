@@ -51,7 +51,7 @@ const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, ca
             setText(item.text); //기존 text값으로 초기화
           
     }
-    return isEdting? (<Input value={text} onChangeText={text=>setText(text)} onSubmitEditing = {_onSubmit} onBlur={_onBlur} />)
+    return isEdting? (<Input themeColor={themeColor} value={text} onChangeText={text=>setText(text)} onSubmitEditing = {_onSubmit} onBlur={_onBlur} />)
      :(
         <Container borderColor={themeColor}>
             

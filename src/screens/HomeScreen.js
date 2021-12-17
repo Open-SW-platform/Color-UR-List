@@ -6,13 +6,13 @@ import { images } from '../images';
 import IconButton from '../components/IconButton';
 import Today from '../components/Today'
 import ThemeSelector from '../components/ThemeSelector';
-import Input from '../components/Input';
 import Task from '../components/Task';
 import ExtraMenu from '../components/ExtraMenu';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { theme } from '../theme';
 import Goal from '../components/Goal'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
 
 export default function HomeScreen() {
 
@@ -23,6 +23,7 @@ export default function HomeScreen() {
     '4': { id: '4', text: "My Todo List4", duedate:'', completed: false, category: 3 , comment:''},
   });
   
+  const [isReady,setIsReady]=useState(false); //로딩중 여부
   const [visibleMode,setVisibleMode]=useState('ViewAll'); // ViewAll/Uncompleted/Completed
   const [goal,setGoal]=useState('');
   const [themeVisible, setThemeVisible] = useState(false); // theme 변경 창을 띄우고 있는지 여부
@@ -39,7 +40,20 @@ export default function HomeScreen() {
     setThemeVisible(!themeVisible);
   }
 
-  // 투두 추가,삭제,토글,업데이트 함수
+  // 투두 추가,삭제,토글,업데이트,저장 함수
+
+  //데이터 저장
+  const storeData =async tasks=>{
+    await AsyncStorage.setItem('tasks',JSON.stringify(tasks)); //최신데이터 저장
+    setTasks(tasks); // state변수 업데이트
+
+  }
+
+  //데이터 불러오기 
+  const getData =async ()=>{
+    const loadedData = await AsyncStorage.getItem('tasks'); // 키값이 `task`인 데이터 가져오기
+    setTasks(JSON.parse(loadedData||'{}')); //가져온 데이터는 문자열이기때문에 parse작업으로 원래 객체형으로 돌려놓음. loadedData가 존재하지 않을 경우 빈객체 저장
+  }
 
   const _addTask = (num_category) => {
     const ID = Date.now().toString();
@@ -47,7 +61,7 @@ export default function HomeScreen() {
       [ID]: { id: ID, text: "", completed: false, category: num_category },
     };
  
-    setTasks({ ...tasks, ...newTaskObject });
+    storeData({ ...tasks, ...newTaskObject });
   };
 
   const _deleteTask = (id) => { //id : 삭제할 task의 id값
@@ -56,34 +70,34 @@ export default function HomeScreen() {
 
     //delete 연산자는 객체의 속성을 제거
     delete currentTasks[id]; //특정 id값을 가진 todoitem삭제.
-    setTasks(currentTasks); // {...currentTasks} 가 아님. 이미 열거 가능한 항목으로 나열되어있음.
+    storeData(currentTasks); // {...currentTasks} 가 아님. 이미 열거 가능한 항목으로 나열되어있음.
 
   }
 
   const _toggleTask = (id) => { //완료/미완료
     const currentTask = Object.assign({}, tasks);
     currentTask[id]['completed'] = !currentTask[id]['completed'];
-    setTasks(currentTask);
+    storeData(currentTask);
   }
 
   const _updateTask = (updatatedItem) => { //수정
     const currentTasks = Object.assign({}, tasks);
     currentTasks[updatatedItem.id]['text'] = updatatedItem.text;
-    setTasks(currentTasks);
+    storeData(currentTasks);
 
   }
 
   const _dueDateTask = (dueDateItem) =>{ //duedate 설정
     const currentTasks = Object.assign({}, tasks);
     currentTasks[dueDateItem.id]['duedate'] = dueDateItem.duedate;
-    setTasks(currentTasks);
+    storeData(currentTasks);
   }
 
   const _updateComment = (updatatedItem)=>{
 
     const currentTasks = Object.assign({}, tasks);
     currentTasks[updatatedItem.id]['comment'] = updatatedItem.comment;
-    setTasks(currentTasks);
+    storeData(currentTasks);
   }
   
   const _selectAll = () => {
@@ -93,7 +107,7 @@ export default function HomeScreen() {
             currentTasks[id]['completed'] = true; //완료여부를 true로 설정
         
     }
-   setTasks(currentTasks);
+    storeData(currentTasks);
   }
 
   const _deselectAll = () => {
@@ -102,14 +116,14 @@ export default function HomeScreen() {
     for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
             currentTasks[id]['completed'] = false; //완료여부를 false로 설정
     }
-   setTasks(currentTasks);
+    storeData(currentTasks);
   }
 
  
   const _updateCategory=(category_index,name)=>{ //index번째 카테고리를 name으로 바꿈
     const currentCategory = category;
     currentCategory[category_index]=name;
-    setTasks(currentCategory);
+    storeData(currentCategory);
   }
 
   const [searchTerm, setSearchTerm] = useState(""); // 검색창에 들어가는 키워드
@@ -217,7 +231,7 @@ var ListView = <List /**/>
       
  })}
  </List> 
-  return (
+  return isReady? (
     //ThemeProvider는 자식들에게 광역으로 자신이 가지고 있는 기본 props값을 사용할 수 있도록 해주는 역할
     <ThemeProvider theme= {theme} //theme : basic theme (기본파랑)
     > 
@@ -242,6 +256,10 @@ var ListView = <List /**/>
         {SearchMode?SearchView:ListView/*서치모드이면 서치리스트뷰, 아니라면 일반 리스트 뷰를 보여줌*/}
         </Container>
     </ThemeProvider>
-  );
+  ):(<AppLoading  //isReady 가 false상태이면 AppLoading이 보여짐
+    startAsync={getData} // loading하는 동안 데이터 가져오기 
+    onFinish={()=>setIsReady(true)} //loading이 끝나면 state변수 변경해서 새로운 화면 렌더링하기
+    onError={()=>console.log("error")}
+    />);
 };
 
