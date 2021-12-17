@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { Pressable,StyleSheet, TouchableOpacity, View,Image  } from "react-native";
 import PropTypes from 'prop-types'
 import { images } from '../images';
+import { theme } from "../theme";
 
 //Icon이미지를 출력할 styled-component
 const Icon=styled.Image` 
@@ -29,7 +30,7 @@ const _onPressOut =()=>{
 if(type == 15){ //todo type id 값?
     return(
         <Pressable onPressOut = {onPressOut}>
-            <Image source = {type} style = {iconStyle.themeIcon}/>
+            <Image source = {type} style = {[iconStyle.themeIcon, {borderWidth: 1.5, borderColor: 'black', borderRadius: 100}]}/>
         </Pressable>
     );
 }

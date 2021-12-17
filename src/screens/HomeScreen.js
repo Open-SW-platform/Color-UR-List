@@ -29,6 +29,7 @@ export default function HomeScreen() {
   const [SearchMode, setSearchMode] = useState(false); //검색모드인지 여부
   const [extraVisible, setExtraVisible] = useState(false); // 더보기창을 보이고 있는지 여부
   const [DeleteMode, setDeleteMode] = useState(false); //삭제모드인지 여부 
+  const [themeColor, setThemeColor] = useState('#f9ceee');
 
   var TopBar;
 
@@ -109,7 +110,7 @@ export default function HomeScreen() {
   // > 버튼을 누르면 선택된 투두아이템의 정보가 detailtodolist에 props로 주어짐.
 
   if (SearchMode) { // 검색모드라면 -> 상단바부분을 검색창으로 변경
-    TopBar = <View style={viewStyles.settingView} >
+    TopBar = <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
       <IconButton type={images.back} onPressOut={() => setSearchMode(!SearchMode)} />
       <View style={viewStyles.SearchBar}>
         <IconButton type={images.search} />
@@ -125,7 +126,7 @@ export default function HomeScreen() {
     </View>
   }
   else if (DeleteMode) { //삭제모드라면 -> 상단바부분을 삭제부분으로 변경.
-    TopBar = <View style={viewStyles.settingView} >
+    TopBar = <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
       <IconButton type={images.back} onPressOut={() => setDeleteMode(!DeleteMode)} />
       <Text style={{ flex: 1, fontSize: 20 }}>  Delete </Text>
       <View style={viewStyles.settingGroup}>
@@ -137,7 +138,7 @@ export default function HomeScreen() {
   }
   else { // 둘다 아니라면 -> 일반 상단바 보여줌
     TopBar =
-      <View style={viewStyles.settingView} >
+      <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
         <IconButton type={images.todo} onPressOut={openTheme} />
         <Today />
         <View style={viewStyles.settingGroup}>
@@ -166,6 +167,8 @@ export default function HomeScreen() {
   updateTask={_updateTask}
   dueDateTask={_dueDateTask} 
   category={category[item.category]}
+  setThemeColor={setThemeColor}
+  themeColor={themeColor}
   />
   ))}
 </List>
@@ -175,7 +178,7 @@ var ListView = <List /**/>
  {category.map((category,index)=>{  
    return(
      <>
-      <View style={viewStyles.categoryView}/** 일반 카테고리*/>
+      <View style={[viewStyles.categoryView, {backgroundColor:themeColor}]}/** 일반 카테고리*/>
           <IconButton type={images.tag} />
           <Text style={textStyles.contents}> {category} </Text>
           <IconButton onPressOut={()=>_addTask(index)} type={images.add} />
@@ -197,6 +200,8 @@ var ListView = <List /**/>
           updateTask={_updateTask}
           dueDateTask={_dueDateTask} 
           category={category}
+          setThemeColor={setThemeColor}
+          themeColor={themeColor}
           /> ) )}
       </>
    );
@@ -210,7 +215,7 @@ var ListView = <List /**/>
     <Container>
       <StatusBar barStyle="light-content" style={barStyles.statusBar} />
       {TopBar}
-      <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} // 테마선택창
+      <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} themeColor={themeColor} setThemeColor={setThemeColor} // 테마선택창
       />
 
         <ExtraMenu  // 더보기 모달창
@@ -223,7 +228,7 @@ var ListView = <List /**/>
         deselectAll={_deselectAll}
         setVisibleMode={setVisibleMode}/>
 
-      <Goal value={goal} setValue={setGoal}/*목표작성부분*//>
+      <Goal value={goal} setValue={setGoal}/*목표작성부분*/ themeColor={themeColor}/>
 
         {SearchMode?SearchView:ListView/*서치모드이면 서치리스트뷰, 아니라면 일반 리스트 뷰를 보여줌*/}
         </Container>

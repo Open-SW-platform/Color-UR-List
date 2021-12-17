@@ -14,10 +14,11 @@ const Memo = () => {
 const inputStyle = StyleSheet.create({
     textInput: {
         fontSize: 15,
-        width: 380,
+        width: '95%',
         height: 80,
-        marginTop: 10,
-        marginLeft: 3,
+        marginTop: 5,
+        marginLeft: 10,
+        marginBottom: 10,
         paddingLeft: 15,
         paddingTop: 2,
         borderRadius: 10,

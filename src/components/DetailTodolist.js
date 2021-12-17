@@ -7,8 +7,9 @@ import Memo from './Memo';
 import TodolistInput from './TodolistInput';
 import { images } from '../images';
 import ViewCalendar from './ViewCalendar';
+import { theme } from '../theme';
 
-const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask, category, dueDateTask}) => {
+const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask, category, dueDateTask, themeColor, setThemeColor}) => {
 
   //삭제버튼 눌렸을때
   const _deleteTask= ()=>{
@@ -22,20 +23,21 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
         animationType="slide"
         transparent={true}
         visible={detailVisible}
+        
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
           setDetailVisible(!detailVisible);
         }}>
 
-        <View style={modalStyles.modalView}>
-          <View style={viewStyles.settingGroup}>
+        <View style={[modalStyles.modalView, {backgroundColor:theme.itemBackground, borderColor: themeColor}]}>
+          <View style={[viewStyles.settingGroup, {backgroundColor: themeColor, borderRadius: 10}]}>
           <Text style={textStyles.listInModal}> {category} </Text>
             <IconButton type={images.check} onPressOut={() => {setDetailVisible(!detailVisible);}} />
             <IconButton type={images.trash} onPressOut={_deleteTask} />
             <IconButton type={images.cancle} onPressOut={() => {setDetailVisible(!detailVisible);}} />
           </View>
           <TodolistInput item={item} dueDate = {dueDate} toggleTask={toggleTask} updateTask={updateTask}/>
-          <ScrollView style={{ width: '100%', marginLeft: 20, marginRight: 8}}>
+          <ScrollView style={{ width: '100%', backgroundColor: theme.itemBackground}}>
             <Text style={modalStyles.modalText}>Note</Text>
             <Memo />
             <PickImage/>

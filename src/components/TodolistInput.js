@@ -34,8 +34,7 @@ const TodolistInput = ({newTask, dueDate,item,toggleTask,updateTask}) => {
         item = {item}
         />
     
-        <View style={{backgroundColor:'white'}}>
-   
+        <View style={{backgroundColor:theme.itemBackground, margin: 3, borderRadius: 5}}>
         <TextInput value={text} style={styles.textInput} onChangeText={text=>setText(text)} onSubmitEditing = {_onSubmit} onBlur={_onBlur}/> 
         <Text style={styles.textDueDate}> Due Date: {dueDate}</Text>
         </View>
@@ -57,7 +56,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         borderRadius: 10,
         color: 'black',
-        backgroundColor : 'yellow',
         fontWeight : 'bold',
         marginTop: 5,
         marginBottom: 5,
@@ -67,8 +65,7 @@ const styles = StyleSheet.create({
         width: 140,
         fontSize: 13,
         borderRadius: 10,
-        color: 'black',
-        backgroundColor : 'orange',
+        color: 'orange',
         fontWeight : 'bold',
         marginTop: 5,
         marginBottom: 5,
