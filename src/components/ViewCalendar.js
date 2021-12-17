@@ -11,7 +11,12 @@ LocaleConfig.locales['fr'] = {
   };
   LocaleConfig.defaultLocale = 'fr';
 
-  const ViewCalendar = ({dueDate, setDueDate})=> {
+  const ViewCalendar = ({item, dueDate, setDueDate, dueDateTask})=> {
+    const _dueDateTask = (changedDate)=>{
+      const settingItem = Object.assign({},item);
+      settingItem['duedate'] = changedDate;
+      dueDateTask(settingItem);
+    }
       return(
         <Calendar
         // Initially visible month. Default = Date()
@@ -38,6 +43,7 @@ LocaleConfig.locales['fr'] = {
             ToastAndroid.CENTER
           );
           setDueDate(day.dateString);
+          _dueDateTask(day.dateString);
         }}
         markedDates={{
           [dueDate]: {selected: true, selectedColor: 'orange'}
