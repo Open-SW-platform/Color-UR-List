@@ -12,7 +12,6 @@ export const viewStyles = StyleSheet.create({
   settingView: { //설정 하단바 스타일
     flex: 0.09,
     flexDirection: 'row',
-    backgroundColor: 'red',
     alignItems: 'center',
   },
   settingGroup:{ //search/trash/dot 아이콘 버튼 정렬
@@ -22,12 +21,11 @@ export const viewStyles = StyleSheet.create({
   },
   goalView: { //목표 작성 스타일
     flex: 0.15,
-    borderWidth: 1,
-    width: '100%',
+    borderWidth: 1.5,
+    width: '95%',
     padding: 3,
     margin: 5,
     borderRadius: 3,
-    backgroundColor: 'green',
   },
 
   todolistView: { //투두리스트 전체 스타일
@@ -60,7 +58,6 @@ export const viewStyles = StyleSheet.create({
   SearchBar: {
     flex: 6,
     flexDirection: 'row',
-    backgroundColor: 'red',
   }
 });
 
@@ -82,8 +79,7 @@ export const textStyles = StyleSheet.create({ //text관련 설정
     flex: 1,
     fontSize: 27,
     fontWeight: 'bold',
-    color: 'white',
-    backgroundColor: 'blue',
+    color: 'black',
     marginLeft: 5,
   },
   menu: {
@@ -115,8 +111,9 @@ export const modalStyles = StyleSheet.create({
   modalView: {
     marginTop: 250,
     justifyContent: 'flex-start',
-    backgroundColor: 'white',
+    backgroundColor: theme.background,
     borderRadius: 20,
+    borderWidth: 2,
     padding: 0,
     alignItems: 'center',
     shadowColor: '#000',
@@ -168,14 +165,14 @@ export const modalStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'yellow',
     width: '100%',
-  }
-
+  },
 });
 
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  backgroundColor: ${ ({theme}) => theme.background };
+  background-color: ${(props) =>
+    props.fillColor ? props.fillColor : theme.background};
   align-items: center;
   justify-content: flex-start;
 
