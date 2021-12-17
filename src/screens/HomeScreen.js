@@ -17,10 +17,10 @@ import AppLoading from 'expo-app-loading';
 export default function HomeScreen() {
 
   const [tasks, setTasks] = useState({
-    '1': { id: '1', text: "My Todo List1", duedate:'', completed: false, category: 0,  comment:'' },
-    '2': { id: '2', text: "My Todo List2", duedate:'', completed: false, category: 1 , comment:'' },
-    '3': { id: '3', text: "My Todo List3", duedate:'', completed: false, category: 2 , comment:''},
-    '4': { id: '4', text: "My Todo List4", duedate:'', completed: false, category: 3 , comment:''},
+    '1': { id: '1', text: "My Todo List1", duedate:'', completed: false, category: 0,  comment:'' ,imageSrc:''},
+    '2': { id: '2', text: "My Todo List2", duedate:'', completed: false, category: 1 , comment:'' ,imageSrc:''},
+    '3': { id: '3', text: "My Todo List3", duedate:'', completed: false, category: 2 , comment:'',imageSrc:''},
+    '4': { id: '4', text: "My Todo List4", duedate:'', completed: false, category: 3 , comment:'',imageSrc:''},
   });
   
   const [isReady,setIsReady]=useState(false); //로딩중 여부
@@ -58,7 +58,7 @@ export default function HomeScreen() {
   const _addTask = (num_category) => {
     const ID = Date.now().toString();
     const newTaskObject = {
-      [ID]: { id: ID, text: "", completed: false, category: num_category },
+      [ID]: { id: ID, text: "", completed: false, category: num_category,comment:'',imageSrc:''},
     };
  
     storeData({ ...tasks, ...newTaskObject });
@@ -99,13 +99,17 @@ export default function HomeScreen() {
     currentTasks[updatatedItem.id]['comment'] = updatatedItem.comment;
     storeData(currentTasks);
   }
+  const _updateImage=(updatatedItem)=>{
+    const currentTasks = Object.assign({}, tasks);
+    currentTasks[updatatedItem.id]['image'] = updatatedItem.comment;
+    storeData(currentTasks);
+  }
   
   const _selectAll = () => {
     const currentTasks = Object.assign({}, tasks);
 
     for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
             currentTasks[id]['completed'] = true; //완료여부를 true로 설정
-        
     }
     storeData(currentTasks);
   }
@@ -132,7 +136,7 @@ export default function HomeScreen() {
 
   if (SearchMode) { // 검색모드라면 -> 상단바부분을 검색창으로 변경
     TopBar = <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
-      <IconButton type={images.back} onPressOut={() => setSearchMode(!SearchMode)} />
+      <IconButton type={images.back} onPressOut={() => {setSearchMode(!SearchMode); setSearchTerm('')}} />
       <View style={viewStyles.SearchBar}>
         <IconButton type={images.search} />
         <TextInput
@@ -181,17 +185,18 @@ export default function HomeScreen() {
       return item
     }
   }).reverse().map(item =>(
-  <Task key= {item.id} 
-  item={item} 
-  deleteTask={_deleteTask} 
-  toggleTask={_toggleTask} 
-  updateTask={_updateTask}
-  dueDateTask={_dueDateTask} 
-  category={category[item.category]}
-  setThemeColor={setThemeColor}
-  themeColor={themeColor}
-  updateComment={_updateComment}
-  />
+    <Task key= {item.id} 
+          item={item} 
+          deleteTask={_deleteTask} 
+          toggleTask={_toggleTask} 
+          updateTask={_updateTask}
+          dueDateTask={_dueDateTask} 
+          category={category[item.category]}
+          setThemeColor={setThemeColor}
+          themeColor={themeColor}
+          updateComment={_updateComment}
+          updateImage={_updateImage}
+          />
   ))}
 </List>
 
@@ -225,6 +230,7 @@ var ListView = <List /**/>
           setThemeColor={setThemeColor}
           themeColor={themeColor}
           updateComment={_updateComment}
+          updateImage={_updateImage}
           /> ) )}
       </>
    );
