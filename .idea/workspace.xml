@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3af051a6-878c-4b12-a588-e91e388cde79" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Delete.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Delete.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Delete.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Task.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Task.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/HomeScreen.js" afterDir="false" />
     </list>
@@ -47,7 +45,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639500716437</updated>
-      <workItem from="1639500721297" duration="16641000" />
+      <workItem from="1639500721297" duration="16919000" />
+      <workItem from="1639711615371" duration="5540000" />
+      <workItem from="1639733440517" duration="3914000" />
     </task>
     <servers />
   </component>
@@ -64,5 +64,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

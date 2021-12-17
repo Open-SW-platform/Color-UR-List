@@ -30,24 +30,25 @@ text-decoration-line: ${({completed})=> completed?'Line-through':'none'};
 const Delete =({item,toggleTask,selectTask})=>{
 //투두리스트 아이템이 눌리면 현재 렌더링하고있는 아이템들이 아닌 input컴포넌트를 렌더링하도록함.
 // input vs 현재구성 렌더링을 결정하기 위해서는 수정상태변수 필요.
-
     //isEditing 값에 따라서 input vs 기존투두아이템 중 무엇을 렌더링 할지 결정
+    const _selectTask= ()=>{
+        selectTask(item.id)
+    }
     return (
+
 
             <Container>
 
                 <IconButton type = {item.completed? images.checked :images.unchecked}
                     //완료 여부에 따라 아이콘이 다르게 렌더링 되어야함.
-                            onPressOut={toggleTask}
+                            onPressOut={_selectTask}
                             item = {item}
                 />
-
-                <TouchableOpacity style={{flex:1, backgroundColor: item.selected ? 'red' : '#000'}} onPress={selectTask}>
+                <TouchableOpacity style={{flex:1, backgroundColor: item.selected ? '#d3d3d3' : 'white'}} onPressOut={_selectTask}>
                     <Content completed={item.completed}>{item.text}</Content>
                 </TouchableOpacity>
-
-
             </Container>
+
 
         );
 };

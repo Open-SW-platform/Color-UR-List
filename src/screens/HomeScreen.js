@@ -13,6 +13,7 @@ import ExtraMenu from '../components/ExtraMenu';
 import styled,{ThemeProvider} from 'styled-components/native';
 import {theme} from '../theme';
 import Goal from '../components/Goal'
+import {failedColor} from "react-native-calendars/src/style";
 
 export default function HomeScreen() {
 
@@ -83,17 +84,16 @@ export default function HomeScreen() {
    setTasks(currentTasks);
   }
 
-  const _selectToDelete = () => {
+  const _selectToDelete = (id) => {
     const currentTask=Object.assign({},tasks);
-
     currentTask[id]['selected'] = ! currentTask[id]['selected'];
     setTasks(currentTask);
   }
 
   const _selectAllToDelete = () => {
     const currentTasks = Object.assign({}, tasks);
-
-    if(!check){
+    check = !check
+    if(check){
       for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
         currentTasks[id]['selected'] = true; //완료여부를 true로 설정
       }
@@ -103,7 +103,6 @@ export default function HomeScreen() {
         currentTasks[id]['selected'] = false; //완료여부를 true로 설정
       }
     }
-    check = !check
     setTasks(currentTasks);
   }
   const _delete = () => {
@@ -156,16 +155,9 @@ export default function HomeScreen() {
     <IconButton type={images.back}  onPressOut={() => setDeleteMode(!DeleteMode)}/>
     <Text style={{flex:1, fontSize: 20}}>  Delete </Text>
     <View style={viewStyles.settingGroup}>
-      <IconButton onPressOut={()=> { _selectAllToDelete(); }} type={check ? images.checked :images.unchecked} />
-      <IconButton onPressOut={()=> { _delete(); }} type={images.trash} />
+      <IconButton onPressOut={_selectAllToDelete} type={check ? images.checked :images.unchecked} />
+      <IconButton onPressOut={_delete} type={images.trash} />
     </View>
-      <List>
-        <Delete key= {item.id}
-                item={item}
-                toggleTask={_toggleTask}
-                selectTask={_selectToDelete}
-        />
-      </List>
   </View>
 
   }
@@ -182,7 +174,6 @@ export default function HomeScreen() {
       </View>
 
   }
-
 
   //서치뷰
   var SearchView =<List>
@@ -202,6 +193,19 @@ export default function HomeScreen() {
   />
   ))}
 </List>
+
+//삭제
+  var DeleteView =<List>
+    {Object.values(tasks).reverse().map(item=>(
+        <Delete key= {item.id}
+                item={item}
+                toggleTask={_toggleTask}
+                selectTask={_selectToDelete}
+                category={category[item.category]}
+        />
+    ))}
+
+  </List>
 
 //일반 투두리스트 뷰 -> 2중 맵 활용 간소화.
 var ListView = <List /**/>
@@ -257,7 +261,8 @@ var ListView = <List /**/>
 
       <Goal value={goal} setValue={setGoal}/*목표작성부분*//>
 
-        {SearchMode?SearchView:ListView/*서치모드이면 서치리스트뷰, 아니라면 일반 리스트 뷰를 보여줌*/}
+
+        {DeleteMode?DeleteView:ListView/*삭제모드이면 삭제리스트뷰, 아니라면 일반 리스트 뷰를 보여줌*/}
         </Container>
     </ThemeProvider>
   );

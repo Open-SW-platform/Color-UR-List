@@ -55,44 +55,44 @@ const Task =({item,deleteTask,toggleTask,updateTask, category})=>{
 
     }
 
-    const renderItem = ({ item, drag, isActive }) => {
-        return (
-            <Container>
-                <TouchableOpacity
-                    onLongPress={drag}
-                    disabled={isActive}
-                >
-                <IconButton type = {item.completed? images.checked :images.unchecked}
-                    //완료 여부에 따라 아이콘이 다르게 렌더링 되어야함.
-                    onPressOut={toggleTask}
-                    item = {item}
-                />
-                    <TouchableOpacity style={{flex:1,}} onPress={()=>{setIsEdting(true);}}>
-                    <Content completed={item.completed}>{item.text}</Content>
-                    </TouchableOpacity>
-                    <IconButton onPressOut={()=> { setDetailVisible(!detailVisible); }} type={images.edit} />
-
-                    <DetailTodolist //투두리스트 세부창
-                        detailVisible={detailVisible}
-                        setDetailVisible ={setDetailVisible}
-                        item= {item}
-                        deleteTask={deleteTask}
-                        toggleTask={toggleTask}
-                        updateTask={updateTask}
-                        category={ category}/>
-                </TouchableOpacity>
-            </Container>
-        );
-    }
-
-    return (
-        <DraggableFlatList
-            data={data}
-            onDragEnd={({ data }) => setData(data)}
-            keyExtractor={(item) => item.key}
-            renderItem={renderItem}
-        />
-    );
+    // const renderItem = ({ item, drag, isActive }) => {
+    //     return (
+    //         <Container>
+    //             <TouchableOpacity
+    //                 onLongPress={drag}
+    //                 disabled={isActive}
+    //             >
+    //             <IconButton type = {item.completed? images.checked :images.unchecked}
+    //                 //완료 여부에 따라 아이콘이 다르게 렌더링 되어야함.
+    //                 onPressOut={toggleTask}
+    //                 item = {item}
+    //             />
+    //                 <TouchableOpacity style={{flex:1,}} onPress={()=>{setIsEdting(true);}}>
+    //                 <Content completed={item.completed}>{item.text}</Content>
+    //                 </TouchableOpacity>
+    //                 <IconButton onPressOut={()=> { setDetailVisible(!detailVisible); }} type={images.edit} />
+    //
+    //                 <DetailTodolist //투두리스트 세부창
+    //                     detailVisible={detailVisible}
+    //                     setDetailVisible ={setDetailVisible}
+    //                     item= {item}
+    //                     deleteTask={deleteTask}
+    //                     toggleTask={toggleTask}
+    //                     updateTask={updateTask}
+    //                     category={ category}/>
+    //             </TouchableOpacity>
+    //         </Container>
+    //     );
+    // }
+    //
+    // return (
+    //     <DraggableFlatList
+    //         data={data}
+    //         onDragEnd={({ data }) => setData(data)}
+    //         keyExtractor={(item) => item.key}
+    //         renderItem={renderItem}
+    //     />
+    // );
 
     return isEdting? (<Input value={text} onChangeText={text=>setText(text)} onSubmitEditing = {_onSubmit} onBlur={_onBlur} />)
      :(
