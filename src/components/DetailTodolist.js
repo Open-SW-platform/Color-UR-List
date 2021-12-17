@@ -9,7 +9,7 @@ import { images } from '../images';
 import ViewCalendar from './ViewCalendar';
 import { theme } from '../theme';
 
-const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask, category, dueDateTask, themeColor, setThemeColor}) => {
+const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask, category, dueDateTask, themeColor, setThemeColor,updateComment}) => {
 
   //삭제버튼 눌렸을때
   const _deleteTask= ()=>{
@@ -36,10 +36,11 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
             <IconButton type={images.trash} onPressOut={_deleteTask} />
             <IconButton type={images.cancle} onPressOut={() => {setDetailVisible(!detailVisible);}} />
           </View>
-          <TodolistInput item={item} dueDate = {dueDate} toggleTask={toggleTask} updateTask={updateTask}/>
           <ScrollView style={{ width: '100%', backgroundColor: theme.itemBackground}}>
+          <TodolistInput item={item} dueDate = {dueDate} toggleTask={toggleTask} updateTask={updateTask}/>
+          
             <Text style={modalStyles.modalText}>Note</Text>
-            <Memo />
+            <Memo item={item} updateComment={updateComment} />
             <PickImage/>
             <ViewCalendar item={item} dueDate={dueDate} setDueDate={setDueDate} dueDateTask={dueDateTask}/>
           </ScrollView>
