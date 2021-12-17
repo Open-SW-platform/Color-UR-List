@@ -15,7 +15,7 @@ flex-direction : row;
 align-items : center; 
 background-color : ${({theme}) => theme.itemBackground};
 border-radius: 10px;
-border-width: 1;
+border-width: 1px;
 border-color: ${(props) => props.borderColor ? props.borderColor : 'black'};
 padding : 5px;
 margin : 3px 0;
@@ -97,11 +97,11 @@ const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, ca
     //     />
     // );
 
-   
+
     return isEdting? (<Input value={text} onChangeText={text=>setText(text)} onSubmitEditing = {_onSubmit} onBlur={_onBlur} />)
      :(
         <Container borderColor={themeColor}>
-            
+
 
         <IconButton type = {item.completed? images.checked :images.unchecked}
         //완료 여부에 따라 아이콘이 다르게 렌더링 되어야함.
@@ -123,7 +123,7 @@ const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, ca
         toggleTask={toggleTask}
         updateTask={updateTask}
         dueDateTask={dueDateTask}
-        pickURITask = {pickURITask} 
+        pickURITask = {pickURITask}
         category={ category}
         setThemeColor={setThemeColor}
         themeColor={themeColor}/>

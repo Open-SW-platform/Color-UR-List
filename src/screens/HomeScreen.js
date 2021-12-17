@@ -83,7 +83,7 @@ export default function HomeScreen() {
     currentTasks[dueDateItem.id]['duedate'] = dueDateItem.duedate;
     setTasks(currentTasks);
   }
-  
+
   const _selectAll = () => {
     const currentTasks = Object.assign({}, tasks);
 
@@ -102,7 +102,9 @@ export default function HomeScreen() {
 
   const _selectAllToDelete = () => {
     const currentTasks = Object.assign({}, tasks);
+    console.log(check)
     check = !check
+    console.log(check)
     if(check){
       for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
         currentTasks[id]['selected'] = true; //완료여부를 true로 설정
@@ -142,7 +144,7 @@ export default function HomeScreen() {
   }
 
   const [searchTerm, setSearchTerm] = useState(""); // 검색창에 들어가는 키워드
- 
+
   // > 버튼을 누르면 선택된 투두아이템의 정보가 detailtodolist에 props로 주어짐.
 
   if (SearchMode) { // 검색모드라면 -> 상단바부분을 검색창으로 변경
@@ -173,7 +175,7 @@ export default function HomeScreen() {
   </View>
 
   }
-  
+
   else { // 둘다 아니라면 -> 일반 상단바 보여줌
     TopBar =
       <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
@@ -198,12 +200,12 @@ export default function HomeScreen() {
     }
   }).reverse().map(item =>(
 
-  <Task key= {item.id} 
-  item={item} 
-  deleteTask={_deleteTask} 
-  toggleTask={_toggleTask} 
+  <Task key= {item.id}
+  item={item}
+  deleteTask={_deleteTask}
+  toggleTask={_toggleTask}
   updateTask={_updateTask}
-  dueDateTask={_dueDateTask} 
+  dueDateTask={_dueDateTask}
   category={category[item.category]}
   setThemeColor={setThemeColor}
   themeColor={themeColor}
@@ -216,8 +218,8 @@ export default function HomeScreen() {
     {Object.values(tasks).reverse().map(item=>(
         <Delete key= {item.id}
                 item={item}
-                toggleTask={_toggleTask}
                 selectTask={_selectToDelete}
+                themeColor={themeColor}
                 category={category[item.category]}
         />
     ))}
@@ -244,12 +246,12 @@ var ListView = <List /**/>
           else return null;
 
         }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
+          <Task key= {item.id}
+          item={item}
+          deleteTask={_deleteTask}
+          toggleTask={_toggleTask}
           updateTask={_updateTask}
-          dueDateTask={_dueDateTask} 
+          dueDateTask={_dueDateTask}
           category={category}
           setThemeColor={setThemeColor}
           themeColor={themeColor}
