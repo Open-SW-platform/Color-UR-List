@@ -20,12 +20,13 @@ export const viewStyles = StyleSheet.create({
     marginTop: 5
   },
   goalView: { //목표 작성 스타일
-    flex: 0.15,
+    height: 90,
     borderWidth: 1.5,
     width: '95%',
-    padding: 3,
+    padding: 1,
     margin: 5,
     borderRadius: 3,
+
   },
 
   categoryView:{ //투두리스트 카테고리 스타일
@@ -165,8 +166,7 @@ export const modalStyles = StyleSheet.create({
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  background-color: ${(props) =>
-    props.fillColor ? props.fillColor : theme.background};
+  background-color: white;
   align-items: center;
   justify-content: flex-start;
 
