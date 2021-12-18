@@ -22,7 +22,7 @@ const ThemeSelector = ({themeVisible,setThemeVisible, themeColor, setThemeColor}
             <View style ={styles.sqareBlock}>
           <TouchableOpacity 
             style={[styles.button,{backgroundColor: "#f9ceee" } ]}
-            onPress={() => {alert('change to pink'); setThemeColor('#f9ceee');setThemeVisible(!themeVisible);}}
+            onPress={() => { setThemeColor('#f9ceee');}}
             />    
             <Text>pink</Text>  
             </View>
@@ -30,7 +30,7 @@ const ThemeSelector = ({themeVisible,setThemeVisible, themeColor, setThemeColor}
             <View style ={styles. sqareBlock}>
           <TouchableOpacity 
             style={[styles.button,{backgroundColor: "#e0cdff" } ]}
-            onPress={() => {alert('change to purple'); setThemeColor('#e0cdff');setThemeVisible(!themeVisible);}}
+            onPress={() => { setThemeColor('#e0cdff');}}
             />    
             <Text>purple</Text>  
             </View>
@@ -38,7 +38,7 @@ const ThemeSelector = ({themeVisible,setThemeVisible, themeColor, setThemeColor}
             <View style ={styles. sqareBlock}>
           <TouchableOpacity 
             style={[styles.button,{backgroundColor: "#c1f0fb" } ]}
-            onPress={() => {alert('change to sky blue'); setThemeColor('#c1f0fb');setThemeVisible(!themeVisible);}}
+            onPress={() => { setThemeColor('#c1f0fb');}}
             />    
             <Text>sky blue</Text>  
             </View>
@@ -46,7 +46,7 @@ const ThemeSelector = ({themeVisible,setThemeVisible, themeColor, setThemeColor}
             <View style ={styles. sqareBlock}>
           <TouchableOpacity 
             style={[styles.button,{backgroundColor: "#dcf9a8" } ]}
-            onPress={() => {alert('change to green'); setThemeColor('#dcf9a8');setThemeVisible(!themeVisible);}}
+            onPress={() => { setThemeColor('#dcf9a8');}}
             />    
             <Text>green</Text>  
             </View>
@@ -54,7 +54,7 @@ const ThemeSelector = ({themeVisible,setThemeVisible, themeColor, setThemeColor}
             <View style ={styles. sqareBlock}>
           <TouchableOpacity 
             style={[styles.button,{backgroundColor: "#ffebaf" } ]}
-            onPress={() => {alert('change to peach'); setThemeColor('#ffebaf');setThemeVisible(!themeVisible);}}
+            onPress={() => { setThemeColor('#ffebaf');}}
             />    
             <Text>peach</Text>  
             </View>

@@ -31,7 +31,8 @@ text-decoration-line: ${({completed})=> completed?'Line-through':'none'};
 
 `;
 
-const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, category,setThemeColor, themeColor, shareData})=>{
+
+const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, category,setThemeColor, themeColor,updateComment})=>{
 //투두리스트 아이템이 눌리면 현재 렌더링하고있는 아이템들이 아닌 input컴포넌트를 렌더링하도록함.
 // input vs 현재구성 렌더링을 결정하기 위해서는 수정상태변수 필요.
 
@@ -57,6 +58,7 @@ const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, ca
 
     }
 
+    return isEdting? (<Input themeColor={themeColor} value={text} onChangeText={text=>setText(text)} onSubmitEditing = {_onSubmit} onBlur={_onBlur} />)
 
     // const renderItem = ({ item, drag, isActive }) => {
     //     return (
@@ -98,7 +100,6 @@ const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, ca
     // );
 
 
-    return isEdting? (<Input value={text} onChangeText={text=>setText(text)} onSubmitEditing = {_onSubmit} onBlur={_onBlur} />)
      :(
         <Container borderColor={themeColor}>
 
@@ -123,7 +124,9 @@ const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, ca
         toggleTask={toggleTask}
         updateTask={updateTask}
         dueDateTask={dueDateTask}
-        pickURITask = {pickURITask}
+
+        pickURITask = {pickURITask} 
+        updateComment={updateComment}
         category={ category}
         setThemeColor={setThemeColor}
         themeColor={themeColor}

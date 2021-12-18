@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet,Dimensions } from 'react-native';
 import {theme} from './theme';
 import styled from 'styled-components/native';
 
@@ -20,12 +20,13 @@ export const viewStyles = StyleSheet.create({
     marginTop: 5
   },
   goalView: { //목표 작성 스타일
-    flex: 0.15,
+    height: 90,
     borderWidth: 1.5,
     width: '95%',
-    padding: 3,
+    padding: 1,
     margin: 5,
     borderRadius: 3,
+
   },
 
   todolistView: { //투두리스트 전체 스타일
@@ -171,8 +172,7 @@ export const modalStyles = StyleSheet.create({
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  background-color: ${(props) =>
-    props.fillColor ? props.fillColor : theme.background};
+  background-color: white;
   align-items: center;
   justify-content: flex-start;
 
@@ -180,7 +180,7 @@ export const Container = styled.SafeAreaView`
 
 export const List =styled.ScrollView`
 flex : 1;
-width : 100%;
+width : 98%; 
 
 `;
 

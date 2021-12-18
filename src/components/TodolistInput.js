@@ -21,9 +21,7 @@ const TodolistInput = ({newTask, dueDate,item,toggleTask,updateTask}) => {
       
     }
     const _onBlur=()=>{ // focus를 잃었을 경우
-    
             setText(item.text); //기존 text값으로 초기화
-          
     }
     console.log(item);
     return (
@@ -65,7 +63,8 @@ const styles = StyleSheet.create({
         width: 140,
         fontSize: 13,
         borderRadius: 10,
-        color: 'orange',
+        color: 'white',
+        backgroundColor: '#68135f',
         fontWeight : 'bold',
         marginTop: 5,
         marginBottom: 5,
