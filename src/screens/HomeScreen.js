@@ -25,7 +25,8 @@ export default function HomeScreen() {
     '3': { id: '3', text: "My Todo List3", duedate:'', completed: false, category: 2 , comment:'',imageSrc:'', selected :false },
     '4': { id: '4', text: "My Todo List4", duedate:'', completed: false, category: 3 , comment:'',imageSrc:'', selected :false },
   });
-  
+
+
   const [isReady,setIsReady]=useState(false); //로딩중 여부
   const [visibleMode,setVisibleMode]=useState('ViewAll'); // ViewAll/Uncompleted/Completed
   const [goal,setGoal]=useState('');
@@ -54,7 +55,7 @@ export default function HomeScreen() {
 
   }
 
-  //데이터 불러오기 
+  //데이터 불러오기
   const getData =async ()=>{
     const loadedData = await AsyncStorage.getItem('tasks'); // 키값이 `task`인 데이터 가져오기
     setTasks(JSON.parse(loadedData||'{}')); //가져온 데이터는 문자열이기때문에 parse작업으로 원래 객체형으로 돌려놓음. loadedData가 존재하지 않을 경우 빈객체 저장
@@ -66,7 +67,7 @@ export default function HomeScreen() {
 
       [ID]: { id: ID, text: "", completed: false, category: num_category,comment:'',imageSrc:'', selected :false },
     };
- 
+
     storeData({ ...tasks, ...newTaskObject });
   };
 
@@ -137,7 +138,7 @@ export default function HomeScreen() {
         currentTasks[id]['selected'] = true; //완료여부를 true로 설정
       }
     }
-    else {
+    else if(!check){
       for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
         currentTasks[id]['selected'] = false; //완료여부를 true로 설정
       }
@@ -220,7 +221,7 @@ export default function HomeScreen() {
   }
 
   //서치뷰
-  var SearchView =<List> 
+  var SearchView =<List>
   {Object.values(tasks).filter((item)=>{
     if(searchTerm==""){
       return item
@@ -228,12 +229,12 @@ export default function HomeScreen() {
       return item
     }
   }).reverse().map(item =>(
-    <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
+    <Task key= {item.id}
+          item={item}
+          deleteTask={_deleteTask}
+          toggleTask={_toggleTask}
           updateTask={_updateTask}
-          dueDateTask={_dueDateTask} 
+          dueDateTask={_dueDateTask}
           category={category[item.category]}
           setThemeColor={setThemeColor}
           themeColor={themeColor}
@@ -251,19 +252,21 @@ export default function HomeScreen() {
                 selectTask={_selectToDelete}
                 themeColor={themeColor}
                 category={category[item.category]}
+                selectTask={_selectToDelete}
         />
     ))}
+    </List>
 
-//일반 투두리스트 뷰 -> 2중 맵 활용 간소화.
-var ListView = <List /**/> 
- {category.map((category,index)=>{  
+
+var ListView = <List /**/>
+ {category.map((category,index)=>{
    return(
      <>
       <View style={[viewStyles.categoryView, {backgroundColor:themeColor}]}/** 일반 카테고리*/>
           <IconButton type={images.tag} />
           <Text style={textStyles.contents}> {category} </Text>
           <IconButton onPressOut={()=>_addTask(index)} type={images.add} />
-      </View> 
+      </View>
       {Object.values(tasks).filter((item)=>{ // ViewMode 구현
           if(visibleMode =='ViewAll'&&item.category==index)
             return item
@@ -271,15 +274,15 @@ var ListView = <List /**/>
           return item
           else if (visibleMode=='Completed'&& item.category==index && item.completed==true)
           return item
-          else return null; 
+          else return null;
 
         }).reverse().map(item=>(
-          <Task key= {item.id} 
-          item={item} 
-          deleteTask={_deleteTask} 
-          toggleTask={_toggleTask} 
+          <Task key= {item.id}
+          item={item}
+          deleteTask={_deleteTask}
+          toggleTask={_toggleTask}
           updateTask={_updateTask}
-          dueDateTask={_dueDateTask} 
+          dueDateTask={_dueDateTask}
           category={category}
           setThemeColor={setThemeColor}
           themeColor={themeColor}
@@ -288,13 +291,14 @@ var ListView = <List /**/>
           /> ) )}
       </>
    );
-      
+
  })}
- </List> 
-  return isReady? (
+ </List>
+
+  return isReady ? (
     //ThemeProvider는 자식들에게 광역으로 자신이 가지고 있는 기본 props값을 사용할 수 있도록 해주는 역할
     <ThemeProvider theme= {theme} //theme : basic theme (기본파랑)
-    > 
+    >
     <Container>
       <StatusBar barStyle="light-content" style={barStyles.statusBar} />
       {TopBar}
@@ -302,23 +306,26 @@ var ListView = <List /**/>
       />
 
         <ExtraMenu  // 더보기 모달창
-        ExtraVisible={extraVisible} 
-        setExtraVisible ={ setExtraVisible} 
-        DeleteMode={DeleteMode} 
-        setDeleteMode={setDeleteMode} 
+        ExtraVisible={extraVisible}
+        setExtraVisible ={ setExtraVisible}
+        DeleteMode={DeleteMode}
+        setDeleteMode={setDeleteMode}
         openTheme={openTheme}
         selectAll={_selectAll}
         deselectAll={_deselectAll}
         setVisibleMode={setVisibleMode}/>
 
       <Goal value={goal} setValue={setGoal}/*목표작성부분*/ themeColor={themeColor}/>
-
-        {DeleteMode?DeleteView:ListView/*삭제모드이면 삭제리스트뷰, 아니라면 일반 리스트 뷰를 보여줌*/}
+      {
+        DeleteMode ? DeleteView
+            : SearchMode ? SearchView
+            : ListView
+      }
         </Container>
     </ThemeProvider>
   ):(<AppLoading  //isReady 가 false상태이면 AppLoading이 보여짐
-    startAsync={getData} // loading하는 동안 데이터 가져오기 
+    startAsync={getData} // loading하는 동안 데이터 가져오기
     onFinish={()=>setIsReady(true)} //loading이 끝나면 state변수 변경해서 새로운 화면 렌더링하기
     onError={()=>console.log("error")}
-    />);
+    />)
 };
