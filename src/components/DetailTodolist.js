@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Modal, Text, TextInput, View, ScrollView } from 'react-native';
+import {Alert, Modal, Text, TextInput, View, ScrollView, Share} from 'react-native';
 import { viewStyles, modalStyles, textStyles } from '../styles'
 import PickImage from './PickImage'; //세부사항 모달창 이미지 삽입 모듈
 import IconButton from './IconButton';
@@ -17,13 +17,36 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
     deleteTask(item.id); //id전달
     setDetailVisible(false);
   }
+  const _shareData = async() => {
+    var text = '<App Name>\n';
+    text+=item.text +'\n'+'-completed: ('+item.completed+')\n'+ '-duedate : ('+item.duedate+')\n' +'-comment : ('+item.comment+')\n'
+
+    try{
+      const result = await Share.share({
+        message:
+        text,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log('activityType!');
+        } else {
+          console.log('Share!');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log('dismissed');
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
     const [dueDate, setDueDate] = useState("");
     return (
         <Modal // Task > 클릭시 띄우는 세부사항 모달
         animationType="slide"
         transparent={true}
         visible={detailVisible}
-        
+
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
           setDetailVisible(!detailVisible);
@@ -32,7 +55,7 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
         <View style={[modalStyles.modalView, {backgroundColor:theme.itemBackground, borderColor: themeColor}]}>
           <View style={[viewStyles.settingGroup, {backgroundColor: themeColor, borderRadius: 10}]}>
           <Text style={textStyles.listInModal}> {category} </Text>
-            <IconButton type={images.check} onPressOut={() => {setDetailVisible(!detailVisible);}} />
+            <IconButton type={images.share} onPressOut={_shareData} />
             <IconButton type={images.trash} onPressOut={_deleteTask} />
             <IconButton type={images.cancle} onPressOut={() => {setDetailVisible(!detailVisible);}} />
           </View>
@@ -46,10 +69,10 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
           </ScrollView>
         </View>
       </Modal>
-  
+
     );
-  
+
   }
-  
-  
+
+
   export default DetailTodolist;
