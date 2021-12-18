@@ -100,6 +100,12 @@ export default function HomeScreen() {
     storeData(currentTasks);
   }
 
+  const _imgSrcTask = (imgSrcItem) =>{
+    const currentTasks = Object.assign({}, tasks);
+    currentTasks[imgSrcItem.id]['imageSrc'] = imgSrcItem.imageSrc;
+    storeData(currentTasks);
+  }
+
   const _updateComment = (updatatedItem)=>{
 
     const currentTasks = Object.assign({}, tasks);
@@ -235,6 +241,7 @@ export default function HomeScreen() {
           toggleTask={_toggleTask}
           updateTask={_updateTask}
           dueDateTask={_dueDateTask}
+          imgSrcTask = {_imgSrcTask}
           category={category[item.category]}
           setThemeColor={setThemeColor}
           themeColor={themeColor}
@@ -284,6 +291,7 @@ var ListView = <List /**/>
           updateTask={_updateTask}
           dueDateTask={_dueDateTask}
           category={category}
+          imgSrcTask = {_imgSrcTask}
           setThemeColor={setThemeColor}
           themeColor={themeColor}
           updateComment={_updateComment}

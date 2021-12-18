@@ -7,7 +7,7 @@ import Input from '../components/Input';
 
 
 //세부사항 모달창에서 체크,투두이름,Duedate정보를 담고있는 곳.
-const TodolistInput = ({newTask, dueDate,item,toggleTask,updateTask}) => {
+const TodolistInput = ({newTask, item,toggleTask,updateTask}) => {
 
    
     const [text,setText]=useState(item.text); //현재 입력중인 텍스트 값 
