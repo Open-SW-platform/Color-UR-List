@@ -37,6 +37,7 @@ export default function DayScreen() {
   var TopBar =
     <View style={viewStyles.settingView} >
       <Today />
+      <Text>                            </Text>
     </View>
 
   return (
