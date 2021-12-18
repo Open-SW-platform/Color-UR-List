@@ -38,7 +38,7 @@ export default function HomeScreen() {
 
   var TopBar;
 
-  //const text_added = useRef(null); //+버튼을 눌러서 방금 추가된 투두아이템
+  //const text_added = useRef(null); //+버튼을 눌러서 방금 추가된 투두아이템
   const [category,setCategory]= useState(["Study","Assignment","Work","Exercise"]);
   const openTheme = () => {
     setThemeVisible(!themeVisible);
@@ -88,10 +88,10 @@ export default function HomeScreen() {
     const currentTasks = Object.assign({}, tasks);
 
     for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
-            currentTasks[id]['completed'] = true; //완료여부를 true로 설정
+      currentTasks[id]['completed'] = true; //완료여부를 true로 설정
 
     }
-   setTasks(currentTasks);
+    setTasks(currentTasks);
   }
 
   const _selectToDelete = (id) => {
@@ -131,9 +131,9 @@ export default function HomeScreen() {
     const currentTasks = Object.assign({}, tasks);
 
     for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
-            currentTasks[id]['completed'] = false; //완료여부를 false로 설정
+      currentTasks[id]['completed'] = false; //완료여부를 false로 설정
     }
-   setTasks(currentTasks);
+    setTasks(currentTasks);
   }
 
 
@@ -153,12 +153,12 @@ export default function HomeScreen() {
       <View style={viewStyles.SearchBar}>
         <IconButton type={images.search} />
         <TextInput
-          type="text"
-          style={{ width: '75%', paddingLeft: 10, paddingRight: 10, fontSize: 20 }}
-          onChangeText={(e) => {
-            setSearchTerm(e);
-          }}
-          placeholder="Searching for ..." />
+            type="text"
+            style={{ width: '75%', paddingLeft: 10, paddingRight: 10, fontSize: 20 }}
+            onChangeText={(e) => {
+              setSearchTerm(e);
+            }}
+            placeholder="Searching for ..." />
         <IconButton type={images.cancle} />
       </View>
     </View>
@@ -166,53 +166,53 @@ export default function HomeScreen() {
   }
   else if (DeleteMode){ //삭제모드라면 -> 상단바부분을 삭제부분으로 변경.
     TopBar=<View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
-    <IconButton type={images.back}  onPressOut={() => setDeleteMode(!DeleteMode)}/>
-    <Text style={{flex:1, fontSize: 20}}>  Delete </Text>
-    <View style={viewStyles.settingGroup}>
-      <IconButton onPressOut={_selectAllToDelete} type={check ? images.checked :images.unchecked} />
-      <IconButton onPressOut={_delete} type={images.trash} />
+      <IconButton type={images.back}  onPressOut={() => setDeleteMode(!DeleteMode)}/>
+      <Text style={{flex:1, fontSize: 20}}>  Delete </Text>
+      <View style={viewStyles.settingGroup}>
+        <IconButton onPressOut={_selectAllToDelete} type={check ? images.checked :images.unchecked} />
+        <IconButton onPressOut={_delete} type={images.trash} />
+      </View>
     </View>
-  </View>
 
   }
 
   else { // 둘다 아니라면 -> 일반 상단바 보여줌
     TopBar =
-      <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
-        <IconButton type={images.todo} onPressOut={openTheme} />
-        <Today />
-        <View style={viewStyles.settingGroup}>
+        <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
+          <IconButton type={images.todo} onPressOut={openTheme} />
+          <Today />
+          <View style={viewStyles.settingGroup}>
 
-          <IconButton type={images.search} onPressOut={() => setSearchMode(!SearchMode)} />
-          <IconButton onPressOut={() => { setExtraVisible(!extraVisible); console.log('open extraMenu'); }} type={images.dot} />
+            <IconButton type={images.search} onPressOut={() => setSearchMode(!SearchMode)} />
+            <IconButton onPressOut={() => { setExtraVisible(!extraVisible); console.log('open extraMenu'); }} type={images.dot} />
+          </View>
         </View>
-      </View>
 
   }
 
   //서치뷰
   var SearchView =<List>
-  {Object.values(tasks).filter((item)=>{
-    if(searchTerm==""){
-      return item
-    }else if(item.text.toLowerCase().includes(searchTerm.toLowerCase())){
-      return item
-    }
-  }).reverse().map(item =>(
+    {Object.values(tasks).filter((item)=>{
+      if(searchTerm==""){
+        return item
+      }else if(item.text.toLowerCase().includes(searchTerm.toLowerCase())){
+        return item
+      }
+    }).reverse().map(item =>(
 
-  <Task key= {item.id}
-  item={item}
-  deleteTask={_deleteTask}
-  toggleTask={_toggleTask}
-  updateTask={_updateTask}
-  dueDateTask={_dueDateTask}
-  category={category[item.category]}
-  setThemeColor={setThemeColor}
-  themeColor={themeColor}
+        <Task key= {item.id}
+              item={item}
+              deleteTask={_deleteTask}
+              toggleTask={_toggleTask}
+              updateTask={_updateTask}
+              dueDateTask={_dueDateTask}
+              category={category[item.category]}
+              setThemeColor={setThemeColor}
+              themeColor={themeColor}
 
-  />
-  ))}
-</List>
+        />
+    ))}
+  </List>
 
 //삭제
   var DeleteView =<List>
@@ -228,66 +228,65 @@ export default function HomeScreen() {
   </List>
 
 //일반 투두리스트 뷰 -> 2중 맵 활용 간소화.
-var ListView = <List /**/>
- {category.map((category,index)=>{
-   return(
-     <>
-      <View style={[viewStyles.categoryView, {backgroundColor:themeColor}]}/** 일반 카테고리*/>
-          <IconButton type={images.tag} />
-          <Text style={textStyles.contents}> {category} </Text>
-          <IconButton onPressOut={()=>_addTask(index)} type={images.add} />
-      </View>
-      {Object.values(tasks).filter((item)=>{ // ViewMode 구현
-          if(visibleMode =='ViewAll'&&item.category==index)
-            return item
-          else if(visibleMode =='Uncompleted'&&item.category==index && item.completed==false)
-          return item
-          else if (visibleMode=='Completed'&& item.category==index && item.completed==true)
-          return item
-          else return null;
+  var ListView = <List /**/>
+    {category.map((category,index)=>{
+      return(
+          <>
+            <View style={[viewStyles.categoryView, {backgroundColor:themeColor}]}/** 일반 카테고리*/>
+              <IconButton type={images.tag} />
+              <Text style={textStyles.contents}> {category} </Text>
+              <IconButton onPressOut={()=>_addTask(index)} type={images.add} />
+            </View>
+            {Object.values(tasks).filter((item)=>{ // ViewMode 구현
+              if(visibleMode =='ViewAll'&&item.category==index)
+                return item
+              else if(visibleMode =='Uncompleted'&&item.category==index && item.completed==false)
+                return item
+              else if (visibleMode=='Completed'&& item.category==index && item.completed==true)
+                return item
+              else return null;
 
-        }).reverse().map(item=>(
-          <Task key= {item.id}
-          item={item}
-          deleteTask={_deleteTask}
-          toggleTask={_toggleTask}
-          updateTask={_updateTask}
-          dueDateTask={_dueDateTask}
-          category={category}
-          setThemeColor={setThemeColor}
-          themeColor={themeColor}
-          /> ) )}
-      </>
-   );
+            }).reverse().map(item=>(
+                <Task key= {item.id}
+                      item={item}
+                      deleteTask={_deleteTask}
+                      toggleTask={_toggleTask}
+                      updateTask={_updateTask}
+                      dueDateTask={_dueDateTask}
+                      category={category}
+                      setThemeColor={setThemeColor}
+                      themeColor={themeColor}
+                /> ) )}
+          </>
+      );
 
- })}
- </List>
+    })}
+  </List>
   return (
-    //ThemeProvider는 자식들에게 광역으로 자신이 가지고 있는 기본 props값을 사용할 수 있도록 해주는 역할
-    <ThemeProvider theme= {theme} //theme : basic theme (기본파랑)
-    >
-    <Container>
-      <StatusBar barStyle="light-content" style={barStyles.statusBar} />
-      {TopBar}
-      <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} themeColor={themeColor} setThemeColor={setThemeColor} // 테마선택창
-      />
+      //ThemeProvider는 자식들에게 광역으로 자신이 가지고 있는 기본 props값을 사용할 수 있도록 해주는 역할
+      <ThemeProvider theme= {theme} //theme : basic theme (기본파랑)
+      >
+        <Container>
+          <StatusBar barStyle="light-content" style={barStyles.statusBar} />
+          {TopBar}
+          <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} themeColor={themeColor} setThemeColor={setThemeColor} // 테마선택창
+          />
 
-        <ExtraMenu  // 더보기 모달창
-        ExtraVisible={extraVisible}
-        setExtraVisible ={ setExtraVisible}
-        DeleteMode={DeleteMode}
-        setDeleteMode={setDeleteMode}
-        openTheme={openTheme}
-        selectAll={_selectAll}
-        deselectAll={_deselectAll}
-        setVisibleMode={setVisibleMode}/>
+          <ExtraMenu  // 더보기 모달창
+              ExtraVisible={extraVisible}
+              setExtraVisible ={ setExtraVisible}
+              DeleteMode={DeleteMode}
+              setDeleteMode={setDeleteMode}
+              openTheme={openTheme}
+              selectAll={_selectAll}
+              deselectAll={_deselectAll}
+              setVisibleMode={setVisibleMode}/>
 
-      <Goal value={goal} setValue={setGoal}/*목표작성부분*/ themeColor={themeColor}/>
+          <Goal value={goal} setValue={setGoal}/*목표작성부분*/ themeColor={themeColor}/>
 
 
-        {DeleteMode?DeleteView:ListView/*삭제모드이면 삭제리스트뷰, 아니라면 일반 리스트 뷰를 보여줌*/}
+          {DeleteMode?DeleteView:ListView/*삭제모드이면 삭제리스트뷰, 아니라면 일반 리스트 뷰를 보여줌*/}
         </Container>
-    </ThemeProvider>
+      </ThemeProvider>
   );
 };
-
