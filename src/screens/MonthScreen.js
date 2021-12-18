@@ -48,6 +48,7 @@ export default function MonthScreen() {
     var TopBar =
         <View style={viewStyles.settingView} >
             <Today />
+            <Text>                            </Text>
         </View>
 
     return (

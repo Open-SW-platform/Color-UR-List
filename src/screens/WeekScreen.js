@@ -44,6 +44,7 @@ export default function WeekScreen() {
     var TopBar =
         <View style={viewStyles.settingView} >
             <Today />
+            <Text>                            </Text>
         </View>
 
     return (

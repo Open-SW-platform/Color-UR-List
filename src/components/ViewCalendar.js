@@ -46,7 +46,7 @@ LocaleConfig.locales['fr'] = {
           _dueDateTask(day.dateString);
         }}
         markedDates={{
-          [dueDate]: {selected: true, selectedColor: 'orange'}
+          [item.duedate]: {selected: true, selectedColor: 'orange'}
         }}
         // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
         monthFormat={'yyyy MM'}
