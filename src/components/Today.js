@@ -42,7 +42,7 @@ const Today = () => {
   },
   dayView: { //요일 뷰 -> 얇고 가는 글씨
     flex: 0.5,
-    fontSize : 28,
+    fontSize : 27,
     fontWeight : "normal",
     paddingLeft : "3%",
   },
