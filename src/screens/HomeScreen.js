@@ -253,6 +253,7 @@ export default function HomeScreen() {
                 category={category[item.category]}
         />
     ))}
+    </List>
 
 //일반 투두리스트 뷰 -> 2중 맵 활용 간소화.
 var ListView = <List /**/> 
