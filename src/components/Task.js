@@ -6,9 +6,6 @@ import IconButton from './IconButton';
 import { images } from "../images";
 import Input  from './Input';
 import DetailTodolist from '../components/DetailTodolist';
-import DraggableFlatList, {
-    ScaleDecorator,
-} from "react-native-draggable-flatlist";
 
 const Container= styled.View`
 flex-direction : row;
@@ -125,7 +122,7 @@ const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, ca
         updateTask={updateTask}
         dueDateTask={dueDateTask}
 
-        pickURITask = {pickURITask} 
+        pickURITask = {pickURITask}
         updateComment={updateComment}
         category={ category}
         setThemeColor={setThemeColor}
