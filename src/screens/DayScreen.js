@@ -57,6 +57,7 @@ export default function DayScreen() {
       <StatusBar barStyle="light-content" style={barStyles.statusBar} />
       {TopBar}
       <Container>
+        <Text style={{ fontSize: 40, position: 'absolute', zIndex: 2, marginTop: 120}}> {percentage}% </Text>
         <ProgressChart
           style={{ paddingTop: 20, flex: 1, position: 'absolute', zIndex: 1 }}
           data={progressChartData}
