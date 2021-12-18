@@ -189,13 +189,15 @@ export default function HomeScreen() {
       <View style={viewStyles.SearchBar}>
         <IconButton type={images.search} />
         <TextInput
+            class= 'searchText'
             type="text"
             style={{ width: '75%', paddingLeft: 10, paddingRight: 10, fontSize: 20 }}
             onChangeText={(e) => {
               setSearchTerm(e);
             }}
+            value = {searchTerm}
             placeholder="Searching for ..." />
-        <IconButton type={images.cancle} onPressOut={() => setSearchMode(!SearchMode)}/>
+        <IconButton type={images.cancle} onPressOut={() => setSearchTerm('')}/>
       </View>
     </View>
 
