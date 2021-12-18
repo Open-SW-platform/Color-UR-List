@@ -1,7 +1,7 @@
 //홈(메인) 화면
 import React, { useState, useRef } from 'react';
 import {StatusBar, Dimensions, Text, View, TextInput, ScrollView, Image, Share} from 'react-native';
-import { viewStyles, textStyles, barStyles, List, Container } from '../styles'
+import {viewStyles, textStyles, barStyles, List, Container, modalStyles} from '../styles'
 import { images } from '../images';
 import IconButton from '../components/IconButton';
 import Today from '../components/Today'
@@ -123,8 +123,8 @@ export default function HomeScreen() {
   }
 
   const _selectToDelete = (id) => {
-    const currentTask=Object.assign({},tasks);
-    currentTask[id]['selected'] = ! currentTask[id]['selected'];
+    const currentTasks=Object.assign({},tasks);
+    currentTasks[id]['selected'] = ! currentTasks[id]['selected'];
     storeData(currentTasks);
   }
 
@@ -145,10 +145,11 @@ export default function HomeScreen() {
     }
     storeData(currentTasks);
   }
+
   const _delete = () => {
     const currentTasks = Object.assign({}, tasks);
     for(const id in currentTasks){
-      if(currentTasks[id]['selected'] = true){
+      if(currentTasks[id]['selected'] == true){
         delete currentTasks[id];
       }
     }
@@ -214,7 +215,17 @@ export default function HomeScreen() {
           <View style={viewStyles.settingGroup}>
 
             <IconButton type={images.search} onPressOut={() => setSearchMode(!SearchMode)} />
-            <IconButton onPressOut={() => { setExtraVisible(!extraVisible); console.log('open extraMenu'); }} type={images.dot} />
+            <ExtraMenu  // 더보기 모달창
+                ExtraVisible={extraVisible}
+                setExtraVisible ={ setExtraVisible}
+                DeleteMode={DeleteMode}
+                setDeleteMode={setDeleteMode}
+                openTheme={openTheme}
+                selectAll={_selectAll}
+                deselectAll={_deselectAll}
+                setVisibleMode={setVisibleMode}
+                />
+
           </View>
         </View>
 
@@ -305,15 +316,6 @@ var ListView = <List /**/>
       <ThemeSelector themeVisible={themeVisible} setThemeVisible={setThemeVisible} themeColor={themeColor} setThemeColor={setThemeColor} // 테마선택창
       />
 
-        <ExtraMenu  // 더보기 모달창
-        ExtraVisible={extraVisible}
-        setExtraVisible ={ setExtraVisible}
-        DeleteMode={DeleteMode}
-        setDeleteMode={setDeleteMode}
-        openTheme={openTheme}
-        selectAll={_selectAll}
-        deselectAll={_deselectAll}
-        setVisibleMode={setVisibleMode}/>
 
       <Goal value={goal} setValue={setGoal}/*목표작성부분*/ themeColor={themeColor}/>
       {

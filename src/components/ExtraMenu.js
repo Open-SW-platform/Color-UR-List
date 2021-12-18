@@ -3,84 +3,49 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View,TouchableOpacity } from
 import { viewStyles,textStyles } from '../styles'
 import styled from 'styled-components/native';
 
-const Container =styled.View`
-background-color : white;
-align-items : center;
-width : 200px;
-height : 200px;
-margin-top : 25%;
-margin-left : 51%;
-
-`;
-
-const HorizentalLine = styled.View`
-  background-color: lightgray;
-  height: 1px;
-  align-self: stretch;
-`;
+import IconButton from "./IconButton";
+import {images} from "../images";
+import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 
 
-const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTheme,selectAll,deselectAll,setVisibleMode}) => {
+const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTheme,selectAll,deselectAll,setVisibleMode},) => {
+    const hideMenu = () => setExtraVisible(false);
+
+    const showMenu = () => setExtraVisible(true);
+
 
   return (
-    <Modal
-        animationType="slide"
-        transparent={true}
-        visible={ExtraVisible}
-        onRequestClose ={()=>{setExtraVisible(!ExtraVisible);}}
+    <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+        <Menu
+            visible={ExtraVisible}
+            onRequestClose ={hideMenu}
+            anchor={ <IconButton onPressOut={showMenu} type={images.dot}/>}
         >
-        <Container >
-            <View >
-                <TouchableOpacity onPress={() => {setDeleteMode(!DeleteMode); setExtraVisible(false);}}>
-                <Text style={textStyles.moremenu}> Delete </Text>
-                </TouchableOpacity>
-            </View>
 
-            <HorizentalLine />
+            <MenuItem onPress={() => {setDeleteMode(!DeleteMode); setExtraVisible(false);}}>Delete</MenuItem>
+            <MenuDivider />
 
-            <View style={textStyles.menu}>
-                <TouchableOpacity onPressOut={() => { setVisibleMode('Uncompleted'); setExtraVisible(false);}  }>
-                <Text style={textStyles.moremenu}> View Uncompleted </Text>
-                </TouchableOpacity>
-            </View>
+            <MenuItem onPress={() => {setVisibleMode('Uncompleted'); setExtraVisible(false);}}>View Uncompleted</MenuItem>
+            <MenuDivider />
 
-            <HorizentalLine />
+            <MenuItem onPress={() => {setVisibleMode('Completed'); setExtraVisible(false);}}>View Completed</MenuItem>
+            <MenuDivider />
 
-            <View style={textStyles.menu}>
-                <TouchableOpacity onPressOut={() => { setVisibleMode('Completed'); setExtraVisible(false);}  }>
-                <Text style={textStyles.moremenu}> View Completed </Text>
-                </TouchableOpacity>
-            </View>
+            <MenuItem onPress={() => {setVisibleMode('ViewAll'); setExtraVisible(false);}}>View All</MenuItem>
+            <MenuDivider />
 
-            <HorizentalLine />
+            <MenuItem onPress={() => {selectAll(); setExtraVisible(false);}}>Select All</MenuItem>
+            <MenuDivider />
 
-            <View style={textStyles.menu}>
-                <TouchableOpacity onPressOut={() => { setVisibleMode('ViewAll'); setExtraVisible(false);}  }>
-                <Text style={textStyles.moremenu}> View All </Text>
-                </TouchableOpacity>
-            </View>
-
-            <HorizentalLine />
-
-            <View style={textStyles.menu}>
-                <TouchableOpacity onPressOut={() =>{ selectAll(); setExtraVisible(false);}}>
-                <Text style={textStyles.moremenu}> Select All </Text>
-                </TouchableOpacity>
-            </View>
-
-            <HorizentalLine />
-
-            <View style={textStyles.menu}>
-                <TouchableOpacity onPressOut={() => { deselectAll(); setExtraVisible(false);}}>
-                <Text style={textStyles.moremenu}> Deselect All </Text>
-                </TouchableOpacity>
-            </View>
-        </Container>
-    </Modal>
+            <MenuItem onPress={() => { deselectAll(); setExtraVisible(false);}}>Deselect</MenuItem>
+            <MenuDivider />
+        </Menu>
+    </View>
 
   );
 
 }
+
 
 
 export default ExtraMenu;
