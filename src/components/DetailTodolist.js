@@ -46,7 +46,6 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
         visible={detailVisible}
 
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setDetailVisible(!detailVisible);
         }}>
 

@@ -1,5 +1,5 @@
 //홈(메인) 화면
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useContext } from 'react';
 import {StatusBar, Dimensions, Text, View, TextInput, ScrollView, Image, Share} from 'react-native';
 import {viewStyles, textStyles, barStyles, List, Container, modalStyles} from '../styles'
 import { images } from '../images';
@@ -14,19 +14,14 @@ import { theme } from '../theme';
 import Goal from '../components/Goal'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
-
+import TaskContext,{TaskProvider,TaskConsumer} from '../contexts/Tasks';
 
 export default function HomeScreen() {
 
-  const [tasks, setTasks] = useState({
 
-    '1': { id: '1', text: "My Todo List1", duedate:'', completed: false, category: 0,  comment:'' ,imageSrc:'', selected :false },
-    '2': { id: '2', text: "My Todo List2", duedate:'', completed: false, category: 1 , comment:'' ,imageSrc:'', selected :false },
-    '3': { id: '3', text: "My Todo List3", duedate:'', completed: false, category: 2 , comment:'',imageSrc:'', selected :false },
-    '4': { id: '4', text: "My Todo List4", duedate:'', completed: false, category: 3 , comment:'',imageSrc:'', selected :false },
-  });
+  const {tasks,setTasks} = useContext(TaskContext);
 
-
+    console.log(tasks);
   const [isReady,setIsReady]=useState(false); //로딩중 여부
   const [visibleMode,setVisibleMode]=useState('ViewAll'); // ViewAll/Uncompleted/Completed
   const [goal,setGoal]=useState('');
