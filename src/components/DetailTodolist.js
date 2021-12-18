@@ -9,7 +9,7 @@ import { images } from '../images';
 import ViewCalendar from './ViewCalendar';
 import { theme } from '../theme';
 
-const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask, category, dueDateTask, themeColor, setThemeColor,updateComment}) => {
+const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTask,updateTask, category, dueDateTask, imgSrcTask, themeColor, setThemeColor,updateComment}) => {
 
   //삭제버튼 눌렸을때
   const _deleteTask= ()=>{
@@ -39,8 +39,6 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
       alert(error.message);
     }
   }
-
-    const [dueDate, setDueDate] = useState("");
     return (
         <Modal // Task > 클릭시 띄우는 세부사항 모달
         animationType="slide"
@@ -60,12 +58,12 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
             <IconButton type={images.cancle} onPressOut={() => {setDetailVisible(!detailVisible);}} />
           </View>
           <ScrollView style={{ width: '100%', backgroundColor: theme.itemBackground}}>
-          <TodolistInput item={item} dueDate = {dueDate} toggleTask={toggleTask} updateTask={updateTask}/>
+          <TodolistInput item={item} toggleTask={toggleTask} updateTask={updateTask}/>
           
             <Text style={modalStyles.modalText}>Note</Text>
             <Memo item={item} updateComment={updateComment} />
-            <PickImage/>
-            <ViewCalendar item={item} dueDate={dueDate} setDueDate={setDueDate} dueDateTask={dueDateTask}/>
+            <PickImage item={item} imgSrcTask={imgSrcTask}/>
+            <ViewCalendar item={item} dueDateTask={dueDateTask}/>
           </ScrollView>
         </View>
       </Modal>

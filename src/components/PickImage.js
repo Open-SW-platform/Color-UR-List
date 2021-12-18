@@ -3,8 +3,15 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import ImageModal from 'react-native-image-modal';
 
-export default function App() {
+const PickImage = ({item, imgSrcTask})=> {
   let [selectedImage, setSelectedImage] = React.useState(null);
+
+  const _imgSrcTask = (changedImg)=>{
+    const settingItem = Object.assign({},item);
+    settingItem['imageSrc'] = changedImg.uri;
+    imgSrcTask(settingItem);
+    console.log('a');
+  }
 
   let openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -20,9 +27,10 @@ export default function App() {
     }
 
     setSelectedImage({ localUri: pickerResult.uri });
+    _imgSrcTask(pickerResult);
   };
   
-  if (selectedImage !== null) {
+  if (item.imageSrc !== "") {
     return (
       <View style={styles.container}>
         <ImageModal
@@ -33,10 +41,10 @@ export default function App() {
             height: 55,
           }}
           source={{
-            uri: selectedImage.localUri
+            uri: item.imageSrc
           }}
         />
-        <Text numberOfLines={1} ellipsizeMode='tail' style={{ flexShrink: 1 }}>  {selectedImage.localUri}</Text>
+        <Text numberOfLines={1} ellipsizeMode='tail' style={{ flexShrink: 1 }}>  {item.imageSrc}</Text>
         <TouchableOpacity onPress={openImagePickerAsync} style={styles.button}>
           <Text style={styles.buttonText}>Change</Text>
         </TouchableOpacity>
@@ -52,6 +60,8 @@ export default function App() {
     </View>
   );
 }
+
+export default PickImage;
 
 const styles = StyleSheet.create({
   container: {
