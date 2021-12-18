@@ -195,7 +195,7 @@ export default function HomeScreen() {
               setSearchTerm(e);
             }}
             placeholder="Searching for ..." />
-        <IconButton type={images.cancle} />
+        <IconButton type={images.cancle} onPressOut={() => setSearchMode(!SearchMode)}/>
       </View>
     </View>
 
