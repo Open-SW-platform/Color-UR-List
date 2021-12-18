@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
 import AchievementScreen from './screens/AchievementScreen';
 import 'react-native-gesture-handler';
+import {TaskProvider} from './contexts/Tasks';
 
 const TabNavigator = createBottomTabNavigator({ // TabNavigator로 App.js 통일
   'To Do': {
@@ -25,14 +26,23 @@ const TabNavigator = createBottomTabNavigator({ // TabNavigator로 App.js 통일
          iconName = 'podium-outline';
         }
        return (
+      
          <Ionicons //아이콘 스타일 설정
            name={iconName}
            size={horizontal ? 20 : 25}
            color={tintColor}
          />
+        
         );
      },
    }),
   },
 );
-export default createAppContainer(TabNavigator);
+
+const AppContainer = createAppContainer(TabNavigator);
+
+export default class App extends React.Component {
+  render() {
+    return <TaskProvider><AppContainer /></TaskProvider>;
+  }
+}

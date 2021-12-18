@@ -11,7 +11,7 @@ LocaleConfig.locales['fr'] = {
   };
   LocaleConfig.defaultLocale = 'fr';
 
-  const ViewCalendar = ({item, dueDate, setDueDate, dueDateTask})=> {
+  const ViewCalendar = ({item, dueDateTask})=> {
     const _dueDateTask = (changedDate)=>{
       const settingItem = Object.assign({},item);
       settingItem['duedate'] = changedDate;
@@ -42,11 +42,10 @@ LocaleConfig.locales['fr'] = {
             ToastAndroid.SHORT,
             ToastAndroid.CENTER
           );
-          setDueDate(day.dateString);
           _dueDateTask(day.dateString);
         }}
         markedDates={{
-          [dueDate]: {selected: true, selectedColor: 'orange'}
+          [item.duedate]: {selected: true, selectedColor: 'orange'}
         }}
         // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
         monthFormat={'yyyy MM'}
