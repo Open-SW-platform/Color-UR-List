@@ -15,7 +15,7 @@ flex-direction : row;
 align-items : center; 
 background-color : ${({theme}) => theme.itemBackground};
 border-radius: 10px;
-border-width: 1;
+border-width: 1px;
 border-color: ${(props) => props.borderColor ? props.borderColor : 'black'};
 padding : 5px;
 margin : 3px 0;
@@ -31,7 +31,7 @@ text-decoration-line: ${({completed})=> completed?'Line-through':'none'};
 
 `;
 
-const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, category,setThemeColor, themeColor})=>{
+const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, category,setThemeColor, themeColor, shareData})=>{
 //투두리스트 아이템이 눌리면 현재 렌더링하고있는 아이템들이 아닌 input컴포넌트를 렌더링하도록함.
 // input vs 현재구성 렌더링을 결정하기 위해서는 수정상태변수 필요.
 
@@ -97,11 +97,11 @@ const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, ca
     //     />
     // );
 
-   
+
     return isEdting? (<Input value={text} onChangeText={text=>setText(text)} onSubmitEditing = {_onSubmit} onBlur={_onBlur} />)
      :(
         <Container borderColor={themeColor}>
-            
+
 
         <IconButton type = {item.completed? images.checked :images.unchecked}
         //완료 여부에 따라 아이콘이 다르게 렌더링 되어야함.
@@ -123,10 +123,11 @@ const Task =({item,deleteTask,toggleTask,updateTask,dueDateTask, pickURITask, ca
         toggleTask={toggleTask}
         updateTask={updateTask}
         dueDateTask={dueDateTask}
-        pickURITask = {pickURITask} 
+        pickURITask = {pickURITask}
         category={ category}
         setThemeColor={setThemeColor}
-        themeColor={themeColor}/>
+        themeColor={themeColor}
+        />
         </Container>
 
     );

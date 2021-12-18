@@ -8,7 +8,7 @@ background-color : white;
 align-items : center;
 width : 200px;
 height : 200px;
-margin-top : 12%;
+margin-top : 25%;
 margin-left : 51%;
 
 `;
