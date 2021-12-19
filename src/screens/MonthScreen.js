@@ -15,20 +15,20 @@ export default function MonthScreen() {
 
     const { tasks } = useContext(TaskContext);
 
-    const totalStudy = Object.values(tasks).filter(item => item.category === 0).length
-    const completedStudy = Object.values(tasks).filter(item => ((item.category === 0) && (item.completed === true))).length
+    const totalStudy = Object.values(tasks).filter(item => item.category == 0).length
+    const completedStudy = Object.values(tasks).filter(item => ((item.category == 0) && (item.completed == true))).length
     const completedPercentageStudy = Math.floor((completedStudy * 100) / (totalStudy))
 
-    const totalWork = Object.values(tasks).filter(item => item.category === 1).length
-    const completedWork = Object.values(tasks).filter(item => ((item.category === 1) && (item.completed === true))).length
+    const totalWork = Object.values(tasks).filter(item => item.category == 1).length
+    const completedWork = Object.values(tasks).filter(item => ((item.category === 1) && (item.completed == true))).length
     const completedPercentageWork = Math.floor((completedWork * 100) / (totalWork))
 
-    const totalExercise = Object.values(tasks).filter(item => item.category === 3).length
-    const completedExercise = Object.values(tasks).filter(item => ((item.category === 3) && (item.completed === true))).length
+    const totalExercise = Object.values(tasks).filter(item => item.category == 3).length
+    const completedExercise = Object.values(tasks).filter(item => ((item.category === 3) && (item.completed == true))).length
     const completedPercentageExercise = Math.floor((completedExercise * 100) / (totalExercise))
 
-    const totalAssginment = Object.values(tasks).filter(item => item.category === 2).length
-    const completedAssginment = Object.values(tasks).filter(item => ((item.category === 2) && (item.completed === true))).length
+    const totalAssginment = Object.values(tasks).filter(item => item.category == 2).length
+    const completedAssginment = Object.values(tasks).filter(item => ((item.category == 2) && (item.completed == true))).length
     const completedPercentageAssginment = Math.floor((completedAssginment * 100) / (totalAssginment))
 
     const total = totalStudy + totalWork + totalExercise + totalAssginment
@@ -40,11 +40,11 @@ export default function MonthScreen() {
     const chartConfig = {
         backgroundGradientFrom: "#ffffff",
         backgroundGradientTo: "#ffffff",
-        color: (opacity = 1) => `rgba(0, 122, 255, ${opacity})`,
+        color: (opacity = 1) => `rgba(87, 87, 87, ${opacity})`,
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
         useShadowColorFromDataset: false // optional
-      };
+    };
 
     const commitsData = [
         { date: "2017-01-02", count: 1 },
@@ -72,7 +72,7 @@ export default function MonthScreen() {
             {TopBar}
             <Container>
                 <ContributionGraph
-                    style={{ paddingLeft: 20, paddingTop: 20, flex: 1, position: 'absolute', zIndex: 0}}
+                    style={{ paddingLeft: 20, paddingTop: 20, flex: 1, position: 'absolute', zIndex: 0 }}
                     values={commitsData}
                     endDate={new Date("2017-04-01")}
                     numDays={105}

@@ -16,7 +16,7 @@ export default function DayScreen() {
   const chartConfig = {
     backgroundGradientFrom: "#ffffff",
     backgroundGradientTo: "#ffffff",
-    color: (opacity = 1) => `rgba(0, 122, 255, ${opacity})`,
+    color: (opacity = 1) => `rgba(249, 206, 238, ${opacity})`,
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false // optional
@@ -24,20 +24,20 @@ export default function DayScreen() {
 
   const { tasks } = useContext(TaskContext);
 
-  const totalStudy = Object.values(tasks).filter(item => item.category === 0).length
-  const completedStudy = Object.values(tasks).filter(item => ((item.category === 0) && (item.completed === true))).length
+  const totalStudy = Object.values(tasks).filter(item => item.category == 0).length
+  const completedStudy = Object.values(tasks).filter(item => ((item.category == 0) && (item.completed == true))).length
   const completedPercentageStudy = Math.floor((completedStudy * 100) / (totalStudy))
 
-  const totalWork = Object.values(tasks).filter(item => item.category === 1).length
-  const completedWork = Object.values(tasks).filter(item => ((item.category === 1) && (item.completed === true))).length
+  const totalWork = Object.values(tasks).filter(item => item.category == 1).length
+  const completedWork = Object.values(tasks).filter(item => ((item.category === 1) && (item.completed == true))).length
   const completedPercentageWork = Math.floor((completedWork * 100) / (totalWork))
 
-  const totalExercise = Object.values(tasks).filter(item => item.category === 3).length
-  const completedExercise = Object.values(tasks).filter(item => ((item.category === 3) && (item.completed === true))).length
+  const totalExercise = Object.values(tasks).filter(item => item.category == 3).length
+  const completedExercise = Object.values(tasks).filter(item => ((item.category === 3) && (item.completed == true))).length
   const completedPercentageExercise = Math.floor((completedExercise * 100) / (totalExercise))
 
-  const totalAssginment = Object.values(tasks).filter(item => item.category === 2).length
-  const completedAssginment = Object.values(tasks).filter(item => ((item.category === 2) && (item.completed === true))).length
+  const totalAssginment = Object.values(tasks).filter(item => item.category == 2).length
+  const completedAssginment = Object.values(tasks).filter(item => ((item.category == 2) && (item.completed == true))).length
   const completedPercentageAssginment = Math.floor((completedAssginment * 100) / (totalAssginment))
 
   const total = totalStudy + totalWork + totalExercise + totalAssginment
