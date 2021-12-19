@@ -10,6 +10,11 @@ const TaskContext = createContext({
     setTasks : "setdefault"
 });
 
+const ThemeContext = createContext({
+    themeColor:'#c1f0fb',
+    setThemeColor:null
+});
+
 // <UserProvider> 사이에 끼어있는 값은 children으로서 provider에 의해state에 의해 생성된 value를 제공받음. 
 const TaskProvider=({children})=>{
     const [tasks, setTasks] = useState({
@@ -18,7 +23,8 @@ const TaskProvider=({children})=>{
         '3': { id: '3', text: "My Todo List3", duedate:'', completed: false, category: 2 , comment:'',imageSrc:'', selected :false },
         '4': { id: '4', text: "My Todo List4", duedate:'', completed: false, category: 3 , comment:'',imageSrc:'', selected :false },
       });
-    const value = {tasks,setTasks};
+      const [themeColor, setThemeColor] = useState('#c1f0fb');
+    const value = {tasks,setTasks,themeColor,setThemeColor};
    
     return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>
 }
@@ -26,7 +32,7 @@ const TaskProvider=({children})=>{
 const TaskConsumer = TaskContext.Consumer;
 
 
-export {TaskConsumer, TaskProvider};
+export {TaskConsumer, TaskProvider,ThemeContext};
 export default TaskContext;
 
 

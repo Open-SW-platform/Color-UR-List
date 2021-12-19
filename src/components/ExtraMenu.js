@@ -15,7 +15,7 @@ const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTh
 
 
   return (
-    <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{alignItems: 'center', justifyContent: 'center' }}>
         <Menu
             visible={ExtraVisible}
             onRequestClose ={hideMenu}
@@ -37,7 +37,7 @@ const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTh
             <MenuItem onPress={() => {selectAll(); setExtraVisible(false);}}>Select All</MenuItem>
             <MenuDivider />
 
-            <MenuItem onPress={() => { deselectAll(); setExtraVisible(false);}}>Deselect</MenuItem>
+            <MenuItem onPress={() => { deselectAll(); setExtraVisible(false);}}>Deselect All</MenuItem>
             <MenuDivider />
         </Menu>
     </View>

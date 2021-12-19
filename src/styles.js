@@ -10,7 +10,7 @@ export const viewStyles = StyleSheet.create({
     marginBottom: 40,
   },
   settingView: { //설정 하단바 스타일
-    flex: 0.09,
+    padding: 5,
     flexDirection: 'row',
     alignItems: 'center',
   },

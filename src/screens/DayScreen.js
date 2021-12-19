@@ -6,17 +6,40 @@ import { theme } from '../theme';
 import { ProgressChart } from 'react-native-chart-kit';
 import * as Progress from 'react-native-progress';
 import Today from '../components/Today';
-import TaskContext from '../contexts/Tasks';
+import TaskContext,{ThemeContext} from '../contexts/Tasks';
 import Svg, { Line } from 'react-native-svg';
+
+
+//hex (#000000 -> rgb로 변환하는 함수)
+function hexToRgb ( hexType,opacity ){ 
+  /* 맨 앞의 "#" 기호를 삭제하기. */ 
+  var hex = hexType.trim().replace( "#", "" ); 
+  
+  /* rgb로 각각 분리해서 배열에 담기. */ 
+  var rgb = ( 3 === hex.length ) ? 
+  hex.match( /[a-f\d]/gi ) : hex.match( /[a-f\d]{2}/gi );     
+  
+  rgb.forEach(function (str, x, arr){     
+      /* rgb 각각의 헥사값이 한자리일 경우, 두자리로 변경하기. */ 
+      if ( str.length == 1 ) str = str + str; 
+      
+      /* 10진수로 변환하기. */ 
+      arr[ x ] = parseInt( str, 16 ); 
+  }); 
+  console.log("rgba(" + rgb.join(", ") +","+opacity+ ")");
+  return "rgba(" + rgb.join(", ") +","+opacity+ ")"; 
+} 
 
 export default function DayScreen() {
 
-  const [themeColor, setThemeColor] = useState('#f9ceee');
+  const {themeColor,setThemeColor} = useContext(TaskContext);
 
+  console.log(themeColor);
+// color: (opacity = 1) => `rgba(0, 122, 255, ${opacity})`
   const chartConfig = {
     backgroundGradientFrom: "#ffffff",
     backgroundGradientTo: "#ffffff",
-    color: (opacity = 1) => `rgba(249, 206, 238, ${opacity})`,
+    color: (opacity = 1) => hexToRgb(themeColor,opacity),
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false // optional
@@ -92,7 +115,7 @@ export default function DayScreen() {
             </View>
             <View style={{ marginHorizontal: 25 }}>
               <Text style={{ fontSize: 20, textAlign: 'center' }}>Rate</Text>
-              <Text style={{ fontSize: 30, textAlign: 'center' }}>{completedPercentage}%</Text>
+              <Text style={{ fontSize: 30, textAlign: 'center',paddingLeft:10, }}>{completedPercentage}%</Text>
             </View>
           </View>
           

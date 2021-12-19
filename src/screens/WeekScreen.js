@@ -12,7 +12,7 @@ import Svg, { Line } from 'react-native-svg';
 
 export default function WeekScreen() {
 
-    const { tasks } = useContext(TaskContext);
+    const { tasks,themeColor } = useContext(TaskContext);
 
     const totalStudy = Object.values(tasks).filter(item => item.category == 0).length
     const completedStudy = Object.values(tasks).filter(item => ((item.category == 0) && (item.completed == true))).length
@@ -34,7 +34,6 @@ export default function WeekScreen() {
     const completed = completedStudy + completedWork + completedExercise + completedAssginment
     const completedPercentage = Math.floor((completed * 100) / (total));
 
-    const [themeColor, setThemeColor] = useState('#f9ceee');
 
     const chartConfig = {
         backgroundGradientFrom: "#ffffff",
@@ -63,7 +62,7 @@ export default function WeekScreen() {
         </View>
 
     return (
-        <ThemeProvider theme={theme}>
+        <>
             <StatusBar barStyle="light-content" style={barStyles.statusBar} />
             {TopBar}<Container>
                 <LineChart
@@ -127,7 +126,7 @@ export default function WeekScreen() {
                     </ScrollView>
                 </Container>
             </Container>
-        </ThemeProvider>
+        </>
     );
 }
 

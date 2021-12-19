@@ -14,7 +14,7 @@ const PickImage = ({item, imgSrcTask})=> {
   }
 
   let openImagePickerAsync = async () => {
-    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
       alert('Permission to access camera roll is required!');
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   button: {
-    backgroundColor: 'purple',
+    backgroundColor: '#007aff',
     padding: 10,
     borderRadius: 5,
     margin: 10,

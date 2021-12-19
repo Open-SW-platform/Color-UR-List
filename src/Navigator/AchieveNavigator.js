@@ -4,29 +4,33 @@ import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import DayScreen from '../screens/DayScreen'
 import WeekScreen from '../screens/WeekScreen'
 import MonthScreen from '../screens/MonthScreen'
+import TaskContext from '../contexts/Tasks';
+
+
+
+
+
 
 const TabNavigator = createMaterialTopTabNavigator({
     Day: {
         screen: DayScreen,
     },
-    Week: {
-        screen: WeekScreen,
-    },
-    Month: {
-        screen: MonthScreen,
-    },
+   
 },
 
 {
     tabBarOptions:{
         style:{
-            backgroundColor: '#f9ceee'
+            backgroundColor: '#c1f0fb'
         },
         labelStyle:{
             fontSize: 15,
             fontWeight: 'bold'
         },
+      
         activeTintColor: 'black'
     }
 });
+
+
 export default createAppContainer(TabNavigator);
