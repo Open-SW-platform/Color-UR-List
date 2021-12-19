@@ -18,7 +18,7 @@ const DetailTodolist = ({item,detailVisible,setDetailVisible,deleteTask,toggleTa
     setDetailVisible(false);
   }
   const _shareData = async() => {
-    var text = '<App Name>\n';
+    var text = '<Color UR List>\n';
     text+=item.text +'\n'+'-completed: ('+item.completed+')\n'+ '-duedate : ('+item.duedate+')\n' +'-comment : ('+item.comment+')\n'
 
     try{
