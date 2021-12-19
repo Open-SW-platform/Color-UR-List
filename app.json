@@ -6,8 +6,8 @@
     "orientation": "portrait",
     "icon": "./assets/todo.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/colorURlist_splash.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
