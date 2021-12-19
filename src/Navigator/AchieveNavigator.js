@@ -9,16 +9,13 @@ import TaskContext from '../contexts/Tasks';
 
 
 
+
+
 const TabNavigator = createMaterialTopTabNavigator({
     Day: {
         screen: DayScreen,
     },
-    Week: {
-        screen: WeekScreen,
-    },
-    Month: {
-        screen: MonthScreen,
-    },
+   
 },
 
 {
