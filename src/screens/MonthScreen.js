@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Text, View, StatusBar, ScrollView } from 'react-native';
 import { Container, barStyles, viewStyles } from '../styles'
 import { ThemeProvider } from 'styled-components/native';
-import { theme } from '../theme';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { LocaleConfig } from 'react-native-calendars';
 import Today from '../components/Today';
@@ -11,9 +10,11 @@ import * as Progress from 'react-native-progress';
 import TaskContext from '../contexts/Tasks';
 import Svg, { Line } from 'react-native-svg';
 
+
 export default function MonthScreen() {
 
-    const { tasks } = useContext(TaskContext);
+    const { tasks,themeColor } = useContext(TaskContext);
+    
 
     const totalStudy = Object.values(tasks).filter(item => item.category == 0).length
     const completedStudy = Object.values(tasks).filter(item => ((item.category == 0) && (item.completed == true))).length
@@ -35,7 +36,7 @@ export default function MonthScreen() {
     const completed = completedStudy + completedWork + completedExercise + completedAssginment
     const completedPercentage = Math.floor((completed * 100) / (total));
 
-    const [themeColor, setThemeColor] = useState('#f9ceee');
+   
 
     const chartConfig = {
         backgroundGradientFrom: "#ffffff",
@@ -67,7 +68,7 @@ export default function MonthScreen() {
         </View>
 
     return (
-        <ThemeProvider theme={theme}>
+        <>
             <StatusBar barStyle="light-content" style={barStyles.statusBar} />
             {TopBar}
             <Container>
@@ -131,7 +132,7 @@ export default function MonthScreen() {
                     </ScrollView>
                 </Container>
             </Container>
-        </ThemeProvider>
+        </>
     );
 }
 
