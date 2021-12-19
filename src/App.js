@@ -21,9 +21,9 @@ const TabNavigator = createBottomTabNavigator({ // TabNavigator로 App.js 통일
   Achievement: {
     screen: AchievementScreen, //AchievementScreen(달성화면)
   },
- 
 },
   {
+    initialRouteName: 'To Do',
     defaultNavigationOptions: ({navigation}) => ({
       tabBarIcon: ({horizontal, tintColor}) => {
        const {routeName} = navigation.state;
