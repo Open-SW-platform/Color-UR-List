@@ -6,17 +6,19 @@ import { theme } from '../theme';
 import { ProgressChart } from 'react-native-chart-kit';
 import * as Progress from 'react-native-progress';
 import Today from '../components/Today';
-import TaskContext from '../contexts/Tasks';
+import TaskContext,{ThemeContext} from '../contexts/Tasks';
 import Svg, { Line } from 'react-native-svg';
 
 export default function DayScreen() {
 
-  const [themeColor, setThemeColor] = useState('#f9ceee');
+  const {themeColor,setThemeColor} = useContext(TaskContext);
+
+  console.log(themeColor);
 
   const chartConfig = {
     backgroundGradientFrom: "#ffffff",
     backgroundGradientTo: "#ffffff",
-    color: (opacity = 1) => `rgba(249, 206, 238, ${opacity})`,
+    color: () => themeColor,
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false // optional

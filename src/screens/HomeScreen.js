@@ -14,14 +14,13 @@ import { theme } from '../theme';
 import Goal from '../components/Goal'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
-import TaskContext,{TaskProvider,TaskConsumer} from '../contexts/Tasks';
+import TaskContext,{ThemeContext,TaskProvider,TaskConsumer} from '../contexts/Tasks';
 
 export default function HomeScreen() {
 
 
   const {tasks,setTasks,themeColor,setThemeColor} = useContext(TaskContext);
-
-    console.log(tasks);
+  
   const [isReady,setIsReady]=useState(false); //로딩중 여부
   const [visibleMode,setVisibleMode]=useState('ViewAll'); // ViewAll/Uncompleted/Completed
   const [goal,setGoal]=useState('');
