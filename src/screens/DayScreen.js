@@ -9,16 +9,37 @@ import Today from '../components/Today';
 import TaskContext,{ThemeContext} from '../contexts/Tasks';
 import Svg, { Line } from 'react-native-svg';
 
+
+//hex (#000000 -> rgb로 변환하는 함수)
+function hexToRgb ( hexType,opacity ){ 
+  /* 맨 앞의 "#" 기호를 삭제하기. */ 
+  var hex = hexType.trim().replace( "#", "" ); 
+  
+  /* rgb로 각각 분리해서 배열에 담기. */ 
+  var rgb = ( 3 === hex.length ) ? 
+  hex.match( /[a-f\d]/gi ) : hex.match( /[a-f\d]{2}/gi );     
+  
+  rgb.forEach(function (str, x, arr){     
+      /* rgb 각각의 헥사값이 한자리일 경우, 두자리로 변경하기. */ 
+      if ( str.length == 1 ) str = str + str; 
+      
+      /* 10진수로 변환하기. */ 
+      arr[ x ] = parseInt( str, 16 ); 
+  }); 
+  console.log("rgba(" + rgb.join(", ") +","+opacity+ ")");
+  return "rgba(" + rgb.join(", ") +","+opacity+ ")"; 
+} 
+
 export default function DayScreen() {
 
   const {themeColor,setThemeColor} = useContext(TaskContext);
 
   console.log(themeColor);
-
+// color: (opacity = 1) => `rgba(0, 122, 255, ${opacity})`
   const chartConfig = {
     backgroundGradientFrom: "#ffffff",
     backgroundGradientTo: "#ffffff",
-    color: () => themeColor,
+    color: (opacity = 1) => hexToRgb(themeColor,opacity),
     strokeWidth: 2, // optional, default 3
     barPercentage: 0.5,
     useShadowColorFromDataset: false // optional
