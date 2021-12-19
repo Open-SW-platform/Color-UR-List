@@ -18,7 +18,8 @@ const TaskProvider=({children})=>{
         '3': { id: '3', text: "My Todo List3", duedate:'', completed: false, category: 2 , comment:'',imageSrc:'', selected :false },
         '4': { id: '4', text: "My Todo List4", duedate:'', completed: false, category: 3 , comment:'',imageSrc:'', selected :false },
       });
-    const value = {tasks,setTasks};
+      const [themeColor, setThemeColor] = useState('#88c4f3');
+    const value = {tasks,setTasks,themeColor,setThemeColor};
    
     return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>
 }

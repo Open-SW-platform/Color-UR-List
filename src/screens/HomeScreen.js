@@ -19,7 +19,7 @@ import TaskContext,{TaskProvider,TaskConsumer} from '../contexts/Tasks';
 export default function HomeScreen() {
 
 
-  const {tasks,setTasks} = useContext(TaskContext);
+  const {tasks,setTasks,themeColor,setThemeColor} = useContext(TaskContext);
 
     console.log(tasks);
   const [isReady,setIsReady]=useState(false); //로딩중 여부
@@ -30,7 +30,7 @@ export default function HomeScreen() {
   const [extraVisible, setExtraVisible] = useState(false); // 더보기창을 보이고 있는지 여부
 
   const [DeleteMode, setDeleteMode] = useState(false); //삭제모드인지 여부
-  const [themeColor, setThemeColor] = useState('#f9ceee');
+  
   let check = false;//전체선택인지 여부
 
   var TopBar;
