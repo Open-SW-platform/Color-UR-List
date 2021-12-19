@@ -9,12 +9,15 @@ import {TaskProvider} from './contexts/Tasks';
 import CalendarScreen from './screens/CalendarScreen';
 
 const TabNavigator = createBottomTabNavigator({ // TabNavigator로 App.js 통일
-  'To Do': {
-    screen: HomeScreen, //HomeScreen(메인화면)
-  },
+
   Calendar:{
     screen: CalendarScreen,
   },
+
+  'To Do': {
+    screen: HomeScreen, //HomeScreen(메인화면)
+  },
+  
   Achievement: {
     screen: AchievementScreen, //AchievementScreen(달성화면)
   },
