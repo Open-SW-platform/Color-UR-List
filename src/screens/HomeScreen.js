@@ -57,7 +57,12 @@ export default function HomeScreen() {
   //데이터 불러오기
   const getData =async ()=>{
     const loadedData = await AsyncStorage.getItem('tasks'); // 키값이 `task`인 데이터 가져오기
-    setTasks(JSON.parse(loadedData||'{}')); //가져온 데이터는 문자열이기때문에 parse작업으로 원래 객체형으로 돌려놓음. loadedData가 존재하지 않을 경우 빈객체 저장
+    setTasks(JSON.parse(loadedData||`{
+      '1': {},
+      '2': {},
+      '3': {},
+      '4': {},
+    }`));
   }
 
   const _addTask = (num_category) => {
