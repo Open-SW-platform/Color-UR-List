@@ -1,6 +1,6 @@
 //홈(메인) 화면
 import React, { useState, useRef,useContext } from 'react';
-import {StatusBar, Dimensions, Text, View, TextInput, ScrollView, Image, Share} from 'react-native';
+import {StatusBar, Dimensions, Text, View, TextInput, ScrollView, Image, Share, Keyboard} from 'react-native';
 import {viewStyles, textStyles, barStyles, List, Container, modalStyles} from '../styles'
 import { images } from '../images';
 import IconButton from '../components/IconButton';
@@ -15,6 +15,7 @@ import Goal from '../components/Goal'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
 import TaskContext,{TaskProvider,TaskConsumer} from '../contexts/Tasks';
+import dismissKeyboard from "react-native-web/dist/modules/dismissKeyboard";
 
 export default function HomeScreen() {
 
@@ -183,7 +184,7 @@ export default function HomeScreen() {
     TopBar = <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
       <IconButton type={images.back} onPressOut={() => {setSearchMode(!SearchMode); setSearchTerm('')}} />
       <View style={viewStyles.SearchBar}>
-        <IconButton type={images.search} />
+        <IconButton type={images.search}  onPressOut={()=>console.log('search button clicked')}/>
         <TextInput
             class= 'searchText'
             type="text"
