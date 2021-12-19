@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         borderRadius: 10,
         color: 'white',
-        backgroundColor: '#68135f',
+        backgroundColor: '#007aff',
         fontWeight : 'bold',
         marginTop: 5,
         marginBottom: 5,
