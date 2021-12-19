@@ -115,7 +115,7 @@ export default function DayScreen() {
             </View>
             <View style={{ marginHorizontal: 25 }}>
               <Text style={{ fontSize: 20, textAlign: 'center' }}>Rate</Text>
-              <Text style={{ fontSize: 30, textAlign: 'center' }}>{completedPercentage}%</Text>
+              <Text style={{ fontSize: 30, textAlign: 'center',paddingLeft:10, }}>{completedPercentage}%</Text>
             </View>
           </View>
           
