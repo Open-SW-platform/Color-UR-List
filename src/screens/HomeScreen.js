@@ -1,6 +1,6 @@
 //홈(메인) 화면
 import React, { useState, useRef,useContext } from 'react';
-import {StatusBar, Dimensions, Text, View, TextInput, ScrollView, Image, Share} from 'react-native';
+import {StatusBar, Dimensions, Text, View, TextInput, ScrollView, Image, Share, Keyboard} from 'react-native';
 import {viewStyles, textStyles, barStyles, List, Container, modalStyles} from '../styles'
 import { images } from '../images';
 import IconButton from '../components/IconButton';
@@ -14,7 +14,10 @@ import { theme } from '../theme';
 import Goal from '../components/Goal'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppLoading from 'expo-app-loading';
-import TaskContext,{ThemeContext,TaskProvider,TaskConsumer} from '../contexts/Tasks';
+
+import TaskContext,{TaskProvider,TaskConsumer} from '../contexts/Tasks';
+import dismissKeyboard from "react-native-web/dist/modules/dismissKeyboard";
+
 
 export default function HomeScreen() {
 
@@ -29,8 +32,10 @@ export default function HomeScreen() {
   const [extraVisible, setExtraVisible] = useState(false); // 더보기창을 보이고 있는지 여부
 
   const [DeleteMode, setDeleteMode] = useState(false); //삭제모드인지 여부
-  
-  let check = false;//전체선택인지 여부
+
+
+  const [allCheck, setAllCheck] = useState(false);//전체선택인지 여부
+
 
   var TopBar;
 
@@ -130,17 +135,16 @@ export default function HomeScreen() {
 
   const _selectAllToDelete = () => {
     const currentTasks = Object.assign({}, tasks);
-    console.log(check)
-    check = !check
-    console.log(check)
-    if(check){
+    setAllCheck(!allCheck)
+    console.log(allCheck)
+    if(allCheck){
       for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
-        currentTasks[id]['selected'] = true; //완료여부를 true로 설정
+        currentTasks[id]['selected'] = true; //선택여부를 true로 설정
       }
     }
-    else if(!check){
+    else if(!allCheck){
       for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
-        currentTasks[id]['selected'] = false; //완료여부를 true로 설정
+        currentTasks[id]['selected'] = false; //선택여부를 false로 설정
       }
     }
     storeData(currentTasks);
@@ -174,6 +178,13 @@ export default function HomeScreen() {
     storeData(currentCategory);
   }
 
+  const setCheckDefault=()=>{
+    const currentTasks = Object.assign({}, tasks);
+    for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
+      currentTasks[id]['selected'] = false; //선택여부를 false로 설정
+    }
+  }
+
   const [searchTerm, setSearchTerm] = useState(""); // 검색창에 들어가는 키워드
 
   // > 버튼을 누르면 선택된 투두아이템의 정보가 detailtodolist에 props로 주어짐.
@@ -182,7 +193,7 @@ export default function HomeScreen() {
     TopBar = <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
       <IconButton type={images.back} onPressOut={() => {setSearchMode(!SearchMode); setSearchTerm('')}} />
       <View style={viewStyles.SearchBar}>
-        <IconButton type={images.search} />
+        <IconButton type={images.search}  onPressOut={()=>console.log('search button clicked')}/>
         <TextInput
             class= 'searchText'
             type="text"
@@ -202,7 +213,7 @@ export default function HomeScreen() {
       <IconButton type={images.back}  onPressOut={() => setDeleteMode(!DeleteMode)}/>
       <Text style={{flex:1, fontSize: 20}}>  Delete </Text>
       <View style={viewStyles.settingGroup}>
-        <IconButton onPressOut={_selectAllToDelete} type={check ? images.checked :images.unchecked} />
+        <IconButton onPressOut={_selectAllToDelete} type={allCheck ? images.unchecked :images.checked} />
         <IconButton onPressOut={_delete} type={images.trash} />
       </View>
     </View>
@@ -210,6 +221,7 @@ export default function HomeScreen() {
   }
 
   else { // 둘다 아니라면 -> 일반 상단바 보여줌
+    setCheckDefault();
     TopBar =
         <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
           <IconButton type={images.todo} onPressOut={openTheme} />
