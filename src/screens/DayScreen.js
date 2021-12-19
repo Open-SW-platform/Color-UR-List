@@ -70,30 +70,33 @@ export default function DayScreen() {
           chartConfig={chartConfig}
           hideLegend={true}
         />
-        <Container style={{marginTop: 300}}>
+
+
+
+        <Container style={{marginTop: 400}}>
           <ScrollView width={350} >
-            <Text style={{ fontSize: 20, paddingLeft: 10, color: 'black' }}>Study</Text>
+            <Text style={{ fontSize: 20, paddingLeft: 15, color: 'black' }}>Study</Text>
             <View style={{ flexDirection: 'row' }} >
-              <Progress.Bar progress={completedPercentageStudy / 100} width={270} height={10} color= {themeColor} style={{ margin: 10 }} />
-              <Text style={{ fontSize: 20, margin: 5, color: 'black' }}> {completedPercentageStudy}% </Text>
+              <Progress.Bar progress={completedPercentageStudy / 100} width={270} height={10} color= {themeColor} style={{ margin: 15 }} />
+              <Text style={{ fontSize: 20, margin: 5, color: 'black' }}> {completedStudy}/{totalStudy} </Text>
             </View>
 
-            <Text style={{ fontSize: 20, paddingLeft: 10, paddingTop: 10, color: 'black' }}>Work</Text>
+            <Text style={{ fontSize: 20, paddingLeft: 15, paddingTop: 10, color: 'black' }}>Work</Text>
             <View style={{ flexDirection: 'row' }} >
-              <Progress.Bar progress={completedPercentageWork / 100} width={270} height={10} color= {themeColor} style={{ margin: 10 }} />
-              <Text style={{ fontSize: 20, margin: 5, color: 'black' }}> {completedPercentageWork}% </Text>
+              <Progress.Bar progress={completedPercentageWork / 100} width={270} height={10} color= {themeColor} style={{ margin: 15 }} />
+              <Text style={{ fontSize: 20, margin: 5, color: 'black' }}> {completedWork}/{totalWork} </Text>
             </View>
 
-            <Text style={{ fontSize: 20, paddingLeft: 10, paddingTop: 10, color: 'black' }}>Exercise</Text>
+            <Text style={{ fontSize: 20, paddingLeft: 15, paddingTop: 10, color: 'black' }}>Exercise</Text>
             <View style={{ flexDirection: 'row' }} >
-              <Progress.Bar progress={completedPercentageExercise / 100} width={270} height={10} color= {themeColor} style={{ margin: 10 }} />
-              <Text style={{ fontSize: 20, margin: 5, color: 'black' }}> {completedPercentageExercise}% </Text>
+              <Progress.Bar progress={completedPercentageExercise / 100} width={270} height={10} color= {themeColor} style={{ margin : 15 }} />
+              <Text style={{ fontSize: 20, margin: 5, color: 'black' }}> {completedExercise}/{totalWork} </Text>
             </View>
 
-            <Text style={{ fontSize: 20, paddingLeft: 10, paddingTop: 10, color: 'black' }}>Assignment</Text>
+            <Text style={{ fontSize: 20, paddingLeft: 15, paddingTop: 10, color: 'black' }}>Assignment</Text>
             <View style={{ flexDirection: 'row' }} >
-              <Progress.Bar progress={completedPercentageAssginment / 100} width={270} height={10} color= {themeColor} style={{ margin: 10 }} />
-              <Text style={{ fontSize: 20, margin: 5, color: 'black' }}> {completedPercentageAssginment}% </Text>
+              <Progress.Bar progress={completedPercentageAssginment / 100} width={270} height={10} color= {themeColor} style={{ margin: 15 }} />
+              <Text style={{ fontSize: 20, margin: 5, color: 'black' }}> {completedAssginment}/{totalAssginment} </Text>
             </View>
           </ScrollView>
         </Container>
