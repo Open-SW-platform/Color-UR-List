@@ -31,7 +31,7 @@ export default function HomeScreen() {
 
   const [DeleteMode, setDeleteMode] = useState(false); //삭제모드인지 여부
   const [themeColor, setThemeColor] = useState('#f9ceee');
-  let check = false;//전체선택인지 여부
+  const [allCheck, setAllCheck] = useState(false);//전체선택인지 여부
 
   var TopBar;
 
@@ -131,17 +131,16 @@ export default function HomeScreen() {
 
   const _selectAllToDelete = () => {
     const currentTasks = Object.assign({}, tasks);
-    console.log(check)
-    check = !check
-    console.log(check)
-    if(check){
+    setAllCheck(!allCheck)
+    console.log(allCheck)
+    if(allCheck){
       for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
-        currentTasks[id]['selected'] = true; //완료여부를 true로 설정
+        currentTasks[id]['selected'] = true; //선택여부를 true로 설정
       }
     }
-    else if(!check){
+    else if(!allCheck){
       for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
-        currentTasks[id]['selected'] = false; //완료여부를 true로 설정
+        currentTasks[id]['selected'] = false; //선택여부를 false로 설정
       }
     }
     storeData(currentTasks);
@@ -175,6 +174,13 @@ export default function HomeScreen() {
     storeData(currentCategory);
   }
 
+  const setCheckDefault=()=>{
+    const currentTasks = Object.assign({}, tasks);
+    for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
+      currentTasks[id]['selected'] = false; //선택여부를 false로 설정
+    }
+  }
+
   const [searchTerm, setSearchTerm] = useState(""); // 검색창에 들어가는 키워드
 
   // > 버튼을 누르면 선택된 투두아이템의 정보가 detailtodolist에 props로 주어짐.
@@ -203,7 +209,7 @@ export default function HomeScreen() {
       <IconButton type={images.back}  onPressOut={() => setDeleteMode(!DeleteMode)}/>
       <Text style={{flex:1, fontSize: 20}}>  Delete </Text>
       <View style={viewStyles.settingGroup}>
-        <IconButton onPressOut={_selectAllToDelete} type={check ? images.checked :images.unchecked} />
+        <IconButton onPressOut={_selectAllToDelete} type={allCheck ? images.unchecked :images.checked} />
         <IconButton onPressOut={_delete} type={images.trash} />
       </View>
     </View>
@@ -211,6 +217,7 @@ export default function HomeScreen() {
   }
 
   else { // 둘다 아니라면 -> 일반 상단바 보여줌
+    setCheckDefault();
     TopBar =
         <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
           <IconButton type={images.todo} onPressOut={openTheme} />
