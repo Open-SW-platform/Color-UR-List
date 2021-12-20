@@ -140,18 +140,19 @@ export default function HomeScreen() {
 
   const _selectAllToDelete = () => {
     const currentTasks = Object.assign({}, tasks);
-    setAllCheck(!allCheck)
+   
     console.log(allCheck)
     if(allCheck){
       for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
-        currentTasks[id]['selected'] = true; //선택여부를 true로 설정
+        currentTasks[id]['selected'] = false; //선택여부를 true로 설정
       }
     }
-    else if(!allCheck){
+    else {
       for(const id in currentTasks){ // id가 매번 반복마다 currentTasks의 key를 순회
-        currentTasks[id]['selected'] = false; //선택여부를 false로 설정
+        currentTasks[id]['selected'] = true; //선택여부를 false로 설정
       }
     }
+    setAllCheck(!allCheck);
     storeData(currentTasks);
   }
 
@@ -189,7 +190,7 @@ export default function HomeScreen() {
       currentTasks[id]['selected'] = false; //선택여부를 false로 설정
     }
   }
-
+ 
   const [searchTerm, setSearchTerm] = useState(""); // 검색창에 들어가는 키워드
 
   // > 버튼을 누르면 선택된 투두아이템의 정보가 detailtodolist에 props로 주어짐.
@@ -215,10 +216,10 @@ export default function HomeScreen() {
   }
   else if (DeleteMode){ //삭제모드라면 -> 상단바부분을 삭제부분으로 변경.
     TopBar=<View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
-      <IconButton type={images.back}  onPressOut={() => setDeleteMode(!DeleteMode)}/>
+      <IconButton type={images.back}  onPressOut={() =>{setCheckDefault(); setDeleteMode(!DeleteMode);} }/>
       <Text style={{flex:1, fontSize: 20}}>  Delete </Text>
       <View style={viewStyles.settingGroup}>
-        <IconButton onPressOut={_selectAllToDelete} type={allCheck ? images.unchecked :images.checked} />
+        <IconButton onPressOut={_selectAllToDelete} type={allCheck ?images.checked:images.unchecked} />
         <IconButton onPressOut={_delete} type={images.trash} />
       </View>
     </View>
@@ -226,7 +227,7 @@ export default function HomeScreen() {
   }
 
   else { // 둘다 아니라면 -> 일반 상단바 보여줌
-    setCheckDefault();
+   
     TopBar =
         <View style={[viewStyles.settingView, {backgroundColor: themeColor}]} >
           <IconButton type={images.todo} onPressOut={openTheme} />
