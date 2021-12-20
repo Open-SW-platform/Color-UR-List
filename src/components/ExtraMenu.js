@@ -34,10 +34,10 @@ const ExtraMenu = ({ExtraVisible,setExtraVisible,DeleteMode,setDeleteMode,openTh
             <MenuItem onPress={() => {setVisibleMode('ViewAll'); setExtraVisible(false);}}>View All</MenuItem>
             <MenuDivider />
 
-            <MenuItem onPress={() => {selectAll(); setExtraVisible(false);}}>Select All</MenuItem>
+            <MenuItem onPress={() => {selectAll(); setExtraVisible(false);}}>Check All</MenuItem>
             <MenuDivider />
 
-            <MenuItem onPress={() => { deselectAll(); setExtraVisible(false);}}>Deselect All</MenuItem>
+            <MenuItem onPress={() => { deselectAll(); setExtraVisible(false);}}>Uncheck All</MenuItem>
             <MenuDivider />
         </Menu>
     </View>
